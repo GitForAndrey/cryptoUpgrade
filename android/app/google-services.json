@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "424909673493",
+    "project_id": "cryptoapp-af264",
+    "storage_bucket": "cryptoapp-af264.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424909673493:android:5776b1f231085460b82a1c",
+        "android_client_info": {
+          "package_name": "com.crypto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424909673493-pghtckj80ntua8puj4794mer7tvd6udq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmXHC4sGqJuGPvjh764Z6U-dM658RfS94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424909673493-pghtckj80ntua8puj4794mer7tvd6udq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
