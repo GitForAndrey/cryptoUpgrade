@@ -13,7 +13,7 @@ const toastConfig = {
   success: props => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: 'green' }}
+      style={{ borderLeftColor: COLORS.chartColorGreen }}
       text1Style={{
         fontSize: 15,
       }}
@@ -25,7 +25,7 @@ const toastConfig = {
   error: props => (
     <ErrorToast
       {...props}
-      style={{ borderLeftColor: 'red' }}
+      style={{ borderLeftColor: COLORS.chartColorRed }}
       text1Style={{
         fontSize: 15,
       }}
@@ -46,12 +46,10 @@ export const App = () => {
   }, []);
 
   return (
-    <>
-      <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar backgroundColor={COLORS.mainBg} barStyle="light-content" />
-        {isUser?.uid ? <MainStackNav /> : <AuthTabs />}
-        <Toast visibilityTime={1500} config={toastConfig} />
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar backgroundColor={COLORS.mainBg} barStyle="light-content" />
+      {isUser?.uid ? <MainStackNav /> : <AuthTabs />}
+      <Toast visibilityTime={1500} config={toastConfig} />
+    </SafeAreaView>
   );
 };

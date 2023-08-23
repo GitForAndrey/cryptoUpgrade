@@ -105,7 +105,7 @@ export const checkAuthUser = createAsyncThunk(
       const userJSON = await AsyncStorage.getItem('user');
       const user = JSON.parse(userJSON);
       console.log('setUserFromStorage', user);
-      if (user.uid) {
+      if (user?.uid) {
         dispatch(setUserFromStorage(user));
       }
     } catch (error) {

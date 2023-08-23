@@ -10,5 +10,6 @@ export default StyleSheet.create({
     backgroundColor: COLORS.transparentLightGray,
     borderRadius: 12,
     zIndex: 10,
+    marginRight: 15,
   },
 });

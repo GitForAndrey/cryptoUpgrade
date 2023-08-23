@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { CustomHeader } from '../components/CustomHeader';
-
 import { COLORS } from '../constants';
 import { MarketItem } from '../components/MarketItem';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,10 +18,6 @@ export const WishListScreen = ({ navigation }) => {
   const wishlistStatus = useSelector(getWishlistStatus);
   const wishlistData = useSelector(selectWishlistCoins);
 
-  const hadleOnPressSearch = () => {
-    navigation.navigate('Search');
-  };
-
   useEffect(() => {
     if (wishlistData.length) {
       dispatch(getWishlistCoins(wishlistData));
@@ -32,11 +26,6 @@ export const WishListScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <CustomHeader
-        title={'My wishlist'}
-        searchIcon={true}
-        handleOnSearch={() => hadleOnPressSearch()}
-      />
       <View style={{ flex: 1, marginTop: 15, marginBottom: 55 }}>
         {wishlistStatus === 'loading' ? (
           <LoadingIndicator />

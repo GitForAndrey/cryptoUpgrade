@@ -8,8 +8,9 @@ import {
 } from '../screens';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
+import { HeaderButton } from '../components/HeaderButton';
 
 const Tabs = createBottomTabNavigator();
 
@@ -26,107 +27,115 @@ function getTabIcon(routeName, focused) {
     return null;
   }
 }
+const renderHeaderButtons = navigation => (
+  <View style={styles.headerButtonsContainer}>
+    <HeaderButton
+      icon={'search-outline'}
+      handleOnPress={() => navigation.navigate('Search')}
+    />
+    <HeaderButton
+      icon={'notifications-outline'}
+      handleOnPress={() => navigation.navigate('Notification')}
+    />
+  </View>
+);
+const renderTabBarIcon = (routeName, focused, color) => (
+  <Icon
+    name={getTabIcon(routeName, focused)}
+    size={24}
+    color={color}
+    style={styles.icons}
+  />
+);
+const renderTabBarBackground = () => (
+  <BlurView
+    tint="dark"
+    intensity={300}
+    overlayColor={'transparent'}
+    style={styles.blurBg}
+  />
+);
 
 export const BottomTabs = () => {
   return (
     <Tabs.Navigator
       initialRouteName={'Home'}
       screenOptions={{
-        headerShown: false,
+        headerStyle: {
+          backgroundColor: COLORS.mainBg,
+        },
+        headerTintColor: COLORS.lightGray,
+        headerShadowVisible: false,
         tabBarActiveTintColor: COLORS.white,
         tabBarInactiveTintColor: COLORS.tabBottomGray,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          position: 'absolute',
-          height: 60,
-          paddingTop: 8,
-          borderTopWidth: 0,
-          shadowColor: 'transparent',
-          backgroundColor: 'transparent',
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          paddingBottom: 8,
-        },
-        tabBarBackground: () => (
-          <BlurView
-            tint="dark"
-            intensity={300}
-            overlayColor={'transparent'}
-            style={{
-              position: 'absolute',
-              borderTopLeftRadius: 15,
-              borderTopRightRadius: 15,
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-            }}
-          />
-        ),
+        tabBarStyle: styles.tabBarStyle,
+        tabBarLabelStyle: styles.tabBarLabelStyle,
+        tabBarBackground: () => renderTabBarBackground(),
       }}>
       <Tabs.Screen
         name="Home"
         component={HomeScreen}
-        options={({ route }) => ({
-          tabBarIcon: ({ color, focused }) => (
-            <Icon
-              name={getTabIcon(route.name, focused)}
-              size={24}
-              color={color}
-              style={styles.icons}
-            />
-          ),
+        options={({ navigation, route }) => ({
+          headerRight: () => renderHeaderButtons(navigation),
+          tabBarIcon: ({ color, focused }) =>
+            renderTabBarIcon(route.name, focused, color),
         })}
       />
       <Tabs.Screen
         name="Wallet"
         component={WalletScreen}
-        options={({ route }) => ({
-          tabBarIcon: ({ color, focused }) => (
-            <Icon
-              name={getTabIcon(route.name, focused)}
-              size={24}
-              color={color}
-              style={styles.icons}
-            />
-          ),
+        options={({ navigation, route }) => ({
+          headerRight: () => renderHeaderButtons(navigation),
+          tabBarIcon: ({ color, focused }) =>
+            renderTabBarIcon(route.name, focused, color),
         })}
       />
       <Tabs.Screen
         name="WishList"
         component={WishListScreen}
-        options={({ route }) => ({
-          tabBarIcon: ({ color, focused }) => (
-            <Icon
-              name={getTabIcon(route.name, focused)}
-              size={24}
-              color={color}
-              style={styles.icons}
-            />
-          ),
+        options={({ navigation, route }) => ({
+          headerRight: () => renderHeaderButtons(navigation),
+          tabBarIcon: ({ color, focused }) =>
+            renderTabBarIcon(route.name, focused, color),
         })}
       />
       <Tabs.Screen
         name="Settings"
         component={SettingsScreen}
-        options={({ route }) => ({
-          tabBarIcon: ({ color, focused }) => (
-            <Icon
-              name={getTabIcon(route.name, focused)}
-              size={24}
-              color={color}
-              style={styles.icons}
-            />
-          ),
+        options={({ navigation, route }) => ({
+          tabBarIcon: ({ color, focused }) =>
+            renderTabBarIcon(route.name, focused, color),
         })}
       />
     </Tabs.Navigator>
   );
 };
+
 const styles = StyleSheet.create({
   icons: {
     height: 28,
     paddingBottom: 3,
+  },
+  blurBg: {
+    position: 'absolute',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  tabBarStyle: {
+    position: 'absolute',
+    height: 60,
+    paddingTop: 8,
+    borderTopWidth: 0,
+    shadowColor: 'transparent',
+    backgroundColor: 'transparent',
+  },
+  tabBarLabelStyle: { fontSize: 12, paddingBottom: 8 },
+  headerButtonsContainer: {
+    flexDirection: 'row',
   },
 });

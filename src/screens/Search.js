@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { View, TextInput, FlatList, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
-import { HeaderButton } from '../components/HeaderButton';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { SearchItem } from '../components/SearchItem';
 import { COLORS } from '../constants';
@@ -21,10 +20,6 @@ export const SearchScreen = () => {
   const coinData = useSelector(selectSearchData);
   const searchLoading = useSelector(selectSearchStatus);
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
-
   const handleSearch = text => {
     onChangeText(text);
     if (text.length >= 3) {
@@ -37,12 +32,6 @@ export const SearchScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: 10 }}>
-        <HeaderButton
-          icon={'chevron-back-outline'}
-          handleOnPress={() => handleGoBack()}
-        />
-      </View>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Search for a coin"

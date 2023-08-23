@@ -1,18 +1,4 @@
 import theme, { COLORS, SIZES, FONTS } from './theme';
-import {
-  filtersMarketCoins,
-  filtersCoinValue,
-  coinsValue,
-  assetsValue,
-} from './data';
+import { filtersMarketCoins, filtersCoinValue } from './data';
 
-export {
-  filtersMarketCoins,
-  filtersCoinValue,
-  assetsValue,
-  coinsValue,
-  theme,
-  COLORS,
-  SIZES,
-  FONTS,
-};
+export { filtersMarketCoins, filtersCoinValue, theme, COLORS, SIZES, FONTS };

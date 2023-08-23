@@ -1,15 +1,15 @@
 export const filtersMarketCoins = [
   {
-    id: 'MarketCap',
-    title: 'Market Cap',
+    id: 'Top100',
+    title: 'Top 100',
   },
   {
-    id: 'Tranding',
-    title: 'Tranding',
+    id: 'Test1',
+    title: 'Test1',
   },
   {
-    id: '1',
-    title: '1',
+    id: 'Test2',
+    title: 'Test2',
   },
 ];
 export const filtersCoinValue = [

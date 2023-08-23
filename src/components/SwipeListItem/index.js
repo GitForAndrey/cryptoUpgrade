@@ -13,6 +13,7 @@ export const SwipeListItem = ({
   onDelFunc,
   isWishlistPage = false,
   isWalletPage = false,
+  onLoadMore,
 }) => {
   let dispatch = useDispatch();
   const RenderItemComponent = renderItemComponent;
@@ -32,6 +33,7 @@ export const SwipeListItem = ({
 
   return (
     <SwipeListView
+      useFlatList={true}
       data={data}
       renderItem={({ item }) => (
         <RenderItemComponent coin={item} key={item.id} />
@@ -50,6 +52,8 @@ export const SwipeListItem = ({
       }
       rightOpenValue={-75}
       disableRightSwipe={true}
+      onEndReached={onLoadMore}
+      onEndReachedThreshold={0.1}
     />
   );
 };

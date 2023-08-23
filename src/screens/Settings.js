@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { CustomHeader } from '../components/CustomHeader';
 import { COLORS, FONTS } from '../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logoutUser } from '../redux/features/authSlice';
@@ -20,7 +19,6 @@ export const SettingsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <CustomHeader title={'Settings'} />
       <TouchableOpacity onPress={() => logout()} style={{}}>
         <Text style={styles.textContent}>Log out</Text>
       </TouchableOpacity>

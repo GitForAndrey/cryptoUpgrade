@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AssetsItem } from '../components/AssetsItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { CustomHeader } from '../components/CustomHeader';
 import { ChartPie } from '../components/PieChart';
 
 import { COLORS, FONTS } from '../constants';
@@ -13,20 +12,18 @@ import {
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';
 import { useNavigation } from '@react-navigation/native';
+import { HeaderButton } from '../components/HeaderButton';
 
 export const WalletScreen = () => {
   const navigation = useNavigation();
   let assetsCoinData = useSelector(selectAssetsCoinsData);
-  const hadleOnPress = () => {
-    navigation.navigate('Search');
-  };
+
   const totalPrice = assetsCoinData
     ?.reduce((acc, item) => acc + item.current_price * item.quantity, 0)
     .toFixed(2);
 
   return (
     <View style={styles.container}>
-      <CustomHeader title={'My wallet'} />
       <View style={styles.chartPieContainer}>
         <ChartPie assetsCoinData={assetsCoinData} />
         <View style={styles.balanceContainer}>

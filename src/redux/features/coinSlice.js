@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'react-native-axios';
 
-// const baseUrl =
-//   `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=`;
-
 const initialState = {
   coinsChart: [],
   selectedCoin: {},

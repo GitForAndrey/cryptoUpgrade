@@ -3,12 +3,28 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { RestorePasswordScreen, SignInScreen, SignUpScreen } from '../screens';
 import { COLORS } from '../constants';
+import { HeaderButton } from '../components/HeaderButton';
+
+const renderBackButton = navigation => (
+  <HeaderButton
+    icon={'chevron-back-outline'}
+    handleOnPress={() => navigation.goBack()}
+  />
+);
 
 const Stack = createNativeStackNavigator();
 
 export const AuthTabs = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="SignIn">
+    <Stack.Navigator
+      initialRouteName="SignIn"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: COLORS.mainBg,
+        },
+        headerTintColor: COLORS.lightGray,
+        headerShadowVisible: false,
+      }}>
       <Stack.Screen
         name="SignIn"
         component={SignInScreen}
@@ -17,26 +33,18 @@ export const AuthTabs = () => (
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
-        options={{
+        options={({ navigation }) => ({
+          headerLeft: () => renderBackButton(navigation),
           title: 'Sign up',
-          headerStyle: {
-            backgroundColor: COLORS.mainBg,
-          },
-          headerTintColor: COLORS.lightGray,
-          headerShadowVisible: false,
-        }}
+        })}
       />
       <Stack.Screen
         name="RestorePassword"
         component={RestorePasswordScreen}
-        options={{
+        options={({ navigation }) => ({
+          headerLeft: () => renderBackButton(navigation),
           title: 'Restore password',
-          headerStyle: {
-            backgroundColor: COLORS.mainBg,
-          },
-          headerTintColor: COLORS.lightGray,
-          headerShadowVisible: false,
-        }}
+        })}
       />
     </Stack.Navigator>
   </NavigationContainer>

@@ -1,41 +1,36 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'react-native-axios';
-
-const baseUrl = 'https://api.coingecko.com/api/v3';
-
-export const marketCoinsUrl = [
-  {
-    id: 'MarketCap',
-    searchUrl:
-      '/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=15&page=1&sparkline=true&price_change_percentage=24&locale=en',
-  },
-  {
-    id: 'Tranding',
-    searchUrl:
-      '/coins/markets?vs_currency=usd&order=market_cap_asc&per_page=15&page=1&sparkline=true&price_change_percentage=24&locale=en',
-  },
-  {
-    id: '1',
-    searchUrl:
-      '/coins/markets?vs_currency=usd&order=volume_asc&per_page=15&page=1&sparkline=true&price_change_percentage=7d&locale=en',
-  },
-];
+import { getDataRequest } from '../../api/api';
+import { firstTestQuery, topQuery, secondTestQuery } from '../../api/queries';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const initialState = {
   marketCoins: [],
-  status: 'idle', //'idle' | 'loading' | 'succeeded' | 'failed'
-  error: null,
+  status: false,
 };
 
 export const getMarketCoins = createAsyncThunk(
   'marketCoin/getMarketCoins',
-  async filterValue => {
-    const filter = marketCoinsUrl.find(f => f.id === filterValue);
-    if (!filter) {
-      throw new Error('Invalid filter value');
+  async (data, { rejectWithValue }) => {
+    let url;
+    const { filter, page } = data;
+    if (filter === 'Top100') {
+      url = topQuery(page);
+    } else if (filter === 'Test1') {
+      url = firstTestQuery(page);
+    } else if (filter === 'Test2') {
+      url = secondTestQuery(page);
     }
-    const response = await axios.get(`${baseUrl}${filter.searchUrl}`);
-    return response.data;
+    try {
+      const response = await getDataRequest(url);
+      return response;
+    } catch (error) {
+      console.log('getMarketCoins error', error);
+      Toast.show({
+        type: 'error',
+        text2: 'Request error: Request failed',
+      });
+      return rejectWithValue();
+    }
   },
 );
 
@@ -45,16 +40,15 @@ const marketCoinSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getMarketCoins.pending, (state, action) => {
-        state.status = 'loading';
+      .addCase(getMarketCoins.pending, state => {
+        state.status = true;
       })
       .addCase(getMarketCoins.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.marketCoins = action.payload;
+        state.status = false;
+        state.marketCoins = [...state.marketCoins, ...action.payload];
       })
-      .addCase(getMarketCoins.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(getMarketCoins.rejected, state => {
+        state.status = false;
       });
   },
 });

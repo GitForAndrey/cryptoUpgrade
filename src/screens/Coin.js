@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CoinChart } from '../components/CoinChart';
-import { CustomHeader } from '../components/CustomHeader';
+import { CustomHeader } from '../components/HeaderTextLeft';
 import { FiltersItem } from '../components/FiltersItem';
 import { COLORS, FONTS } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
@@ -68,7 +68,7 @@ export const CoinScreen = () => {
     <View style={styles.container}>
       {loading === 'succeeded' && (
         <>
-          <CustomHeader
+          {/* <CustomHeader
             title={coin.name}
             backIcon
             wishlistIcon
@@ -76,7 +76,7 @@ export const CoinScreen = () => {
             handleGoBack={handleGoBack}
             onAddFunc={addWishlist}
             onDelFunc={delWishlist}
-          />
+          /> */}
           <View style={styles.coinInfoBlock}>
             <View style={styles.coinInfo}>
               <Image source={{ uri: coin?.image }} style={styles.coinImage} />
