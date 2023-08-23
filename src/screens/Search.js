@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, TextInput, FlatList, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,7 +15,6 @@ import {
 export const SearchScreen = () => {
   const dispatch = useDispatch();
   const [value, onChangeText] = useState('');
-  const navigation = useNavigation();
   const coinData = useSelector(selectSearchData);
   const searchLoading = useSelector(selectSearchStatus);
 

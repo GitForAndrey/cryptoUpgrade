@@ -18,8 +18,10 @@ export const COLORS = {
   lightGray: '#d3d3d3',
   transparentLightGray: 'rgba(69,69,100, 0.4)',
   transparentWhite: 'rgba(255,255,255, 0.45)',
-  chartColorGreen: 'rgba(0,255,0, 0.8)',
-  chartColorRed: 'rgba(255,0,0, 0.8)',
+  chartColorGreen: 'rgba(0,255,0, 0.9)',
+  chartColorRed: 'rgba(255,0,0, 0.9)',
+  itemColorAdd: 'rgba(253,27,27,0.9)',
+  itemColorDel: 'rgba(255,145,26,0.9)',
 };
 
 export const SIZES = {

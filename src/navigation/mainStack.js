@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabs } from './bottomTabs';
 import { CoinScreen } from '../screens/Coin';
-import { SearchScreen } from '../screens';
+import { NotificationScreen, SearchScreen } from '../screens';
 import { COLORS } from '../constants';
 import { HeaderButton } from '../components/HeaderButton';
 
@@ -42,6 +42,13 @@ export const MainStackNav = () => (
       <Stack.Screen
         name="Search"
         component={SearchScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => renderBackButton(navigation),
+        })}
+      />
+      <Stack.Screen
+        name="Notification"
+        component={NotificationScreen}
         options={({ navigation }) => ({
           headerLeft: () => renderBackButton(navigation),
         })}

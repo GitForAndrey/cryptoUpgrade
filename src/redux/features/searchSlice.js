@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'react-native-axios';
+import { searchDataQuery } from '../../api/queries';
+import { getDataRequest } from '../../api/api';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const initialState = {
   searchData: [],
@@ -9,11 +11,17 @@ const initialState = {
 
 export const getSearchData = createAsyncThunk(
   'search/getSearchData',
-  async value => {
-    const response = await axios.get(
-      `https://api.coingecko.com/api/v3/search?query=${value}`,
-    );
-    return response.data.coins;
+  async (value, { rejectWithValue }) => {
+    try {
+      const response = await getDataRequest(searchDataQuery(value));
+      return response.data.coins;
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text2: 'getSearchData error: Request failed',
+      });
+      return rejectWithValue();
+    }
   },
 );
 

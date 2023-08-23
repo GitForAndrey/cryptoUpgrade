@@ -8,7 +8,6 @@ import { MarketItem } from '../components/MarketItem';
 import { EmptyAssetsCard } from '../components/EmptyAssetsCard';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { HeaderTextLeft } from '../components/HeaderTextLeft';
-import { HeaderButton } from '../components/HeaderButton';
 import { SwipeListItem } from '../components/SwipeListItem';
 import { COLORS, filtersMarketCoins, FONTS } from '../constants';
 import {
@@ -59,13 +58,10 @@ export const HomeScreen = () => {
     }
   };
 
-  const handleFilterClick = useCallback(
-    value => {
-      setActiveFilter(value);
-      dispatch(getMarketCoins(1, value));
-    },
-    [dispatch],
-  );
+  const handleFilterClick = value => {
+    setActiveFilter(value);
+    dispatch(getMarketCoins({ filter: value, page: 1 }));
+  };
 
   const renderItems = (array, type) => {
     return array.map(item => {
@@ -89,10 +85,10 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.textContent}>My Assets</Text>
+      <Text style={styles.textContent}>My Assets</Text>
       <View style={{ marginBottom: 10 }}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {assetsCoinsStatus === 'loading' ? (
+          {assetsCoinsStatus ? (
             <LoadingIndicator />
           ) : assetsCoinsData.length ? (
             renderItems(assetsCoinsData, 'coins')
@@ -100,7 +96,7 @@ export const HomeScreen = () => {
             <EmptyAssetsCard />
           )}
         </ScrollView>
-      </View> */}
+      </View>
       <Text style={styles.textContent}>Market</Text>
       <View style={{ marginBottom: 10 }}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -128,15 +124,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     backgroundColor: COLORS.mainBg,
-  },
-  itemContainer: {
-    margin: 10,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  itemImage: {
-    width: 100,
-    height: 100,
   },
   textContent: {
     marginVertical: 10,

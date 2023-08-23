@@ -12,7 +12,6 @@ import {
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';
 import { useNavigation } from '@react-navigation/native';
-import { HeaderButton } from '../components/HeaderButton';
 
 export const WalletScreen = () => {
   const navigation = useNavigation();
@@ -34,7 +33,7 @@ export const WalletScreen = () => {
       </View>
       <View style={styles.assetBlock}>
         <Text style={styles.textContent}>Assets</Text>
-        <TouchableOpacity onPress={() => hadleOnPress()}>
+        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
           <Ionicons
             name={'add-circle-outline'}
             size={34}

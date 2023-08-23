@@ -75,7 +75,6 @@ export const userSignIn = createAsyncThunk(
           uid: user.uid,
         }),
       );
-      console.log('2222222222222222', user);
       return {
         uid: user.uid,
         email: user.email,

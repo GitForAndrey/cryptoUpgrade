@@ -5,11 +5,11 @@ export const filtersMarketCoins = [
   },
   {
     id: 'Test1',
-    title: 'Test1',
+    title: 'Test 1',
   },
   {
     id: 'Test2',
-    title: 'Test2',
+    title: 'Test 2',
   },
 ];
 export const filtersCoinValue = [

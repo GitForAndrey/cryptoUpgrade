@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'react-native-axios';
+import { assetsCoinsQuery } from '../../api/queries';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { getDataRequest } from '../../api/api';
 
 function getRandomColor() {
   const letters = '0123456789ABCDEF';
@@ -10,36 +12,38 @@ function getRandomColor() {
   return color;
 }
 
-const baseUrl = 'https://api.coingecko.com/api/v3';
-
 const initialState = {
   assetsCoinsData: [],
-  status: 'idle', //'idle' | 'loading' | 'succeeded' | 'failed'
-  error: null,
+  status: false,
 };
 
 export const getAssetsCoins = createAsyncThunk(
   'assets/getAssetsCoin',
-  async (coins, { getState }) => {
+  async (coins, { getState, rejectWithValue }) => {
     let coinsNames = coins.map(i => i.id).join(',');
-    const response = await axios.get(
-      `${baseUrl}/coins/markets?vs_currency=usd&ids=${coinsNames}&order=market_cap_desc&per_page=15&page=1&sparkline=true&price_change_percentage=7d&locale=en`,
-    );
-    console.time('setTime');
-    const existingAssets = getState().assets.assetsCoinsData;
-    const newAssets = response.data.map(coin => {
-      const newCoin = existingAssets.find(asset => asset.id === coin.id);
-      if (newCoin) {
-        return {
-          ...coin,
-          quantity: newCoin.quantity,
-          coinBuyPrice: newCoin.coinBuyPrice,
-          fillColor: newCoin.fillColor,
-        };
-      }
-    });
-    console.timeEnd('setTime');
-    return newAssets;
+
+    try {
+      const response = await getDataRequest(assetsCoinsQuery(coinsNames));
+      const existingAssets = getState().assets.assetsCoinsData;
+      const newAssets = response.data.map(coin => {
+        const newCoin = existingAssets.find(asset => asset.id === coin.id);
+        if (newCoin) {
+          return {
+            ...coin,
+            quantity: newCoin.quantity,
+            coinBuyPrice: newCoin.coinBuyPrice,
+            fillColor: newCoin.fillColor,
+          };
+        }
+      });
+      return newAssets;
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text2: 'assetsCoinsQuery error: Request failed',
+      });
+      return rejectWithValue();
+    }
   },
 );
 
@@ -72,16 +76,15 @@ const assetsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getAssetsCoins.pending, (state, action) => {
-        state.status = 'loading';
+      .addCase(getAssetsCoins.pending, state => {
+        state.status = true;
       })
       .addCase(getAssetsCoins.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = false;
         state.assetsCoinsData = action.payload;
       })
-      .addCase(getAssetsCoins.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(getAssetsCoins.rejected, state => {
+        state.status = false;
       });
   },
 });

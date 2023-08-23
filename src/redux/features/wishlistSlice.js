@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'react-native-axios';
-
-const baseUrl = 'https://api.coingecko.com/api/v3';
+import { getDataRequest } from '../../api/api';
+import { wishlistCoinsQuery } from '../../api/queries';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const initialState = {
   wishlistCoinsData: [],
@@ -12,12 +12,18 @@ const initialState = {
 
 export const getWishlistCoins = createAsyncThunk(
   'wishlist/getWishlist',
-  async coins => {
+  async (coins, { rejectWithValue }) => {
     let coinsNames = coins.map(item => item.id).join(',');
-    const response = await axios.get(
-      `${baseUrl}/coins/markets?vs_currency=usd&ids=${coinsNames}&order=market_cap_desc&per_page=15&page=1&sparkline=true&price_change_percentage=7d&locale=en`,
-    );
-    return response.data;
+    try {
+      const response = await getDataRequest(wishlistCoinsQuery(coinsNames));
+      return response.data;
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text2: 'getWishlistCoins error: Request failed',
+      });
+      return rejectWithValue();
+    }
   },
 );
 

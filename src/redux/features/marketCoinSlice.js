@@ -6,12 +6,14 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 const initialState = {
   marketCoins: [],
   status: false,
+  filter: 'Top100',
 };
 
 export const getMarketCoins = createAsyncThunk(
   'marketCoin/getMarketCoins',
   async (data, { rejectWithValue }) => {
     let url;
+    console.log(data);
     const { filter, page } = data;
     if (filter === 'Top100') {
       url = topQuery(page);
@@ -22,12 +24,12 @@ export const getMarketCoins = createAsyncThunk(
     }
     try {
       const response = await getDataRequest(url);
-      return response;
+      return { data: response, selectedFilter: filter };
     } catch (error) {
       console.log('getMarketCoins error', error);
       Toast.show({
         type: 'error',
-        text2: 'Request error: Request failed',
+        text2: 'getMarketCoins error: Request failed',
       });
       return rejectWithValue();
     }
@@ -44,8 +46,14 @@ const marketCoinSlice = createSlice({
         state.status = true;
       })
       .addCase(getMarketCoins.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.status = false;
-        state.marketCoins = [...state.marketCoins, ...action.payload];
+        if (state.filter === action.payload.selectedFilter) {
+          state.marketCoins = [...state.marketCoins, ...action.payload.data];
+        } else {
+          state.filter = action.payload.selectedFilter;
+          state.marketCoins = action.payload.data;
+        }
       })
       .addCase(getMarketCoins.rejected, state => {
         state.status = false;

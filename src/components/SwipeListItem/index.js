@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 
 import styles from './style';
+import { COLORS } from '../../constants';
 
 export const SwipeListItem = ({
   data,
@@ -41,11 +42,11 @@ export const SwipeListItem = ({
       keyExtractor={item => item.id}
       renderHiddenItem={({ item }) =>
         item.isWishlist || isWishlistPage || isWalletPage
-          ? renderItem(item, onDelFunc, 'rgba(253,27,27,0.6)', 'close', 'Del')
+          ? renderItem(item, onDelFunc, COLORS.itemColorAdd, 'close', 'Del')
           : renderItem(
               item,
               onAddFunc,
-              'rgba(255,145,26,0.8)',
+              COLORS.itemColorDel,
               'star-outline',
               'Add',
             )

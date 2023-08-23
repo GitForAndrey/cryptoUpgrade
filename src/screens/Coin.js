@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CoinChart } from '../components/CoinChart';
-import { CustomHeader } from '../components/HeaderTextLeft';
 import { FiltersItem } from '../components/FiltersItem';
 import { COLORS, FONTS } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +20,7 @@ import {
   delWishlistCoin,
 } from '../redux/features/wishlistSlice';
 import { AssetsAdd } from '../components/AssetsAdd';
+import { HeaderButton } from '../components/HeaderButton';
 
 export const CoinScreen = () => {
   const dispatch = useDispatch();
@@ -32,15 +32,28 @@ export const CoinScreen = () => {
   const coin = useSelector(selectActiveCoin);
   const loading = useSelector(selectActiveStatus);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={{ flexDirection: 'row' }}>
+          <HeaderButton
+            icon={isWishlist ? 'star' : 'star-outline'}
+            style={styles.headerRightButton}
+            handleOnPress={isWishlist ? delWishlist : addWishlist}
+          />
+          <HeaderButton
+            icon={'notifications-outline'}
+            handleOnPress={() => navigation.navigate('Notification')}
+          />
+        </View>
+      ),
+    });
+  }, [isWishlist]);
+
   const handleFilterClick = value => {
     let data = { filter: value, coin: coin.id };
     setActiveFilter(value);
     dispatch(getCoinsChart(data));
-  };
-
-  const handleGoBack = () => {
-    navigation.goBack();
-    dispatch(resetActiveCoin());
   };
   const addWishlist = () => {
     dispatch(addWishlistCoin(coin));
@@ -68,15 +81,6 @@ export const CoinScreen = () => {
     <View style={styles.container}>
       {loading === 'succeeded' && (
         <>
-          {/* <CustomHeader
-            title={coin.name}
-            backIcon
-            wishlistIcon
-            isWishlist={isWishlist}
-            handleGoBack={handleGoBack}
-            onAddFunc={addWishlist}
-            onDelFunc={delWishlist}
-          /> */}
           <View style={styles.coinInfoBlock}>
             <View style={styles.coinInfo}>
               <Image source={{ uri: coin?.image }} style={styles.coinImage} />
