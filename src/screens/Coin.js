@@ -11,7 +11,7 @@ import {
   getCoinsChart,
   resetActiveCoin,
   selectActiveCoin,
-  selectActiveStatus,
+  selectCoinLoading,
   selectCoinsChart,
 } from '../redux/features/coinSlice';
 import { isCoinInAssets, isCoinWishlist } from '../redux/selectors';
@@ -30,7 +30,7 @@ export const CoinScreen = () => {
   const isWishlist = useSelector(isCoinWishlist);
   const isInAssets = useSelector(isCoinInAssets);
   const coin = useSelector(selectActiveCoin);
-  const loading = useSelector(selectActiveStatus);
+  const loading = useSelector(selectCoinLoading);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -47,6 +47,12 @@ export const CoinScreen = () => {
           />
         </View>
       ),
+      headerLeft: () => (
+        <HeaderButton
+          icon={'chevron-back-outline'}
+          handleOnPress={() => handleGoBack()}
+        />
+      ),
     });
   }, [isWishlist]);
 
@@ -54,6 +60,10 @@ export const CoinScreen = () => {
     let data = { filter: value, coin: coin.id };
     setActiveFilter(value);
     dispatch(getCoinsChart(data));
+  };
+  const handleGoBack = () => {
+    navigation.goBack();
+    dispatch(resetActiveCoin());
   };
   const addWishlist = () => {
     dispatch(addWishlistCoin(coin));
@@ -78,8 +88,8 @@ export const CoinScreen = () => {
   const formatter = new Intl.NumberFormat('en-US');
 
   return (
-    <View style={styles.container}>
-      {loading === 'succeeded' && (
+    <ScrollView style={styles.container}>
+      {!loading && (
         <>
           <View style={styles.coinInfoBlock}>
             <View style={styles.coinInfo}>
@@ -110,16 +120,12 @@ export const CoinScreen = () => {
           </View>
           <AssetsAdd coin={coin} isAssets={isInAssets} />
           <View style={styles.filtersView}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              {renderItems(filtersCoinValue, 'filters')}
-            </ScrollView>
+            {renderItems(filtersCoinValue, 'filters')}
           </View>
           <View style={styles.chartContainer}>
             <CoinChart data={coinsChartData ?? []} />
           </View>
-          <ScrollView style={styles.table}>
+          <View style={styles.table}>
             <View style={styles.row}>
               <Text style={styles.label}>Rank:</Text>
               <Text style={styles.value}>{coin.market_cap_rank}</Text>
@@ -168,10 +174,10 @@ export const CoinScreen = () => {
                 {'$' + formatter.format(coin.atl?.toFixed(2))}
               </Text>
             </View>
-          </ScrollView>
+          </View>
         </>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -180,7 +186,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     backgroundColor: COLORS.mainBg,
-    paddingBottom: 50,
   },
   coinInfoBlock: {
     flexDirection: 'row',
@@ -228,6 +233,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 15,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   chartContainer: {
     height: 250,
@@ -236,13 +243,11 @@ const styles = StyleSheet.create({
   },
   table: {
     padding: 10,
-    borderRadius: 5,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 5,
-    borderBottomWidth: 1,
+    paddingVertical: 3,
     borderColor: COLORS.transparentWhite,
   },
   label: {

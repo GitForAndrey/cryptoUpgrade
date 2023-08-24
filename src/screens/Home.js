@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -12,12 +12,12 @@ import { SwipeListItem } from '../components/SwipeListItem';
 import { COLORS, filtersMarketCoins, FONTS } from '../constants';
 import {
   getMarketCoins,
-  getMarketCoinsStatus,
+  getMarketCoinsLoading,
 } from '../redux/features/marketCoinSlice';
 import { selectUser } from '../redux/features/authSlice';
 import {
   getAssetsCoins,
-  getAssetsStatus,
+  getAssetsLoading,
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';
 import {
@@ -33,10 +33,10 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
 
   const marketCoinsData = useSelector(getMarketsCoinWithWishlist);
-  const marketCoinsStatus = useSelector(getMarketCoinsStatus);
+  const marketCoinsLoading = useSelector(getMarketCoinsLoading);
   const activeUser = useSelector(selectUser);
   const assetsCoinsData = useSelector(selectAssetsCoinsData);
-  const assetsCoinsStatus = useSelector(getAssetsStatus);
+  const assetsCoinsLoading = useSelector(getAssetsLoading);
 
   useEffect(() => {
     navigation.setOptions({
@@ -52,7 +52,7 @@ export const HomeScreen = () => {
 
   const loadMoreData = async () => {
     const nextPage = page + 1;
-    if (nextPage <= 5) {
+    if (nextPage <= 3) {
       dispatch(getMarketCoins({ filter: activeFilter, page: nextPage }));
       setPage(nextPage);
     }
@@ -85,10 +85,10 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textContent}>My Assets</Text>
-      <View style={{ marginBottom: 10 }}>
+      <Text style={styles.text_content}>My Assets</Text>
+      <View style={styles.items_container}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {assetsCoinsStatus ? (
+          {assetsCoinsLoading ? (
             <LoadingIndicator />
           ) : assetsCoinsData.length ? (
             renderItems(assetsCoinsData, 'coins')
@@ -97,13 +97,13 @@ export const HomeScreen = () => {
           )}
         </ScrollView>
       </View>
-      <Text style={styles.textContent}>Market</Text>
-      <View style={{ marginBottom: 10 }}>
+      <Text style={styles.text_content}>Market</Text>
+      <View style={styles.items_container}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {renderItems(filtersMarketCoins, 'filters')}
         </ScrollView>
       </View>
-      <View style={{ flex: 1, marginBottom: 55 }}>
+      <View style={styles.market_container}>
         {marketCoinsData.length ? (
           <SwipeListItem
             data={marketCoinsData}
@@ -113,7 +113,7 @@ export const HomeScreen = () => {
             onLoadMore={loadMoreData}
           />
         ) : null}
-        {marketCoinsStatus && <LoadingIndicator />}
+        {marketCoinsLoading && <LoadingIndicator />}
       </View>
     </View>
   );
@@ -125,9 +125,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: COLORS.mainBg,
   },
-  textContent: {
+  text_content: {
     marginVertical: 10,
     ...FONTS.textRegular,
     fontSize: 16,
+  },
+  items_container: {
+    marginBottom: 10,
+  },
+  market_container: {
+    flex: 1,
+    marginBottom: 55,
   },
 });

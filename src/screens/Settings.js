@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logoutUser } from '../redux/features/authSlice';
 import { useDispatch } from 'react-redux';
 
-export const SettingsScreen = ({ navigation }) => {
+export const SettingsScreen = () => {
   const dispatch = useDispatch();
 
   const logout = async () => {

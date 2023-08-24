@@ -14,7 +14,7 @@ function getRandomColor() {
 
 const initialState = {
   assetsCoinsData: [],
-  status: false,
+  loading: false,
 };
 
 export const getAssetsCoins = createAsyncThunk(
@@ -77,20 +77,20 @@ const assetsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAssetsCoins.pending, state => {
-        state.status = true;
+        state.loading = true;
       })
       .addCase(getAssetsCoins.fulfilled, (state, action) => {
-        state.status = false;
+        state.loading = false;
         state.assetsCoinsData = action.payload;
       })
       .addCase(getAssetsCoins.rejected, state => {
-        state.status = false;
+        state.loading = false;
       });
   },
 });
 
 export const selectAssetsCoinsData = state => state.assets.assetsCoinsData;
-export const getAssetsStatus = state => state.assets.status;
+export const getAssetsLoading = state => state.assets.loading;
 
 export const { addAssetsCoin, delAssetsCoin } = assetsSlice.actions;
 

@@ -6,8 +6,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 const initialState = {
   wishlistCoinsData: [],
   // wishlistId: [],
-  status: 'idle', //'idle' | 'loading' | 'succeeded' | 'failed'
-  error: null,
+  loading: false,
 };
 
 export const getWishlistCoins = createAsyncThunk(
@@ -42,22 +41,21 @@ const wishlistSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getWishlistCoins.pending, (state, action) => {
-        state.status = 'loading';
+      .addCase(getWishlistCoins.pending, state => {
+        state.loading = true;
       })
       .addCase(getWishlistCoins.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.loading = false;
         state.wishlistCoinsData = action.payload;
       })
-      .addCase(getWishlistCoins.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(getWishlistCoins.rejected, state => {
+        state.loading = false;
       });
   },
 });
 
 export const selectWishlistCoins = state => state.wishlist.wishlistCoinsData;
-export const getWishlistStatus = state => state.wishlist.status;
+export const getWishlistLoading = state => state.wishlist.loading;
 
 export const { addWishlistCoin, delWishlistCoin } = wishlistSlice.actions;
 

@@ -3,6 +3,7 @@ import axios from 'react-native-axios';
 //axios
 const api = axios.create({
   baseURL: 'https://api.coingecko.com/api/v3',
+  timeout: 7000,
 });
 
 export const getDataRequest = async url => {

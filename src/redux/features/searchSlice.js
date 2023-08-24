@@ -5,8 +5,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const initialState = {
   searchData: [],
-  status: 'idle', //'idle' | 'loading' | 'succeeded' | 'failed'
-  error: null,
+  loading: false,
 };
 
 export const getSearchData = createAsyncThunk(
@@ -29,28 +28,27 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    resetSearchData(state, action) {
+    resetSearchData(state) {
       state.searchData = [];
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(getSearchData.pending, (state, action) => {
-        state.status = 'loading';
+      .addCase(getSearchData.pending, state => {
+        state.loading = true;
       })
       .addCase(getSearchData.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.loading = false;
         state.searchData = action.payload;
       })
-      .addCase(getSearchData.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(getSearchData.rejected, state => {
+        state.loading = false;
       });
   },
 });
 
 export const selectSearchData = state => state.search.searchData;
-export const selectSearchStatus = state => state.search.status;
+export const selectSearchLoading = state => state.search.loading;
 
 export const { resetSearchData } = searchSlice.actions;
 

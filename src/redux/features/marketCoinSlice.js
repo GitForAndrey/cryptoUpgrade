@@ -5,7 +5,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const initialState = {
   marketCoins: [],
-  status: false,
+  loading: false,
   filter: 'Top100',
 };
 
@@ -13,7 +13,6 @@ export const getMarketCoins = createAsyncThunk(
   'marketCoin/getMarketCoins',
   async (data, { rejectWithValue }) => {
     let url;
-    console.log(data);
     const { filter, page } = data;
     if (filter === 'Top100') {
       url = topQuery(page);
@@ -43,11 +42,11 @@ const marketCoinSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getMarketCoins.pending, state => {
-        state.status = true;
+        state.loading = true;
       })
       .addCase(getMarketCoins.fulfilled, (state, action) => {
         console.log(action.payload);
-        state.status = false;
+        state.loading = false;
         if (state.filter === action.payload.selectedFilter) {
           state.marketCoins = [...state.marketCoins, ...action.payload.data];
         } else {
@@ -56,13 +55,13 @@ const marketCoinSlice = createSlice({
         }
       })
       .addCase(getMarketCoins.rejected, state => {
-        state.status = false;
+        state.loading = false;
       });
   },
 });
 
 export const selectMarketCoins = state => state.marketCoin.marketCoins;
-export const getMarketCoinsStatus = state => state.marketCoin.status;
+export const getMarketCoinsLoading = state => state.marketCoin.loading;
 
 export const {} = marketCoinSlice.actions;
 

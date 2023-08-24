@@ -6,8 +6,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 const initialState = {
   coinsChart: [],
   selectedCoin: {},
-  status: 'succeeded', //'idle' | 'loading' | 'succeeded' | 'failed'
-  error: null,
+  loading: false,
 };
 
 export const getCoinsChart = createAsyncThunk(
@@ -60,34 +59,33 @@ const coinSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getCoinsChart.pending, (state, action) => {
-        // state.status = 'loading';
+        // state.loading = 'loading';
       })
       .addCase(getCoinsChart.fulfilled, (state, action) => {
-        // state.status = 'succeeded';
+        // state.loading = 'succeeded';
         state.coinsChart = action.payload;
       })
       .addCase(getCoinsChart.rejected, (state, action) => {
-        // state.status = 'failed';
+        // state.loading = 'failed';
         state.error = action.error.message;
       })
-      .addCase(getSearchCoin.pending, (state, action) => {
-        state.status = 'loading';
+      .addCase(getSearchCoin.pending, state => {
+        state.loading = true;
       })
       .addCase(getSearchCoin.fulfilled, (state, action) => {
         state.selectedCoin = action.payload;
         state.coinsChart = action.payload.sparkline_in_7d.price;
-        state.status = 'succeeded';
+        state.loading = false;
       })
-      .addCase(getSearchCoin.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(getSearchCoin.rejected, state => {
+        state.loading = false;
       });
   },
 });
 
 export const selectCoinsChart = state => state.coin.coinsChart;
 export const selectActiveCoin = state => state.coin.selectedCoin;
-export const selectActiveStatus = state => state.coin.status;
+export const selectCoinLoading = state => state.coin.loading;
 
 export const { addActiveCoin, resetActiveCoin } = coinSlice.actions;
 

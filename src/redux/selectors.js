@@ -1,12 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
-
-const getMarketCoinsData = state => state.marketCoin.marketCoins;
-const getWishlistData = state => state.wishlist.wishlistCoinsData;
-const getSelectedCoin = state => state.coin.selectedCoin;
-const getAssetsListData = state => state.assets.assetsCoinsData;
+import { selectAssetsCoinsData } from './features/assetsSlice';
+import { selectMarketCoins } from './features/marketCoinSlice';
+import { selectWishlistCoins } from './features/wishlistSlice';
+import { selectActiveCoin } from './features/coinSlice';
 
 export const getMarketsCoinWithWishlist = createSelector(
-  [getMarketCoinsData, getWishlistData],
+  [selectMarketCoins, selectWishlistCoins],
   (sliceAData, sliceBData) => {
     return sliceAData?.map(item => {
       const marketItem = sliceBData?.find(itemB => item.id === itemB.id);
@@ -20,7 +19,7 @@ export const getMarketsCoinWithWishlist = createSelector(
 );
 
 export const isCoinWishlist = createSelector(
-  [getWishlistData, getSelectedCoin],
+  [selectWishlistCoins, selectActiveCoin],
   (sliceData, selectedCoin) => {
     let isWishlisted = sliceData?.find(item => item.id === selectedCoin?.id);
     return isWishlisted ? true : false;
@@ -28,7 +27,7 @@ export const isCoinWishlist = createSelector(
 );
 
 export const isCoinInAssets = createSelector(
-  [getAssetsListData, getSelectedCoin],
+  [selectAssetsCoinsData, selectActiveCoin],
   (sliceData, selectedCoin) => {
     let isInAssets = sliceData?.find(item => item.id === selectedCoin?.id);
     return isInAssets ? isInAssets.quantity : false;

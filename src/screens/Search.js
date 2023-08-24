@@ -9,14 +9,14 @@ import {
   getSearchData,
   resetSearchData,
   selectSearchData,
-  selectSearchStatus,
+  selectSearchLoading,
 } from '../redux/features/searchSlice';
 
 export const SearchScreen = () => {
   const dispatch = useDispatch();
   const [value, onChangeText] = useState('');
   const coinData = useSelector(selectSearchData);
-  const searchLoading = useSelector(selectSearchStatus);
+  const searchLoading = useSelector(selectSearchLoading);
 
   const handleSearch = text => {
     onChangeText(text);
@@ -42,7 +42,7 @@ export const SearchScreen = () => {
         />
         <Ionicons name={'search-outline'} size={30} color={COLORS.lightGray} />
       </View>
-      {searchLoading === 'loading' ? (
+      {searchLoading ? (
         <LoadingIndicator />
       ) : (
         <FlatList

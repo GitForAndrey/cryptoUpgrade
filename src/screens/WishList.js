@@ -7,15 +7,15 @@ import {
   addWishlistCoin,
   delWishlistCoin,
   getWishlistCoins,
-  getWishlistStatus,
+  getWishlistLoading,
   selectWishlistCoins,
 } from '../redux/features/wishlistSlice';
 import { SwipeListItem } from '../components/SwipeListItem';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 
-export const WishListScreen = ({ navigation }) => {
+export const WishListScreen = () => {
   const dispatch = useDispatch();
-  const wishlistStatus = useSelector(getWishlistStatus);
+  const wishlistLoading = useSelector(getWishlistLoading);
   const wishlistData = useSelector(selectWishlistCoins);
 
   useEffect(() => {
@@ -26,8 +26,8 @@ export const WishListScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, marginTop: 15, marginBottom: 55 }}>
-        {wishlistStatus === 'loading' ? (
+      <View style={styles.list_container}>
+        {wishlistLoading ? (
           <LoadingIndicator />
         ) : wishlistData.length ? (
           <SwipeListItem
@@ -38,7 +38,7 @@ export const WishListScreen = ({ navigation }) => {
             isWishlistPage={true}
           />
         ) : (
-          <Text style={{ color: '#ccc', textAlign: 'center' }}>no coins</Text>
+          <Text style={styles.list_empty}>no coins</Text>
         )}
       </View>
     </View>
@@ -51,4 +51,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: COLORS.mainBg,
   },
+  list_container: { flex: 1, marginTop: 15, marginBottom: 55 },
+  list_empty: { color: COLORS.lightGray, textAlign: 'center' },
 });

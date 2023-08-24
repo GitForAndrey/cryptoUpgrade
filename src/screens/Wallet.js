@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AssetsItem } from '../components/AssetsItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -28,7 +28,6 @@ export const WalletScreen = () => {
         <View style={styles.balanceContainer}>
           <Text style={styles.balanceText}>Total balance</Text>
           <Text style={styles.balanceSum}>${totalPrice}</Text>
-          {/* <Text style={styles.balanceSumBtc}>BTC: 1.6564</Text> */}
         </View>
       </View>
       <View style={styles.assetBlock}>
@@ -41,7 +40,7 @@ export const WalletScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 1, marginBottom: 55 }}>
+      <View style={styles.list_container}>
         {assetsCoinData?.length ? (
           <SwipeListItem
             data={assetsCoinData}
@@ -50,7 +49,7 @@ export const WalletScreen = () => {
             isWalletPage={true}
           />
         ) : (
-          <Text style={{ color: '#ccc', textAlign: 'center' }}>no coins</Text>
+          <Text style={styles.list_empty}>no coins</Text>
         )}
       </View>
     </View>
@@ -84,11 +83,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 24,
   },
-  balanceSumBtc: {
-    ...FONTS.textLight,
-    color: COLORS.tabBottomGray,
-    lineHeight: 18,
-  },
   assetBlock: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -100,4 +94,6 @@ const styles = StyleSheet.create({
     ...FONTS.textRegular,
     fontSize: 18,
   },
+  list_container: { flex: 1, marginBottom: 55 },
+  list_empty: { color: COLORS.lightGray, textAlign: 'center' },
 });
