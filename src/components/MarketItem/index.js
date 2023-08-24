@@ -9,6 +9,7 @@ import styles from './style';
 export const MarketItem = ({ coin }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   const onPressHandle = () => {
     navigation.navigate('Coin');
     dispatch(addActiveCoin(coin));

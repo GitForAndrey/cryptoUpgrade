@@ -9,6 +9,7 @@ export const AssetsItem = ({ coin }) => {
     ((coin.current_price - coin.coinBuyPrice) / coin.coinBuyPrice) *
     100
   ).toFixed(1);
+
   return (
     <TouchableOpacity
       activeOpacity={1}
