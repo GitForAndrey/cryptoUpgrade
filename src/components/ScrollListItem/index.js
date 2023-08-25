@@ -1,18 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity, View, Image, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { addActiveCoin } from '../../redux/features/coinSlice';
 import { Chart } from '../Chart';
 import styles from './style';
 
-export const MarketItem = ({ coin }) => {
+export const ScrollListItem = ({ coin }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const onPressHandle = () => {
-    navigation.navigate('Coin');
-    dispatch(addActiveCoin(coin));
+    navigation.navigate('Coin', {
+      coinId: coin.id,
+    });
   };
   return (
     <TouchableOpacity

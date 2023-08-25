@@ -10,10 +10,10 @@ const initialState = {
 
 export const getSearchData = createAsyncThunk(
   'search/getSearchData',
-  async (value, { rejectWithValue }) => {
+  async (search, { rejectWithValue }) => {
     try {
-      const response = await getDataRequest(searchDataQuery(value));
-      return response.data.coins;
+      const response = await getDataRequest(searchDataQuery(search));
+      return response.coins;
     } catch (error) {
       Toast.show({
         type: 'error',

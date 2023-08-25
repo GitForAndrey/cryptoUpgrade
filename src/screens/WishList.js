@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { COLORS } from '../constants';
-import { MarketItem } from '../components/MarketItem';
+import { ScrollListItem } from '../components/ScrollListItem';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addWishlistCoin,
@@ -32,7 +32,7 @@ export const WishListScreen = () => {
         ) : wishlistData.length ? (
           <SwipeListItem
             data={wishlistData}
-            renderItemComponent={MarketItem}
+            renderItemComponent={ScrollListItem}
             onAddFunc={addWishlistCoin}
             onDelFunc={delWishlistCoin}
             isWishlistPage={true}

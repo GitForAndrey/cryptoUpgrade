@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { AssetsCard } from '../components/AssetsCard';
 import { FiltersItem } from '../components/FiltersItem';
-import { MarketItem } from '../components/MarketItem';
+import { ScrollListItem } from '../components/ScrollListItem';
 import { EmptyAssetsCard } from '../components/EmptyAssetsCard';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { HeaderTextLeft } from '../components/HeaderTextLeft';
@@ -78,7 +78,7 @@ export const HomeScreen = () => {
       if (type === 'coins') {
         return <AssetsCard coin={item} key={item.id} />;
       } else {
-        return <MarketItem coin={item} key={item.id} />;
+        return <ScrollListItem coin={item} key={item.id} />;
       }
     });
   };
@@ -107,7 +107,7 @@ export const HomeScreen = () => {
         {marketCoinsData.length ? (
           <SwipeListItem
             data={marketCoinsData}
-            renderItemComponent={MarketItem}
+            renderItemComponent={ScrollListItem}
             onAddFunc={addWishlistCoin}
             onDelFunc={delWishlistCoin}
             onLoadMore={loadMoreData}

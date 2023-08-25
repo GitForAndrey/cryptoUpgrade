@@ -1,5 +1,5 @@
 import { HomeScreen } from './Home';
-import { WalletScreen } from './Wallet';
+import { AssetsScreen } from './Assets';
 import { WishListScreen } from './WishList';
 import { SettingsScreen } from './Settings';
 import { SearchScreen } from './Search';
@@ -10,7 +10,7 @@ import { RestorePasswordScreen } from './LoginScreens/RestorePassword';
 
 export {
   HomeScreen,
-  WalletScreen,
+  AssetsScreen,
   SettingsScreen,
   SignInScreen,
   SignUpScreen,

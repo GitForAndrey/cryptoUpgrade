@@ -25,7 +25,7 @@ export const getAssetsCoins = createAsyncThunk(
     try {
       const response = await getDataRequest(assetsCoinsQuery(coinsNames));
       const existingAssets = getState().assets.assetsCoinsData;
-      const newAssets = response.data.map(coin => {
+      const newAssets = response.map(coin => {
         const newCoin = existingAssets.find(asset => asset.id === coin.id);
         if (newCoin) {
           return {

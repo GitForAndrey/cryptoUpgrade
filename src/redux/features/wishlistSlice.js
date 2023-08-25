@@ -15,7 +15,7 @@ export const getWishlistCoins = createAsyncThunk(
     let coinsNames = coins.map(item => item.id).join(',');
     try {
       const response = await getDataRequest(wishlistCoinsQuery(coinsNames));
-      return response.data;
+      return response;
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -31,6 +31,7 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addWishlistCoin(state, action) {
+      console.log(action);
       state.wishlistCoinsData.push(action.payload);
     },
     delWishlistCoin(state, action) {

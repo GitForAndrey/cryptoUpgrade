@@ -13,7 +13,7 @@ import {
 } from '../redux/features/assetsSlice';
 import { useNavigation } from '@react-navigation/native';
 
-export const WalletScreen = () => {
+export const AssetsScreen = () => {
   const navigation = useNavigation();
   let assetsCoinData = useSelector(selectAssetsCoinsData);
 

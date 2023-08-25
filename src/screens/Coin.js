@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CoinChart } from '../components/CoinChart';
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filtersCoinValue } from '../constants/data';
 import {
   getCoinsChart,
+  getSearchCoin,
   resetActiveCoin,
   selectActiveCoin,
   selectCoinLoading,
@@ -22,7 +23,8 @@ import {
 import { AssetsAdd } from '../components/AssetsAdd';
 import { HeaderButton } from '../components/HeaderButton';
 
-export const CoinScreen = () => {
+export const CoinScreen = ({ route }) => {
+  const { coinId } = route.params;
   const dispatch = useDispatch();
   const [activeFilter, setActiveFilter] = useState('7');
   const navigation = useNavigation();
@@ -33,13 +35,18 @@ export const CoinScreen = () => {
   const loading = useSelector(selectCoinLoading);
 
   useLayoutEffect(() => {
+    dispatch(getSearchCoin(coinId));
+  }, [coinId]);
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{ flexDirection: 'row' }}>
           <HeaderButton
             icon={isWishlist ? 'star' : 'star-outline'}
             style={styles.headerRightButton}
-            handleOnPress={isWishlist ? delWishlist : addWishlist}
+            handleOnPress={() =>
+              isWishlist ? delWishlist(coin) : addWishlist(coin)
+            }
           />
           <HeaderButton
             icon={'notifications-outline'}
@@ -65,11 +72,11 @@ export const CoinScreen = () => {
     navigation.goBack();
     dispatch(resetActiveCoin());
   };
-  const addWishlist = () => {
-    dispatch(addWishlistCoin(coin));
+  const addWishlist = data => {
+    dispatch(addWishlistCoin(data));
   };
-  const delWishlist = () => {
-    dispatch(delWishlistCoin(coin));
+  const delWishlist = data => {
+    dispatch(delWishlistCoin(data));
   };
 
   const renderItems = array => {

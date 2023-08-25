@@ -45,7 +45,6 @@ const marketCoinSlice = createSlice({
         state.loading = true;
       })
       .addCase(getMarketCoins.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.loading = false;
         if (state.filter === action.payload.selectedFilter) {
           state.marketCoins = [...state.marketCoins, ...action.payload.data];

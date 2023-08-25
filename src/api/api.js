@@ -9,8 +9,8 @@ const api = axios.create({
 export const getDataRequest = async url => {
   try {
     const response = await api.get(url);
-
     if (response.status === 200) {
+      console.log(response);
       return response.data;
     } else {
       throw new Error(`Request failed with status ${response.status}`);
@@ -24,7 +24,7 @@ export const getDataRequest = async url => {
       throw new Error('Network error: Unable to connect to the server.');
     } else {
       // Прочие ошибки
-      throw new Error('An error occurred while making the request.');
+      throw new Error(error);
     }
   }
 };

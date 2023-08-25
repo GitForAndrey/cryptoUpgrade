@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
-  WalletScreen,
+  AssetsScreen,
   HomeScreen,
   WishListScreen,
   SettingsScreen,
@@ -17,7 +17,7 @@ const Tabs = createBottomTabNavigator();
 function getTabIcon(routeName, focused) {
   if (routeName === 'Home') {
     return focused ? 'home' : 'home-outline';
-  } else if (routeName === 'Wallet') {
+  } else if (routeName === 'Assets') {
     return focused ? 'wallet' : 'wallet-outline';
   } else if (routeName === 'WishList') {
     return focused ? 'star' : 'star-outline';
@@ -83,8 +83,8 @@ export const BottomTabs = () => {
         })}
       />
       <Tabs.Screen
-        name="Wallet"
-        component={WalletScreen}
+        name="Assets"
+        component={AssetsScreen}
         options={({ navigation, route }) => ({
           headerRight: () => renderHeaderButtons(navigation),
           tabBarIcon: ({ color, focused }) =>

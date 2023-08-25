@@ -1,16 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity, View, Image, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { getSearchCoin } from '../../redux/features/coinSlice';
 import styles from './style';
 
 export const SearchItem = ({ coin }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const onPressHandle = () => {
-    dispatch(getSearchCoin(coin.id));
-    navigation.navigate('Coin');
+    navigation.navigate('Coin', {
+      coinId: coin.id,
+    });
   };
   return (
     <TouchableOpacity onPress={() => onPressHandle()} style={styles.container}>
