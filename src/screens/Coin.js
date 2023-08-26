@@ -19,9 +19,12 @@ import { isCoinInAssets, isCoinWishlist } from '../redux/selectors';
 import {
   addWishlistCoin,
   delWishlistCoin,
+  delWishlistCoinsFirebase,
+  saveWishlistCoinsFirebase,
 } from '../redux/features/wishlistSlice';
 import { AssetsAdd } from '../components/AssetsAdd';
 import { HeaderButton } from '../components/HeaderButton';
+import { LoadingIndicator } from '../components/LoadingIndicator';
 
 export const CoinScreen = ({ route }) => {
   const { coinId } = route.params;
@@ -34,7 +37,7 @@ export const CoinScreen = ({ route }) => {
   const coin = useSelector(selectActiveCoin);
   const loading = useSelector(selectCoinLoading);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(getSearchCoin(coinId));
   }, [coinId]);
   useEffect(() => {
@@ -61,10 +64,10 @@ export const CoinScreen = ({ route }) => {
         />
       ),
     });
-  }, [isWishlist]);
+  }, [isWishlist, coin]);
 
   const handleFilterClick = value => {
-    let data = { filter: value, coin: coin.id };
+    let data = { filter: value, coin: coinId };
     setActiveFilter(value);
     dispatch(getCoinsChart(data));
   };
@@ -73,10 +76,10 @@ export const CoinScreen = ({ route }) => {
     dispatch(resetActiveCoin());
   };
   const addWishlist = data => {
-    dispatch(addWishlistCoin(data));
+    dispatch(saveWishlistCoinsFirebase(data));
   };
   const delWishlist = data => {
-    dispatch(delWishlistCoin(data));
+    dispatch(delWishlistCoinsFirebase(data));
   };
 
   const renderItems = array => {
@@ -96,11 +99,13 @@ export const CoinScreen = ({ route }) => {
 
   return (
     <ScrollView style={styles.container}>
-      {!loading && (
+      {!loading ? (
         <>
           <View style={styles.coinInfoBlock}>
             <View style={styles.coinInfo}>
-              <Image source={{ uri: coin?.image }} style={styles.coinImage} />
+              {coin.image && (
+                <Image source={{ uri: coin.image }} style={styles.coinImage} />
+              )}
               <View>
                 <Text
                   style={styles.coinName}
@@ -183,6 +188,8 @@ export const CoinScreen = ({ route }) => {
             </View>
           </View>
         </>
+      ) : (
+        <LoadingIndicator />
       )}
     </ScrollView>
   );

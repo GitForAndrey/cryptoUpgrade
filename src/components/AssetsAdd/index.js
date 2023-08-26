@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { COLORS } from '../../constants';
-import { addAssetsCoin } from '../../redux/features/assetsSlice';
+import { saveAssetsFirebase } from '../../redux/features/assetsSlice';
 import { FormBotton } from '../FormBotton';
 import styles from './style';
 
@@ -14,7 +14,7 @@ export const AssetsAdd = ({ coin, isAssets }) => {
 
   const handleAddAsset = () => {
     if (coinPriceInput && quantityInput) {
-      dispatch(addAssetsCoin(coinPriceInput, quantityInput, coin));
+      dispatch(saveAssetsFirebase({ coinPriceInput, quantityInput, coin }));
     }
   };
 

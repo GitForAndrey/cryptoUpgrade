@@ -10,7 +10,6 @@ export const getDataRequest = async url => {
   try {
     const response = await api.get(url);
     if (response.status === 200) {
-      console.log(response);
       return response.data;
     } else {
       throw new Error(`Request failed with status ${response.status}`);
@@ -28,15 +27,5 @@ export const getDataRequest = async url => {
     }
   }
 };
-
-// // Создание новой записи
-// export const createRecord = async data => {
-//   try {
-//     const response = await api.post('/records', data);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 export default api;

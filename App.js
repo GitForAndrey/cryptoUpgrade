@@ -8,6 +8,8 @@ import { MainStackNav } from './src/navigation/mainStack';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthUser, selectUser } from './src/redux/features/authSlice';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { fetchAssetsFromFirebase } from './src/redux/features/assetsSlice';
+import { fetchWishlistFromFirebase } from './src/redux/features/wishlistSlice';
 
 const toastConfig = {
   success: props => (
@@ -41,8 +43,11 @@ export const App = () => {
   const isUser = useSelector(selectUser);
 
   useEffect(() => {
-    RNBootSplash.hide({ fade: true, duration: 500 });
-    dispatch(checkAuthUser());
+    dispatch(checkAuthUser()).then(() => {
+      dispatch(fetchAssetsFromFirebase());
+      dispatch(fetchWishlistFromFirebase());
+      RNBootSplash.hide({ fade: true, duration: 500 });
+    });
   }, []);
 
   return (

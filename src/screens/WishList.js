@@ -4,10 +4,10 @@ import { COLORS } from '../constants';
 import { ScrollListItem } from '../components/ScrollListItem';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addWishlistCoin,
-  delWishlistCoin,
+  delWishlistCoinsFirebase,
   getWishlistCoins,
   getWishlistLoading,
+  saveWishlistCoinsFirebase,
   selectWishlistCoins,
 } from '../redux/features/wishlistSlice';
 import { SwipeListItem } from '../components/SwipeListItem';
@@ -33,8 +33,8 @@ export const WishListScreen = () => {
           <SwipeListItem
             data={wishlistData}
             renderItemComponent={ScrollListItem}
-            onAddFunc={addWishlistCoin}
-            onDelFunc={delWishlistCoin}
+            onAddFunc={saveWishlistCoinsFirebase}
+            onDelFunc={delWishlistCoinsFirebase}
             isWishlistPage={true}
           />
         ) : (

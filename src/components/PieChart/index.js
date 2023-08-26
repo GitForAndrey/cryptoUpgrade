@@ -1,5 +1,6 @@
 import React from 'react';
 import { PieChart } from 'react-native-svg-charts';
+
 import styles from './style';
 
 export const ChartPie = ({ assetsCoinData }) => {

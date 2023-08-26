@@ -25,7 +25,6 @@ export const CoinChart = ({ data }) => {
           color: COLORS.white,
         }}
         svg={{ fill: COLORS.white }}
-        pointerEvents={() => 'auto'}
       />
     </View>
   );

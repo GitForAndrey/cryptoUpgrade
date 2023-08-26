@@ -30,7 +30,7 @@ export const AssetsCard = ({ coin }) => {
               ? styles.coinChangeGreen
               : styles.coinChangeRed
           }>
-          {coin.price_change_percentage_24h.toFixed(2)}%
+          {coin?.price_change_percentage_24h.toFixed(2)}%
         </Text>
         <Text style={styles.coinPrice}>${coin.current_price.toFixed(2)}</Text>
       </View>

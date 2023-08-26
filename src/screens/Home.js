@@ -16,13 +16,12 @@ import {
 } from '../redux/features/marketCoinSlice';
 import { selectUser } from '../redux/features/authSlice';
 import {
-  getAssetsCoins,
   getAssetsLoading,
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';
 import {
-  addWishlistCoin,
-  delWishlistCoin,
+  delWishlistCoinsFirebase,
+  saveWishlistCoinsFirebase,
 } from '../redux/features/wishlistSlice';
 import { getMarketsCoinWithWishlist } from '../redux/selectors';
 
@@ -45,9 +44,6 @@ export const HomeScreen = () => {
   }, []);
   useEffect(() => {
     dispatch(getMarketCoins({ filter: activeFilter, page: 1 }));
-    if (assetsCoinsData.length) {
-      dispatch(getAssetsCoins(assetsCoinsData));
-    }
   }, []);
 
   const loadMoreData = async () => {
@@ -76,9 +72,9 @@ export const HomeScreen = () => {
         );
       }
       if (type === 'coins') {
-        return <AssetsCard coin={item} key={item.id} />;
+        return <AssetsCard coin={item} key={item?.id} />;
       } else {
-        return <ScrollListItem coin={item} key={item.id} />;
+        return <ScrollListItem coin={item} key={item?.id} />;
       }
     });
   };
@@ -108,8 +104,8 @@ export const HomeScreen = () => {
           <SwipeListItem
             data={marketCoinsData}
             renderItemComponent={ScrollListItem}
-            onAddFunc={addWishlistCoin}
-            onDelFunc={delWishlistCoin}
+            onAddFunc={saveWishlistCoinsFirebase}
+            onDelFunc={delWishlistCoinsFirebase}
             onLoadMore={loadMoreData}
           />
         ) : null}

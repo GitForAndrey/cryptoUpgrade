@@ -8,12 +8,14 @@ import { COLORS, FONTS } from '../constants';
 import { useSelector } from 'react-redux';
 import { SwipeListItem } from '../components/SwipeListItem';
 import {
-  delAssetsCoin,
+  deleteAssetsFirebase,
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';
 import { useNavigation } from '@react-navigation/native';
+import { LogBox } from 'react-native';
 
 export const AssetsScreen = () => {
+  LogBox.ignoreAllLogs();
   const navigation = useNavigation();
   let assetsCoinData = useSelector(selectAssetsCoinsData);
 
@@ -45,7 +47,7 @@ export const AssetsScreen = () => {
           <SwipeListItem
             data={assetsCoinData}
             renderItemComponent={AssetsItem}
-            onDelFunc={delAssetsCoin}
+            onDelFunc={deleteAssetsFirebase}
             isWalletPage={true}
           />
         ) : (

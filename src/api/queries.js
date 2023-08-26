@@ -13,7 +13,7 @@ export const secondTestQuery = page => {
 
 /////////////getAssetsCoins
 export const assetsCoinsQuery = name => {
-  `/coins/markets?vs_currency=usd&ids=${name}&order=market_cap_desc&per_page=15&page=1&sparkline=true&price_change_percentage=7d&locale=en`;
+  return `/coins/markets?vs_currency=usd&ids=${name}&order=market_cap_desc&per_page=15&page=1&sparkline=true&price_change_percentage=7d&locale=en`;
 };
 
 /////////getCoinsChart

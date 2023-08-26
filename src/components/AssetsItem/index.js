@@ -5,7 +5,7 @@ import { COLORS } from '../../constants';
 import styles from './style';
 
 export const AssetsItem = ({ coin }) => {
-  let valueProcents = (
+  let valuePercent = (
     ((coin.current_price - coin.coinBuyPrice) / coin.coinBuyPrice) *
     100
   ).toFixed(1);
@@ -36,14 +36,14 @@ export const AssetsItem = ({ coin }) => {
         <Text style={styles.coinPrice}>{coin.quantity}</Text>
 
         <Text style={styles.coinSumPrice}>
-          ${(coin.current_price * coin.quantity).toFixed(2)}
+          ${(coin?.current_price * coin.quantity).toFixed(2)}
         </Text>
         <Text
           style={{
             color:
-              valueProcents > 0 ? COLORS.chartColorGreen : COLORS.chartColorRed,
+              valuePercent > 0 ? COLORS.chartColorGreen : COLORS.chartColorRed,
           }}>
-          {valueProcents > 0 ? `+${valueProcents}%` : `${valueProcents}%`}
+          {valuePercent > 0 ? `+${valuePercent}%` : `${valuePercent}%`}
         </Text>
       </View>
     </TouchableOpacity>
