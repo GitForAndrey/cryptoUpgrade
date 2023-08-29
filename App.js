@@ -49,7 +49,7 @@ export const App = () => {
     <>
       <StatusBar backgroundColor={COLORS.mainBg} barStyle="light-content" />
       {isUser?.uid ? <MainStackNav /> : <AuthTabs />}
-      <Toast visibilityTime={1500} config={toastConfig} />
+      <Toast visibilityTime={3000} config={toastConfig} />
     </>
   );
 };
