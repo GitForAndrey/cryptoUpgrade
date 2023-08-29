@@ -56,5 +56,7 @@ export const RestorePasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     ...GLOB_STYLE.screenContainer,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

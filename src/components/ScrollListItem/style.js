@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { COLORS, FONTS } from '../../constants';
+import { COLORS, FONTS, SIZES } from '../../constants';
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLORS.mainBg,
-    borderRadius: 5,
-    height: 50,
+    backgroundColor: COLORS.transparentLightGray,
+    borderRadius: SIZES.radius,
+    height: 55,
     marginBottom: 5,
     paddingHorizontal: 10,
     flexDirection: 'row',
@@ -15,7 +15,7 @@ export default StyleSheet.create({
   coinInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: '30%',
+    maxWidth: '29%',
     flexShrink: 1,
   },
   coinImage: {
@@ -24,8 +24,7 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   coinName: {
-    ...FONTS.textRegular,
-    color: COLORS.lightGray,
+    ...FONTS.textLight,
   },
   coinSymbol: {
     textTransform: 'uppercase',
@@ -39,11 +38,11 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   coinChangeGreen: {
-    fontWeight: 'bold',
+    ...FONTS.textBold,
     color: COLORS.chartColorGreen,
   },
   coinChangeRed: {
-    fontWeight: 'bold',
+    ...FONTS.textBold,
     color: COLORS.chartColorRed,
   },
 });

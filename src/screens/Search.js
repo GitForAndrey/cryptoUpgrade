@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { SearchItem } from '../components/SearchItem';
-import { COLORS } from '../constants';
+import { COLORS, GLOB_STYLE, SIZES } from '../constants';
 import {
   getSearchData,
   resetSearchData,
@@ -40,7 +40,7 @@ export const SearchScreen = () => {
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <Ionicons name={'search-outline'} size={30} color={COLORS.lightGray} />
+        <Ionicons name={'search-outline'} size={30} color={COLORS.white} />
       </View>
       {searchLoading ? (
         <LoadingIndicator />
@@ -55,7 +55,7 @@ export const SearchScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 15, backgroundColor: COLORS.mainBg },
+  container: { ...GLOB_STYLE.screenContainer },
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 15,
     backgroundColor: COLORS.transparentLightGray,
-    borderRadius: 12,
+    borderRadius: SIZES.radius,
   },
   inputField: {
     flex: 1,
-    color: COLORS.lightGray,
+    color: COLORS.white,
     fontSize: 17,
   },
 });

@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { COLORS, FONTS } from '../../constants';
+import { COLORS, FONTS, SIZES } from '../../constants';
 
 export default StyleSheet.create({
   container: {
-    borderRadius: 5,
-    height: 70,
+    borderRadius: SIZES.radius,
+    height: 75,
     marginBottom: 6,
     paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: COLORS.mainBg,
+    backgroundColor: COLORS.transparentLightGray,
     overflow: 'hidden',
   },
   coinColor: {
@@ -32,21 +32,21 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   coinName: {
-    ...FONTS.textRegular,
-    color: COLORS.lightGray,
+    ...FONTS.textLight,
   },
   coinSymbol: {
     textTransform: 'uppercase',
     ...FONTS.textBold,
+    fontSize: SIZES.body3,
   },
   coinStats: {
     alignItems: 'flex-end',
   },
-  coinPrice: {
+  coinQuantity: {
     ...FONTS.textBold,
+    fontSize: SIZES.body3,
   },
   coinSumPrice: {
     ...FONTS.textLight,
-    color: COLORS.lightGray,
   },
 });

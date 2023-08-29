@@ -24,7 +24,7 @@ export const SwipeListItem = ({
       style={{
         ...styles.rightAction,
         backgroundColor: color,
-        height: isWalletPage ? 70 : 50,
+        height: isWalletPage ? 75 : 55,
       }}
       activeOpacity={0.8}>
       <Icon name={iconName} size={24} style={styles.icon} />

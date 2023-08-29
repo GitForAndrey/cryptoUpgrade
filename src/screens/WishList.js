@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS, GLOB_STYLE } from '../constants';
 import { ScrollListItem } from '../components/ScrollListItem';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -47,10 +47,8 @@ export const WishListScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 15,
-    backgroundColor: COLORS.mainBg,
+    ...GLOB_STYLE.screenContainer,
   },
   list_container: { flex: 1, marginTop: 15, marginBottom: 75 },
-  list_empty: { color: COLORS.lightGray, textAlign: 'center' },
+  list_empty: { color: COLORS.white, textAlign: 'center' },
 });

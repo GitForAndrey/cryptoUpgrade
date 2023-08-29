@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '../../constants';
+import { COLORS, SIZES } from '../../constants';
 
 export default StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ export default StyleSheet.create({
     width: 34,
     height: 34,
     backgroundColor: COLORS.transparentLightGray,
-    borderRadius: 12,
+    borderRadius: SIZES.radius,
     zIndex: 10,
     marginRight: 15,
   },

@@ -26,7 +26,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   coinSymbol: {
-    ...FONTS.textRegular,
+    ...FONTS.textLight,
     color: COLORS.lightGray,
   },
 });

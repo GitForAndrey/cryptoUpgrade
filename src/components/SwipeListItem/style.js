@@ -5,9 +5,8 @@ export default StyleSheet.create({
   rightAction: {
     position: 'absolute',
     right: 0,
-    borderRadius: 7,
+    borderRadius: SIZES.radius + 1,
     width: 75,
-    backgroundColor: 'rgba(255,0,0, 0.4)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -15,6 +14,6 @@ export default StyleSheet.create({
     color: COLORS.white,
   },
   text: {
-    color: COLORS.white,
+    ...FONTS.textRegular,
   },
 });

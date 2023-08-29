@@ -104,6 +104,8 @@ export const SignInScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     ...GLOB_STYLE.screenContainer,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   logoWrapper: {
     marginBottom: 20,

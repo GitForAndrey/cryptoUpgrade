@@ -16,7 +16,7 @@ export const COLORS = {
   gray: '#7875A1',
   tabBottomGray: '#AAA2A4',
   lightGray: '#d3d3d3',
-  transparentLightGray: 'rgba(69,69,100, 0.4)',
+  transparentLightGray: 'rgb(50, 50, 81)', //darkblue
   transparentWhite: 'rgba(255,255,255, 0.45)',
   chartColorGreen: 'rgba(0,255,0, 0.9)',
   chartColorRed: 'rgba(255,0,0, 0.9)',
@@ -56,7 +56,7 @@ export const FONTS = {
   },
   textBold: {
     fontFamily: 'Roboto-Bold',
-    fontSize: SIZES.body3,
+    fontSize: SIZES.body4,
     color: COLORS.white,
   },
   textLight: {
@@ -81,8 +81,6 @@ export const GLOB_STYLE = {
   screenContainer: {
     flex: 1,
     backgroundColor: COLORS.mainBg,
-    alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: 15,
   },
 };

@@ -36,7 +36,7 @@ export const AssetsItem = ({ coin }) => {
         />
       )}
       <View style={styles.coinStats}>
-        <Text style={styles.coinPrice}>{coin.quantity}</Text>
+        <Text style={styles.coinQuantity}>{coin.quantity}</Text>
 
         <Text style={styles.coinSumPrice}>
           ${(coin.current_price * coin.quantity).toFixed(2)}

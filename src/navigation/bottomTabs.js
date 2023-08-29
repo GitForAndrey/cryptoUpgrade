@@ -19,7 +19,7 @@ function getTabIcon(routeName, focused) {
     return focused ? 'home' : 'home-outline';
   } else if (routeName === 'Assets') {
     return focused ? 'wallet' : 'wallet-outline';
-  } else if (routeName === 'WishList') {
+  } else if (routeName === 'Wishlist') {
     return focused ? 'star' : 'star-outline';
   } else if (routeName === 'Settings') {
     return focused ? 'settings' : 'settings-outline';
@@ -88,7 +88,7 @@ export const BottomTabs = () => {
         })}
       />
       <Tabs.Screen
-        name="WishList"
+        name="Wishlist"
         component={WishListScreen}
         options={({ navigation, route }) => ({
           headerRight: () => renderHeaderButtons(navigation),

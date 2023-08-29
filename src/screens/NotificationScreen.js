@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS, GLOB_STYLE } from '../constants';
 
 export const NotificationScreen = () => {
   return (
@@ -10,6 +10,6 @@ export const NotificationScreen = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 15, backgroundColor: COLORS.mainBg },
+  container: { ...GLOB_STYLE.screenContainer },
   text_empty: { color: '#ccc', textAlign: 'center' },
 });

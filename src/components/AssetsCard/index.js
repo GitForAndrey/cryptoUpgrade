@@ -3,12 +3,12 @@ import { View, Image, Text } from 'react-native';
 import { Chart } from '../Chart';
 import styles from './style';
 
-export const AssetsCard = ({ coin }) => {
+export const AssetsCard = ({ coin, firstStyle }) => {
   let percentage_24h = coin.price_change_percentage_24h
     ? coin.price_change_percentage_24h
     : 0;
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, firstStyle && styles.firstElement]}>
       <View style={styles.coinInfo}>
         <Image source={{ uri: coin.image }} style={styles.coinImage} />
         <View>
@@ -33,7 +33,12 @@ export const AssetsCard = ({ coin }) => {
           }>
           {percentage_24h.toFixed(2)}%
         </Text>
-        <Text style={styles.coinPrice}>${coin.current_price.toFixed(2)}</Text>
+        <Text style={styles.coinPrice}>
+          $
+          {coin.current_price >= 0.01
+            ? coin.current_price.toFixed(2)
+            : coin.current_price.toFixed(3)}
+        </Text>
       </View>
     </View>
   );

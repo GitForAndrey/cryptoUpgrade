@@ -4,7 +4,7 @@ import { AssetsItem } from '../components/AssetsItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ChartPie } from '../components/PieChart';
 
-import { COLORS, FONTS } from '../constants';
+import { COLORS, FONTS, GLOB_STYLE } from '../constants';
 import { useSelector } from 'react-redux';
 import { SwipeListItem } from '../components/SwipeListItem';
 import {
@@ -33,12 +33,12 @@ export const AssetsScreen = () => {
         </View>
       </View>
       <View style={styles.assetBlock}>
-        <Text style={styles.textContent}>Assets</Text>
+        <Text style={styles.text_content}>Assets</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Search')}>
           <Ionicons
             name={'add-circle-outline'}
             size={34}
-            color={COLORS.lightGray}
+            color={COLORS.white}
           />
         </TouchableOpacity>
       </View>
@@ -60,9 +60,7 @@ export const AssetsScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 15,
-    backgroundColor: COLORS.mainBg,
+    ...GLOB_STYLE.screenContainer,
   },
   chartPieContainer: {
     alignItems: 'center',
@@ -76,7 +74,6 @@ const styles = StyleSheet.create({
   },
   balanceText: {
     ...FONTS.textLight,
-    color: COLORS.tabBottomGray,
     fontSize: 18,
     lineHeight: 20,
   },
@@ -91,11 +88,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
   },
-  textContent: {
-    marginVertical: 10,
+  text_content: {
     ...FONTS.textRegular,
     fontSize: 18,
   },
   list_container: { flex: 1, marginBottom: 75 },
-  list_empty: { color: COLORS.lightGray, textAlign: 'center' },
+  list_empty: { color: COLORS.white, textAlign: 'center' },
 });

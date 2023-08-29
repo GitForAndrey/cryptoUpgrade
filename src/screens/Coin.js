@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CoinChart } from '../components/CoinChart';
 import { FiltersItem } from '../components/FiltersItem';
-import { COLORS, FONTS } from '../constants';
+import { COLORS, FONTS, GLOB_STYLE } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { filtersCoinValue } from '../constants/data';
@@ -195,9 +195,7 @@ export const CoinScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 15,
-    backgroundColor: COLORS.mainBg,
+    ...GLOB_STYLE.screenContainer,
   },
   coinInfoBlock: {
     flexDirection: 'row',
@@ -223,22 +221,22 @@ const styles = StyleSheet.create({
   coinSymbol: {
     textTransform: 'uppercase',
     ...FONTS.textRegular,
-    color: COLORS.lightGray,
+    color: COLORS.white,
   },
   coinStats: {
     alignItems: 'flex-end',
   },
   coinPrice: {
-    fontWeight: 'bold',
+    ...FONTS.textBold,
     fontSize: 16,
     color: COLORS.white,
   },
   coinChangeGreen: {
-    fontWeight: 'bold',
+    ...FONTS.textBold,
     color: COLORS.chartColorGreen,
   },
   coinChangeRed: {
-    fontWeight: 'bold',
+    ...FONTS.textBold,
     color: COLORS.chartColorRed,
   },
   filtersView: {
@@ -266,6 +264,6 @@ const styles = StyleSheet.create({
     ...FONTS.textRegular,
   },
   value: {
-    color: COLORS.lightGray,
+    color: COLORS.white,
   },
 });

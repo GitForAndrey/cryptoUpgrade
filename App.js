@@ -7,8 +7,6 @@ import { AuthTabs } from './src/navigation/authStack';
 import { MainStackNav } from './src/navigation/mainStack';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthUser, selectUser } from './src/redux/features/authSlice';
-import { fetchAssetsFromFirebase } from './src/redux/features/assetsSlice';
-import { fetchWishlistFromFirebase } from './src/redux/features/wishlistSlice';
 
 const toastConfig = {
   success: props => (
@@ -43,8 +41,6 @@ export const App = () => {
 
   useEffect(() => {
     dispatch(checkAuthUser()).then(() => {
-      dispatch(fetchAssetsFromFirebase());
-      dispatch(fetchWishlistFromFirebase());
       RNBootSplash.hide({ fade: true, duration: 500 });
     });
   }, []);

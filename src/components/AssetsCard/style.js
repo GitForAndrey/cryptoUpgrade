@@ -6,17 +6,21 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: SIZES.width * 0.35,
     backgroundColor: COLORS.transparentLightGray,
-    borderRadius: 20,
+    borderRadius: SIZES.radius,
     height: 165,
     marginRight: 15,
     padding: 10,
     overflow: 'hidden',
+  },
+  firstElement: {
+    marginLeft: 15,
   },
   coinInfo: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
     alignItems: 'center',
     marginBottom: 10,
+    width: '95%',
   },
   coinImage: {
     width: 25,
@@ -25,30 +29,27 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   coinName: {
-    ...FONTS.textRegular,
-    fontSize: 14,
-    color: COLORS.lightGray,
+    ...FONTS.textLight,
   },
   coinSymbol: {
     textTransform: 'uppercase',
     ...FONTS.textBold,
-    fontSize: 14,
   },
   coinStats: {
     alignItems: 'center',
     marginTop: 'auto',
   },
   coinPrice: {
-    ...FONTS.textBold,
-    fontSize: 15,
-    marginBottom: 5,
+    ...FONTS.textRegular,
+    fontSize: 16,
+    marginTop: 2,
   },
   coinChangeGreen: {
-    fontWeight: 'bold',
+    ...FONTS.textBold,
     color: COLORS.chartColorGreen,
   },
   coinChangeRed: {
-    fontWeight: 'bold',
+    ...FONTS.textBold,
     color: COLORS.chartColorRed,
   },
 });

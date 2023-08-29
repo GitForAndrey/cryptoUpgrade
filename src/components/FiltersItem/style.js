@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { COLORS, FONTS } from '../../constants';
+import { COLORS, FONTS, SIZES } from '../../constants';
 
 export default StyleSheet.create({
   container: {
     backgroundColor: COLORS.transparentLightGray,
-    borderRadius: 20,
+    borderRadius: SIZES.radius,
     height: 20,
     paddingHorizontal: 10,
     marginRight: 15,
@@ -12,13 +12,11 @@ export default StyleSheet.create({
   text: {
     ...FONTS.textRegular,
     color: COLORS.tabBottomGray,
-    fontSize: 13,
-    lineHeight: 19,
   },
   activeContainer: {
-    backgroundColor: COLORS.transparentWhite,
+    backgroundColor: COLORS.white,
   },
   activeText: {
-    color: COLORS.white,
+    color: COLORS.mainBg,
   },
 });
