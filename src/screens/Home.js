@@ -131,6 +131,6 @@ const styles = StyleSheet.create({
   },
   market_container: {
     flex: 1,
-    marginBottom: 55,
+    marginBottom: 60,
   },
 });

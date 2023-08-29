@@ -41,6 +41,7 @@ export const SIZES = {
   body2: 20,
   body3: 16,
   body4: 14,
+  button: 16,
 
   // app dimensions
   width,
@@ -51,23 +52,41 @@ export const FONTS = {
   textRegular: {
     fontFamily: 'Roboto-Regular',
     fontSize: SIZES.body4,
-    lineHeight: 16,
     color: COLORS.white,
   },
   textBold: {
     fontFamily: 'Roboto-Bold',
     fontSize: SIZES.body3,
-    lineHeight: 16,
     color: COLORS.white,
   },
   textLight: {
     fontFamily: 'Roboto-Light',
     fontSize: SIZES.body4,
-    lineHeight: 16,
     color: COLORS.white,
   },
 };
 
-const appTheme = { COLORS, SIZES, FONTS };
+export const GLOB_STYLE = {
+  headerBasic: {
+    headerStyle: {
+      backgroundColor: COLORS.mainBg,
+    },
+    headerTitleStyle: {
+      ...FONTS.textRegular,
+      fontSize: SIZES.body2,
+    },
+    headerTintColor: COLORS.white,
+    headerShadowVisible: false,
+  },
+  screenContainer: {
+    flex: 1,
+    backgroundColor: COLORS.mainBg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+  },
+};
+
+const appTheme = { COLORS, SIZES, FONTS, GLOB_STYLE };
 
 export default appTheme;

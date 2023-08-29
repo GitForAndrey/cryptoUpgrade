@@ -7,7 +7,6 @@ import { AuthTabs } from './src/navigation/authStack';
 import { MainStackNav } from './src/navigation/mainStack';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthUser, selectUser } from './src/redux/features/authSlice';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchAssetsFromFirebase } from './src/redux/features/assetsSlice';
 import { fetchWishlistFromFirebase } from './src/redux/features/wishlistSlice';
 
@@ -51,10 +50,10 @@ export const App = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <>
       <StatusBar backgroundColor={COLORS.mainBg} barStyle="light-content" />
       {isUser?.uid ? <MainStackNav /> : <AuthTabs />}
       <Toast visibilityTime={1500} config={toastConfig} />
-    </SafeAreaView>
+    </>
   );
 };

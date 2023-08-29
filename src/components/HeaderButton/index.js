@@ -9,7 +9,7 @@ export const HeaderButton = ({ icon, style, handleOnPress }) => {
     <TouchableOpacity
       onPress={() => handleOnPress()}
       style={{ ...styles.container, ...style }}>
-      <Ionicons name={icon} size={26} color={COLORS.lightGray} />
+      <Ionicons name={icon} size={26} color={COLORS.white} />
     </TouchableOpacity>
   );
 };

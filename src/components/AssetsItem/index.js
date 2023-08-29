@@ -8,7 +8,10 @@ export const AssetsItem = ({ coin }) => {
   let valuePercent = (
     ((coin.current_price - coin.coinBuyPrice) / coin.coinBuyPrice) *
     100
-  ).toFixed(1);
+  )?.toFixed(1);
+  let percentage_24h = coin.price_change_percentage_24h
+    ? coin.price_change_percentage_24h
+    : 0;
 
   return (
     <TouchableOpacity
@@ -18,9 +21,9 @@ export const AssetsItem = ({ coin }) => {
       <View
         style={{ ...styles.coinColor, backgroundColor: coin.fillColor }}></View>
       <View style={styles.coinInfo}>
-        <Image source={{ uri: coin.image }} style={styles.coinImage} />
+        <Image source={{ uri: coin?.image }} style={styles.coinImage} />
         <View>
-          <Text style={styles.coinSymbol}>{coin.symbol}</Text>
+          <Text style={styles.coinSymbol}>{coin?.symbol}</Text>
           <Text style={styles.coinName} numberOfLines={1} ellipsizeMode="tail">
             {coin.name}
           </Text>
@@ -29,14 +32,14 @@ export const AssetsItem = ({ coin }) => {
       {coin?.sparkline_in_7d && (
         <Chart
           data={coin?.sparkline_in_7d.price}
-          lineColor={coin?.price_change_percentage_24h > 0 ? true : false}
+          lineColor={percentage_24h > 0 ? true : false}
         />
       )}
       <View style={styles.coinStats}>
         <Text style={styles.coinPrice}>{coin.quantity}</Text>
 
         <Text style={styles.coinSumPrice}>
-          ${(coin?.current_price * coin.quantity).toFixed(2)}
+          ${(coin.current_price * coin.quantity).toFixed(2)}
         </Text>
         <Text
           style={{

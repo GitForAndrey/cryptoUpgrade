@@ -17,8 +17,6 @@ import {
 } from '../redux/features/coinSlice';
 import { isCoinInAssets, isCoinWishlist } from '../redux/selectors';
 import {
-  addWishlistCoin,
-  delWishlistCoin,
   delWishlistCoinsFirebase,
   saveWishlistCoinsFirebase,
 } from '../redux/features/wishlistSlice';

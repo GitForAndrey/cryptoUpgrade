@@ -93,8 +93,11 @@ export const fetchAssetsFromFirebase = createAsyncThunk(
     const user = getState().auth.user.uid;
     try {
       let results = await fetchAccessCollection(user, 'assets');
-      dispatch(getAssetsCoins(results));
-      return results;
+      if (results.length) {
+        dispatch(getAssetsCoins(results));
+      } else {
+        return;
+      }
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -133,6 +136,9 @@ const assetsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getAssetsCoins.pending, state => {
+        state.loading = true;
+      })
       .addCase(getAssetsCoins.fulfilled, (state, action) => {
         state.loading = false;
         state.assetsCoinsData = action.payload;
@@ -142,6 +148,10 @@ const assetsSlice = createSlice({
       })
       .addCase(fetchAssetsFromFirebase.pending, state => {
         state.loading = true;
+      })
+      .addCase(fetchAssetsFromFirebase.fulfilled, (state, action) => {
+        state.loading = false;
+        state.assetsCoinsData = [];
       });
   },
 });

@@ -3,7 +3,7 @@ import { View, Text, TextInput } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { COLORS } from '../../constants';
 import { saveAssetsFirebase } from '../../redux/features/assetsSlice';
-import { FormBotton } from '../FormBotton';
+import { FormBotton } from '../FormButton';
 import styles from './style';
 
 export const AssetsAdd = ({ coin, isAssets }) => {

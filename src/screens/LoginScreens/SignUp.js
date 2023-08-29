@@ -1,13 +1,6 @@
-import React from 'react';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  KeyboardAvoidingView,
-} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { COLORS } from '../../constants';
+import React, { useState } from 'react';
+import { StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { GLOB_STYLE } from '../../constants';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +8,8 @@ import {
   selectLoading,
   userRegistration,
 } from '../../redux/features/authSlice';
-import { FormBotton } from '../../components/FormBotton';
+import { FormButton } from '../../components/FormButton';
+import { InputField } from '../../components/InputField';
 
 const validationSchema = yup.object().shape({
   name: yup.string().min(4).required(),
@@ -23,9 +17,11 @@ const validationSchema = yup.object().shape({
   password: yup.string().min(6).required(),
 });
 
-export const SignUpScreen = ({ navigation }) => {
+export const SignUpScreen = () => {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
+  const [showPassword, setShowPassword] = useState(true);
+  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -46,72 +42,43 @@ export const SignUpScreen = ({ navigation }) => {
           touched,
         }) => (
           <>
-            <View style={styles.inputContainer}>
-              <Ionicons
-                name="chatbox-ellipses-outline"
-                size={24}
-                color={COLORS.lightGray}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="Name"
-                value={values.name}
-                placeholderTextColor={COLORS.lightGray}
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                style={styles.input}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              {touched.name && errors.name && (
-                <Text style={styles.errorText}>{errors.name}</Text>
-              )}
-            </View>
-            <View style={styles.inputContainer}>
-              <Ionicons
-                name="mail-outline"
-                size={24}
-                color={COLORS.lightGray}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="Email"
-                value={values.email}
-                placeholderTextColor={COLORS.lightGray}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                style={styles.input}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              {touched.email && errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
-            </View>
-            <View style={styles.inputContainer}>
-              <Ionicons
-                name="lock-closed-outline"
-                size={24}
-                color={COLORS.lightGray}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="Password"
-                value={values.password}
-                placeholderTextColor={COLORS.lightGray}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                style={styles.input}
-                autoCapitalize="none"
-                autoCorrect={false}
-                secureTextEntry={true}
-              />
-              {touched.password && errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
-              )}
-            </View>
-            <FormBotton
+            <InputField
+              iconName="chatbox-ellipses-outline"
+              placeholder="Name"
+              value={values.name}
+              onChangeText={handleChange('name')}
+              onBlur={handleBlur('name')}
+              errorText={touched.name && errors.name}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <InputField
+              iconName="mail-outline"
+              placeholder="Email"
+              value={values.email}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              errorText={touched.email && errors.email}
+              keyboardType="visible-password"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <InputField
+              iconName="lock-closed-outline"
+              placeholder="Password"
+              value={values.password}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              secureTextEntry={showPassword}
+              showPassword={showPassword}
+              toggleShowPassword={toggleShowPassword}
+              errorText={touched.password && errors.password}
+              autoCapitalize="none"
+              autoCorrect={false}
+              secondIcon={true}
+            />
+            <FormButton
               title="Sign Up"
               handleSubmit={handleSubmit}
               loadingStatus={loading}
@@ -125,34 +92,6 @@ export const SignUpScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: COLORS.mainBg,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 15,
-  },
-  errorText: {
-    position: 'absolute',
-    bottom: -18,
-    left: 10,
-    color: COLORS.orange1,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.color3,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    color: COLORS.lightGray,
-    fontSize: 16,
+    ...GLOB_STYLE.screenContainer,
   },
 });

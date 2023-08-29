@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabs } from './bottomTabs';
 import { CoinScreen } from '../screens/Coin';
 import { NotificationScreen, SearchScreen } from '../screens';
-import { COLORS } from '../constants';
+import { GLOB_STYLE } from '../constants';
 import { HeaderButton } from '../components/HeaderButton';
 
 const renderBackButton = navigation => (
@@ -21,11 +21,7 @@ export const MainStackNav = () => (
     <Stack.Navigator
       initialRouteName="Main"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: COLORS.mainBg,
-        },
-        headerTintColor: COLORS.lightGray,
-        headerShadowVisible: false,
+        ...GLOB_STYLE.headerBasic,
       }}>
       <Stack.Screen
         name="Main"

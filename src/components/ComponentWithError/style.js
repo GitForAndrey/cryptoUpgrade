@@ -2,6 +2,21 @@ import { StyleSheet } from 'react-native';
 import { COLORS } from '../../constants';
 
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.mainBg,
+    paddingHorizontal: 15,
+  },
+  title: {
+    fontSize: 20,
+    color: COLORS.white,
+  },
+  text: {
+    fontSize: 14,
+    color: COLORS.white,
+  },
   button: {
     backgroundColor: COLORS.color3,
     borderWidth: 1,
@@ -13,8 +28,5 @@ export default StyleSheet.create({
     marginTop: 20,
     minWidth: 200,
   },
-  buttonText: {
-    color: COLORS.white,
-    fontSize: 17,
-  },
+  buttonText: { color: COLORS.white },
 });

@@ -7,7 +7,7 @@ import {
   SettingsScreen,
 } from '../screens';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { COLORS } from '../constants';
+import { COLORS, GLOB_STYLE } from '../constants';
 import { StyleSheet, View } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { HeaderButton } from '../components/HeaderButton';
@@ -61,11 +61,7 @@ export const BottomTabs = () => {
     <Tabs.Navigator
       initialRouteName={'Home'}
       screenOptions={{
-        headerStyle: {
-          backgroundColor: COLORS.mainBg,
-        },
-        headerTintColor: COLORS.lightGray,
-        headerShadowVisible: false,
+        ...GLOB_STYLE.headerBasic,
         tabBarActiveTintColor: COLORS.white,
         tabBarInactiveTintColor: COLORS.tabBottomGray,
         tabBarHideOnKeyboard: true,
@@ -128,7 +124,7 @@ const styles = StyleSheet.create({
   },
   tabBarStyle: {
     position: 'absolute',
-    height: 60,
+    height: 80,
     paddingTop: 8,
     borderTopWidth: 0,
     shadowColor: 'transparent',

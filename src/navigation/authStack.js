@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { RestorePasswordScreen, SignInScreen, SignUpScreen } from '../screens';
-import { COLORS } from '../constants';
+import { GLOB_STYLE } from '../constants';
 import { HeaderButton } from '../components/HeaderButton';
 
 const renderBackButton = navigation => (
@@ -19,11 +19,7 @@ export const AuthTabs = () => (
     <Stack.Navigator
       initialRouteName="SignIn"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: COLORS.mainBg,
-        },
-        headerTintColor: COLORS.lightGray,
-        headerShadowVisible: false,
+        ...GLOB_STYLE.headerBasic,
       }}>
       <Stack.Screen
         name="SignIn"

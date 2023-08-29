@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Image,
@@ -11,11 +10,11 @@ import {
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { COLORS } from '../../constants';
-import { FormBotton } from '../../components/FormBotton';
+import { COLORS, FONTS, GLOB_STYLE } from '../../constants';
+import { FormButton } from '../../components/FormButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLoading, userSignIn } from '../../redux/features/authSlice';
+import { InputField } from '../../components/InputField';
 
 const SignInSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -54,65 +53,37 @@ export const SignInScreen = ({ navigation }) => {
           touched,
         }) => (
           <>
-            <View style={styles.inputContainer}>
-              <Ionicons
-                name="mail-outline"
-                size={24}
-                color={COLORS.lightGray}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="Email"
-                value={values.email}
-                placeholderTextColor={COLORS.lightGray}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                style={styles.input}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              {touched.email && errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
-            </View>
-            <View style={styles.inputContainer}>
-              <Ionicons
-                name="lock-closed-outline"
-                size={24}
-                color={COLORS.lightGray}
-                style={styles.icon}
-              />
-              <TextInput
-                placeholder="Password"
-                value={values.password}
-                placeholderTextColor={COLORS.lightGray}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                style={styles.input}
-                secureTextEntry={showPassword}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              <TouchableOpacity
-                onPress={toggleShowPassword}
-                style={styles.iconContainer}>
-                <Ionicons
-                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-                  size={24}
-                  color={COLORS.lightGray}
-                />
-              </TouchableOpacity>
-              {touched.password && errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
-              )}
-            </View>
+            <InputField
+              iconName="mail-outline"
+              placeholder="Email"
+              value={values.email}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              errorText={touched.email && errors.email}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <InputField
+              iconName="lock-closed-outline"
+              placeholder="Password"
+              value={values.password}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              secureTextEntry={showPassword}
+              showPassword={showPassword}
+              toggleShowPassword={toggleShowPassword}
+              errorText={touched.password && errors.password}
+              autoCapitalize="none"
+              autoCorrect={false}
+              secondIcon={true}
+            />
             <TouchableOpacity
               onPress={() => navigation.navigate('RestorePassword')}
-              style={styles.forgot}>
-              <Text style={styles.forgotText}>Forgot Password?</Text>
+              style={styles.forgot_button}>
+              <Text style={styles.forgot_button_text}>Forgot Password?</Text>
             </TouchableOpacity>
-            <FormBotton
+            <FormButton
               title="Sign In"
               handleSubmit={handleSubmit}
               loadingStatus={loading}
@@ -120,12 +91,10 @@ export const SignInScreen = ({ navigation }) => {
           </>
         )}
       </Formik>
-      <View style={styles.isHaveAccount}>
-        <Text style={{ color: COLORS.lightGray }}>
-          Don't have an account yet?
-        </Text>
+      <View style={styles.underButton}>
+        <Text style={styles.underButton_text}>Don't have an account yet?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.forgotText}> Sign up.</Text>
+          <Text style={styles.forgot_button_text}> Sign up.</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -134,11 +103,7 @@ export const SignInScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: COLORS.mainBg,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 15,
+    ...GLOB_STYLE.screenContainer,
   },
   logoWrapper: {
     marginBottom: 20,
@@ -147,42 +112,18 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.color3,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    color: COLORS.lightGray,
-    fontSize: 16,
-  },
-  errorText: {
-    position: 'absolute',
-    bottom: -18,
-    left: 10,
-    color: COLORS.orange1,
-  },
-  iconContainer: {
-    padding: 10,
-  },
-
-  forgot: {
+  forgot_button: {
     alignSelf: 'flex-end',
   },
-  forgotText: {
-    color: COLORS.orange1,
+  forgot_button_text: {
+    ...FONTS.textRegular,
     textDecorationLine: 'underline',
+    color: COLORS.orange1,
   },
-  isHaveAccount: {
+  underButton: {
     flexDirection: 'row',
+  },
+  underButton_text: {
+    ...FONTS.textRegular,
   },
 });

@@ -71,7 +71,7 @@ export const fetchWishlistFromFirebase = createAsyncThunk(
     } catch (error) {
       Toast.show({
         type: 'error',
-        text2: 'fetchAssetsFromFirebase error: Request failed',
+        text2: 'fetchWishlistFromFirebase error: Request failed',
       });
       return rejectWithValue();
     }

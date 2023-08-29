@@ -16,7 +16,7 @@ export const ChartPie = ({ assetsCoinData }) => {
     <PieChart
       style={styles.chart}
       data={chartData}
-      innerRadius="95%"
+      innerRadius="85%"
       spacing={5}
       strokeWidth={5}
     />

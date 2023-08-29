@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
     ...FONTS.textRegular,
     fontSize: 18,
   },
-  list_container: { flex: 1, marginBottom: 55 },
+  list_container: { flex: 1, marginBottom: 75 },
   list_empty: { color: COLORS.lightGray, textAlign: 'center' },
 });

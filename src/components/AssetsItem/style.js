@@ -22,6 +22,8 @@ export default StyleSheet.create({
   coinInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    maxWidth: '30%',
+    flexShrink: 1,
     marginLeft: 10,
   },
   coinImage: {

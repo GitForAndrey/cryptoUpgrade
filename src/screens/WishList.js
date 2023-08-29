@@ -51,6 +51,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: COLORS.mainBg,
   },
-  list_container: { flex: 1, marginTop: 15, marginBottom: 55 },
+  list_container: { flex: 1, marginTop: 15, marginBottom: 75 },
   list_empty: { color: COLORS.lightGray, textAlign: 'center' },
 });

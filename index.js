@@ -4,11 +4,15 @@ import { App } from './App';
 import { name as appName } from './app.json';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
+import ErrorBoundary from 'react-native-error-boundary';
+import { ComponentWithError } from './src/components/ComponentWithError';
 
 const AppWrap = () => {
   return (
     <Provider store={store}>
-      <App />
+      <ErrorBoundary FallbackComponent={ComponentWithError}>
+        <App />
+      </ErrorBoundary>
     </Provider>
   );
 };
