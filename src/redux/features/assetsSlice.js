@@ -136,21 +136,16 @@ const assetsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getAssetsCoins.pending, state => {
-        state.loading = true;
-      })
+      .addCase(getAssetsCoins.pending, state => {})
       .addCase(getAssetsCoins.fulfilled, (state, action) => {
         state.loading = false;
         state.assetsCoinsData = action.payload;
       })
-      .addCase(getAssetsCoins.rejected, state => {
-        state.loading = false;
-      })
+      .addCase(getAssetsCoins.rejected, state => {})
       .addCase(fetchAssetsFromFirebase.pending, state => {
         state.loading = true;
       })
       .addCase(fetchAssetsFromFirebase.fulfilled, (state, action) => {
-        state.loading = false;
         state.assetsCoinsData = [];
       });
   },

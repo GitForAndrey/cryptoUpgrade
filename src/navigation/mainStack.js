@@ -2,8 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabs } from './bottomTabs';
-import { CoinScreen } from '../screens/Coin';
-import { NotificationScreen, SearchScreen } from '../screens';
+import { CoinScreen, NotificationScreen, SearchScreen } from '../screens';
 import { GLOB_STYLE } from '../constants';
 import { HeaderButton } from '../components/HeaderButton';
 

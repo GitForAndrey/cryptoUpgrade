@@ -12,7 +12,8 @@ import { SwipeListItem } from '../components/SwipeListItem';
 import { COLORS, filtersMarketCoins, FONTS, SIZES } from '../constants';
 import {
   getMarketCoins,
-  getMarketCoinsLoading,
+  getMarketLoadingAdditional,
+  getMarketLoadingInitial,
 } from '../redux/features/marketCoinSlice';
 import { selectUser } from '../redux/features/authSlice';
 import {
@@ -34,7 +35,8 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
 
   const marketCoinsData = useSelector(getMarketsCoinWithWishlist);
-  const marketCoinsLoading = useSelector(getMarketCoinsLoading);
+  const marketCoinsLoadingInitial = useSelector(getMarketLoadingInitial);
+  const marketCoinsLoadingAdditional = useSelector(getMarketLoadingAdditional);
   const activeUser = useSelector(selectUser);
   const assetsCoinsData = useSelector(selectAssetsCoinsData);
   const assetsCoinsLoading = useSelector(getAssetsLoading);
@@ -94,15 +96,15 @@ export const HomeScreen = () => {
     <View style={styles.container}>
       <Text style={styles.text_content}>My Assets</Text>
       <View style={styles.assets_container}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {assetsCoinsLoading ? (
-            <LoadingIndicator />
-          ) : assetsCoinsData.length ? (
-            renderItems(assetsCoinsData, 'coins')
-          ) : (
-            <AssetsEmptyCard />
-          )}
-        </ScrollView>
+        {assetsCoinsLoading ? (
+          <LoadingIndicator />
+        ) : assetsCoinsData.length ? (
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {renderItems(assetsCoinsData, 'coins')}
+          </ScrollView>
+        ) : (
+          <AssetsEmptyCard />
+        )}
       </View>
       <Text style={styles.text_content}>Market</Text>
       <View style={styles.filters_container}>
@@ -111,7 +113,7 @@ export const HomeScreen = () => {
         </ScrollView>
       </View>
       <View style={styles.market_container}>
-        {marketCoinsData.length ? (
+        {!marketCoinsLoadingInitial ? (
           <SwipeListItem
             data={marketCoinsData}
             renderItemComponent={ScrollListItem}
@@ -119,8 +121,11 @@ export const HomeScreen = () => {
             onDelFunc={delWishlistCoinsFirebase}
             onLoadMore={loadMoreData}
           />
-        ) : null}
-        {marketCoinsLoading && <LoadingIndicator />}
+        ) : (
+          <LoadingIndicator />
+        )}
+
+        {marketCoinsLoadingAdditional && <LoadingIndicator />}
       </View>
     </View>
   );
@@ -138,6 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   assets_container: {
+    height: 165,
     marginBottom: 10,
   },
   filters_container: {
@@ -146,7 +152,7 @@ const styles = StyleSheet.create({
   },
   market_container: {
     flex: 1,
-    marginBottom: 60,
+    marginBottom: 75,
     paddingHorizontal: 15,
   },
 });

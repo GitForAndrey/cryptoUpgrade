@@ -5,7 +5,8 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const initialState = {
   marketCoins: [],
-  loading: false,
+  loadingInitial: false, //first page data loading
+  loadingAdditional: false, //additional data
   filter: 'Top100',
 };
 
@@ -41,11 +42,16 @@ const marketCoinSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getMarketCoins.pending, state => {
-        state.loading = true;
+      .addCase(getMarketCoins.pending, (state, action) => {
+        if (action.meta.arg.page === 1) {
+          state.loadingInitial = true;
+        } else {
+          state.loadingAdditional = true;
+        }
       })
       .addCase(getMarketCoins.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loadingInitial = false;
+        state.loadingAdditional = false;
         if (state.filter === action.payload.selectedFilter) {
           state.marketCoins = [...state.marketCoins, ...action.payload.data];
         } else {
@@ -54,13 +60,16 @@ const marketCoinSlice = createSlice({
         }
       })
       .addCase(getMarketCoins.rejected, state => {
-        state.loading = false;
+        state.loadingInitial = false;
+        state.loadingAdditional = false;
       });
   },
 });
 
 export const selectMarketCoins = state => state.marketCoin.marketCoins;
-export const getMarketCoinsLoading = state => state.marketCoin.loading;
+export const getMarketLoadingInitial = state => state.marketCoin.loadingInitial;
+export const getMarketLoadingAdditional = state =>
+  state.marketCoin.loadingAdditional;
 
 export const {} = marketCoinSlice.actions;
 

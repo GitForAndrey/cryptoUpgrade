@@ -3,7 +3,7 @@ import { View, Text, TextInput } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { COLORS } from '../../constants';
 import { saveAssetsFirebase } from '../../redux/features/assetsSlice';
-import { FormBotton } from '../FormButton';
+import { FormButton } from '../FormButton';
 import styles from './style';
 
 export const AssetsAdd = ({ coin, isAssets }) => {
@@ -63,10 +63,10 @@ export const AssetsAdd = ({ coin, isAssets }) => {
               autoCorrect={false}
             />
           </View>
-          <FormBotton title={'Add'} handleSubmit={handleAddAsset} />
+          <FormButton title={'Add'} handleSubmit={handleAddAsset} />
         </View>
       ) : (
-        <FormBotton title={'Add to wallet'} handleSubmit={openAssetBlock} />
+        <FormButton title={'Add to wallet'} handleSubmit={openAssetBlock} />
       )}
     </View>
   );

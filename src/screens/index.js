@@ -6,6 +6,7 @@ import { SearchScreen } from './Search';
 import { NotificationScreen } from './NotificationScreen';
 import { SignInScreen } from './LoginScreens/SignIn';
 import { SignUpScreen } from './LoginScreens/SignUp';
+import { CoinScreen } from './Coin';
 import { RestorePasswordScreen } from './LoginScreens/RestorePassword';
 
 export {
@@ -14,6 +15,7 @@ export {
   SettingsScreen,
   SignInScreen,
   SignUpScreen,
+  CoinScreen,
   RestorePasswordScreen,
   WishListScreen,
   SearchScreen,
