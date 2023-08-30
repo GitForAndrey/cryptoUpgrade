@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   tabBarStyle: {
     position: 'absolute',
-    height: 80,
+    minHeight: 80,
     paddingTop: 8,
     borderTopWidth: 0,
     shadowColor: 'transparent',

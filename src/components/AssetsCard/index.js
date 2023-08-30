@@ -3,7 +3,7 @@ import { View, Image, Text } from 'react-native';
 import { Chart } from '../Chart';
 import styles from './style';
 
-export const AssetsCard = ({ coin, firstStyle }) => {
+export const AssetsCard = React.memo(({ coin, firstStyle }) => {
   let percentage_24h = coin.price_change_percentage_24h
     ? coin.price_change_percentage_24h
     : 0;
@@ -42,4 +42,4 @@ export const AssetsCard = ({ coin, firstStyle }) => {
       </View>
     </View>
   );
-};
+});

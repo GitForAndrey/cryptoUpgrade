@@ -4,7 +4,7 @@ import { TouchableOpacity, View, Image, Text } from 'react-native';
 import { Chart } from '../Chart';
 import styles from './style';
 
-export const ScrollListItem = ({ coin }) => {
+export const ScrollListItem = React.memo(({ coin }) => {
   const navigation = useNavigation();
 
   let percentage_24h = coin.price_change_percentage_24h
@@ -48,4 +48,4 @@ export const ScrollListItem = ({ coin }) => {
       </View>
     </TouchableOpacity>
   );
-};
+});

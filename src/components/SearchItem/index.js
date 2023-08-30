@@ -3,7 +3,7 @@ import React from 'react';
 import { TouchableOpacity, View, Image, Text } from 'react-native';
 import styles from './style';
 
-export const SearchItem = ({ coin }) => {
+export const SearchItem = React.memo(({ coin }) => {
   const navigation = useNavigation();
   const onPressHandle = () => {
     navigation.navigate('Coin', {
@@ -20,4 +20,4 @@ export const SearchItem = ({ coin }) => {
       <Text style={styles.coinSymbol}>#{coin.market_cap_rank}</Text>
     </TouchableOpacity>
   );
-};
+});
