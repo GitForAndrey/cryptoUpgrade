@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, FlatList, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingIndicator } from '../components/LoadingIndicator';
-import { SearchItem } from '../components/SearchItem';
 import { COLORS, GLOB_STYLE, SIZES } from '../constants';
 import {
   getSearchData,
@@ -11,6 +10,7 @@ import {
   selectSearchData,
   selectSearchLoading,
 } from '../redux/features/searchSlice';
+import { SearchItemList } from '../components/SearchItemList';
 
 export const SearchScreen = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,6 @@ export const SearchScreen = () => {
       dispatch(resetSearchData());
     }
   };
-  const renderItem = ({ item }) => <SearchItem coin={item} />;
 
   return (
     <View style={styles.container}>
@@ -45,11 +44,7 @@ export const SearchScreen = () => {
       {searchLoading ? (
         <LoadingIndicator />
       ) : (
-        <FlatList
-          data={coinData}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
+        <SearchItemList data={coinData} />
       )}
     </View>
   );

@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
   container: {
     ...GLOB_STYLE.screenContainer,
   },
-  list_container: { flex: 1, marginTop: 15, marginBottom: 75 },
+  list_container: { flex: 1, marginTop: 15, marginBottom: 80 },
   list_empty: { color: COLORS.white, textAlign: 'center' },
 });

@@ -11,5 +11,5 @@ export const NotificationScreen = () => {
 };
 const styles = StyleSheet.create({
   container: { ...GLOB_STYLE.screenContainer },
-  text_empty: { color: '#ccc', textAlign: 'center' },
+  text_empty: { color: COLORS.white, textAlign: 'center' },
 });

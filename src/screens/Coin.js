@@ -1,8 +1,7 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { CoinChart } from '../components/CoinChart';
-import { FiltersItem } from '../components/FiltersItem';
+import { ChartCoin } from '../components/ChartCoin';
 import { COLORS, FONTS, GLOB_STYLE } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,9 +19,10 @@ import {
   delWishlistCoinsFirebase,
   saveWishlistCoinsFirebase,
 } from '../redux/features/wishlistSlice';
-import { AssetsAdd } from '../components/AssetsAdd';
+import { AssetsCoinAdd } from '../components/AssetsCoinAdd';
 import { HeaderButton } from '../components/HeaderButton';
 import { LoadingIndicator } from '../components/LoadingIndicator';
+import { FiltersItemList } from '../components/FiltersItemList';
 
 export const CoinScreen = ({ route }) => {
   const { coinId } = route.params;
@@ -79,20 +79,6 @@ export const CoinScreen = ({ route }) => {
   const delWishlist = data => {
     dispatch(delWishlistCoinsFirebase(data));
   };
-
-  const renderItems = array => {
-    return array.map(item => {
-      return (
-        <FiltersItem
-          item={item}
-          key={item.id}
-          isActive={activeFilter === item.id}
-          handleFilterClick={handleFilterClick}
-        />
-      );
-    });
-  };
-
   const formatter = new Intl.NumberFormat('en-US');
 
   return (
@@ -128,12 +114,16 @@ export const CoinScreen = ({ route }) => {
               </Text>
             </View>
           </View>
-          <AssetsAdd coin={coin} isAssets={isInAssets} />
+          <AssetsCoinAdd coin={coin} isAssets={isInAssets} />
           <View style={styles.filtersView}>
-            {renderItems(filtersCoinValue, 'filters')}
+            <FiltersItemList
+              data={filtersCoinValue}
+              activeFilter={activeFilter}
+              handleFilterOnPress={handleFilterClick}
+            />
           </View>
           <View style={styles.chartContainer}>
-            <CoinChart data={coinsChartData ?? []} />
+            <ChartCoin data={coinsChartData ?? []} />
           </View>
           <View style={styles.table}>
             <View style={styles.row}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AssetsItem } from '../components/AssetsItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ChartPie } from '../components/PieChart';
+import { ChartPie } from '../components/ChartPie';
 
 import { COLORS, FONTS, GLOB_STYLE } from '../constants';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import {
 } from '../redux/features/assetsSlice';
 import { useNavigation } from '@react-navigation/native';
 import { LogBox } from 'react-native';
+import { ContentTitle } from '../components/ContentTitle';
 
 export const AssetsScreen = () => {
   LogBox.ignoreAllLogs();
@@ -33,7 +34,10 @@ export const AssetsScreen = () => {
         </View>
       </View>
       <View style={styles.assetBlock}>
-        <Text style={styles.text_content}>Assets</Text>
+        <ContentTitle
+          title={'My assets'}
+          style={{ paddingLeft: 0, fontSize: 18 }}
+        />
         <TouchableOpacity onPress={() => navigation.navigate('Search')}>
           <Ionicons
             name={'add-circle-outline'}
@@ -88,10 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
   },
-  text_content: {
-    ...FONTS.textRegular,
-    fontSize: 18,
-  },
-  list_container: { flex: 1, marginBottom: 75 },
+
+  list_container: { flex: 1, paddingBottom: 80 },
   list_empty: { color: COLORS.white, textAlign: 'center' },
 });

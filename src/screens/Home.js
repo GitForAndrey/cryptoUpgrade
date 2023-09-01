@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-import { AssetsCard } from '../components/AssetsCard';
-import { FiltersItem } from '../components/FiltersItem';
-import { ScrollListItem } from '../components/ScrollListItem';
-import { AssetsEmptyCard } from '../components/AssetsEmptyCard';
+
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { HeaderTextLeft } from '../components/HeaderTextLeft';
+import { AssetsCardList } from '../components/AssetsCardList';
+import { FiltersItemList } from '../components/FiltersItemList';
+import { ContentTitle } from '../components/ContentTitle';
 import { SwipeListItem } from '../components/SwipeListItem';
-import { COLORS, filtersMarketCoins, FONTS, SIZES } from '../constants';
+import { ScrollListItem } from '../components/ScrollListItem';
+
+import { GLOB_STYLE, filtersMarketCoins } from '../constants';
 import {
   getMarketCoins,
   getMarketLoadingAdditional,
@@ -28,11 +29,11 @@ import {
 } from '../redux/features/wishlistSlice';
 import { getMarketsCoinWithWishlist } from '../redux/selectors';
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [activeFilter, setActiveFilter] = useState(filtersMarketCoins[0].id);
   const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
 
   const marketCoinsData = useSelector(getMarketsCoinWithWishlist);
   const marketCoinsLoadingInitial = useSelector(getMarketLoadingInitial);
@@ -46,6 +47,7 @@ export const HomeScreen = () => {
       headerTitle: () => <HeaderTextLeft userName={activeUser.displayName} />,
     });
   }, []);
+
   useEffect(() => {
     dispatch(getMarketCoins({ filter: activeFilter, page: 1 })).then(() => {
       dispatch(fetchAssetsFromFirebase());
@@ -61,57 +63,28 @@ export const HomeScreen = () => {
     }
   };
 
-  const handleFilterClick = value => {
+  const handleFilterOnPress = value => {
     setActiveFilter(value);
     dispatch(getMarketCoins({ filter: value, page: 1 }));
   };
 
-  const renderItems = (array, type) => {
-    return array.map((item, idx) => {
-      if (type === 'filters') {
-        return (
-          <FiltersItem
-            item={item}
-            key={item.id}
-            isActive={activeFilter === item.id}
-            handleFilterClick={handleFilterClick}
-          />
-        );
-      }
-      if (type === 'coins') {
-        return (
-          <AssetsCard
-            coin={item}
-            key={item?.id}
-            firstStyle={idx === 0 ? true : false}
-          />
-        );
-      } else {
-        return <ScrollListItem coin={item} key={item?.id} />;
-      }
-    });
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.text_content}>My Assets</Text>
+      <ContentTitle title={'My Assets'} />
       <View style={styles.assets_container}>
         {assetsCoinsLoading ? (
           <LoadingIndicator />
-        ) : assetsCoinsData.length ? (
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {renderItems(assetsCoinsData, 'coins')}
-          </ScrollView>
         ) : (
-          <AssetsEmptyCard />
+          <AssetsCardList data={assetsCoinsData} />
         )}
       </View>
-      <Text style={styles.text_content}>Market</Text>
-      <View style={styles.filters_container}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {renderItems(filtersMarketCoins, 'filters')}
-        </ScrollView>
-      </View>
+      <ContentTitle title={'Market'} />
+      <FiltersItemList
+        data={filtersMarketCoins}
+        activeFilter={activeFilter}
+        handleFilterOnPress={handleFilterOnPress}
+      />
+
       <View style={styles.market_container}>
         {!marketCoinsLoadingInitial ? (
           <SwipeListItem
@@ -124,7 +97,6 @@ export const HomeScreen = () => {
         ) : (
           <LoadingIndicator />
         )}
-
         {marketCoinsLoadingAdditional && <LoadingIndicator />}
       </View>
     </View>
@@ -133,26 +105,14 @@ export const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: COLORS.mainBg,
-  },
-  text_content: {
-    marginVertical: 10,
-    ...FONTS.textRegular,
-    fontSize: SIZES.body3,
-    paddingHorizontal: 15,
+    ...GLOB_STYLE.screenContainer,
+    paddingHorizontal: 0,
   },
   assets_container: {
     height: 165,
-    marginBottom: 10,
-  },
-  filters_container: {
-    marginBottom: 10,
-    paddingHorizontal: 15,
   },
   market_container: {
-    flex: 1,
-    marginBottom: 75,
+    paddingBottom: 80,
     paddingHorizontal: 15,
   },
 });

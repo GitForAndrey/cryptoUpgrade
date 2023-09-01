@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { COLORS, FONTS, GLOB_STYLE } from '../constants';
+import { FONTS, GLOB_STYLE } from '../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logoutUser } from '../redux/features/authSlice';
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ export const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => logout()} style={{}}>
+      <TouchableOpacity onPress={() => logout()}>
         <Text style={styles.textContent}>Log out</Text>
       </TouchableOpacity>
     </View>
