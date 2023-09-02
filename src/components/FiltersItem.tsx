@@ -1,8 +1,20 @@
-import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import React,{FunctionComponent} from 'react';
+import { TouchableOpacity, Text, StyleSheet,GestureResponderEvent } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../constants';
 
-export const FiltersItem = React.memo(
+
+interface FiltersElement {
+  id:string,
+  title:string ,
+}
+
+interface FiltersItemProps {
+  item:FiltersElement,
+  isActive:boolean ,
+  handleFilterOnPress: ((id: string)=> void | undefined),
+}
+
+export const FiltersItem: FunctionComponent<FiltersItemProps> = React.memo(
   ({ item, isActive, handleFilterOnPress }) => {
     return (
       <TouchableOpacity

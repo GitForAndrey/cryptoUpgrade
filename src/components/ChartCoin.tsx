@@ -1,9 +1,13 @@
-import React from 'react';
+import React,{ FunctionComponent} from 'react';
 import { View, StyleSheet } from 'react-native';
 import { LineChart, Grid, YAxis } from 'react-native-svg-charts';
 import { COLORS } from '../constants';
 
-export const ChartCoin = ({ data }) => {
+interface ChartCoinProps {
+  data:[],
+}
+
+export const ChartCoin: FunctionComponent<ChartCoinProps> = ({ data }) => {
   const key = data.join('-');
   return (
     <View style={styles.container}>
@@ -18,7 +22,7 @@ export const ChartCoin = ({ data }) => {
         key={key}
         data={data}
         contentInset={{ top: 10, bottom: 10 }}
-        formatLabel={value => `$${value.toFixed(2)}`}
+        formatLabel={(value:number) => `$${value.toFixed(2)}`}
         numberOfTicks={10}
         style={{
           color: COLORS.white,

@@ -1,9 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { FunctionComponent} from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 import { COLORS, FONTS } from '../constants';
+import { SearchCoin } from '../types/coinTypes';
 
-export const SearchItem = React.memo(({ coin }) => {
+
+interface SearchItemProps {
+  coin: SearchCoin,
+}
+
+export const SearchItem:FunctionComponent< SearchItemProps> = React.memo(({ coin }) => {
   const navigation = useNavigation();
   const onPressHandle = () => {
     navigation.navigate('Coin', {

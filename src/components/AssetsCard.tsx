@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../constants';
 import { Chart } from './Chart';
+import { Coin } from '../types/coinTypes';
 
-export const AssetsCard = React.memo(({ coin, firstStyle }) => {
+
+interface AssetsCardProps {
+  coin: Coin,
+  firstStyle: boolean,
+}
+
+export const AssetsCard: FunctionComponent<AssetsCardProps> = React.memo(({ coin, firstStyle }) => {
   let percentage_24h = coin.price_change_percentage_24h
     ? coin.price_change_percentage_24h
     : 0;

@@ -14,7 +14,7 @@ import {
   selectCoinLoading,
   selectCoinsChart,
 } from '../redux/features/coinSlice';
-import { isCoinInAssets, isCoinWishlist } from '../redux/selectors';
+import { isCoinWishlist, valueInAssets } from '../redux/selectors';
 import {
   delWishlistCoinsFirebase,
   saveWishlistCoinsFirebase,
@@ -31,7 +31,7 @@ export const CoinScreen = ({ route }) => {
   const navigation = useNavigation();
   const coinsChartData = useSelector(selectCoinsChart);
   const isWishlist = useSelector(isCoinWishlist);
-  const isInAssets = useSelector(isCoinInAssets);
+  const valueInAsset = useSelector(valueInAssets);
   const coin = useSelector(selectActiveCoin);
   const loading = useSelector(selectCoinLoading);
 
@@ -114,7 +114,7 @@ export const CoinScreen = ({ route }) => {
               </Text>
             </View>
           </View>
-          <AssetsCoinAdd coin={coin} isAssets={isInAssets} />
+          <AssetsCoinAdd coin={coin} inAssets={valueInAsset} />
           <View style={styles.filtersView}>
             <FiltersItemList
               data={filtersCoinValue}
@@ -179,6 +179,7 @@ export const CoinScreen = ({ route }) => {
       ) : (
         <LoadingIndicator />
       )}
+      <View style={styles.empty} />
     </ScrollView>
   );
 };
@@ -255,5 +256,8 @@ const styles = StyleSheet.create({
   },
   value: {
     color: COLORS.white,
+  },
+  empty: {
+    height: 100,
   },
 });

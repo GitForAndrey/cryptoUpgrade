@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 import { Chart } from './Chart';
 import { COLORS, FONTS, SIZES } from '../constants';
+import { Coin } from '../types/coinTypes';
 
-export const AssetsItem = ({ coin }) => {
+interface AssetsCoin extends Coin {
+  coinBuyPrice:number,
+  quantity:number,
+  fillColor:string,
+}
+interface AssetsItemProps  {
+  coin:AssetsCoin,
+}
+
+export const AssetsItem:FunctionComponent<AssetsItemProps> = ({ coin }) => {
   let valuePercent = (
     ((coin.current_price - coin.coinBuyPrice) / coin.coinBuyPrice) *
     100
-  )?.toFixed(1);
+  ).toFixed(1);
+
   let percentage_24h = coin.price_change_percentage_24h
     ? coin.price_change_percentage_24h
     : 0;
@@ -18,9 +29,9 @@ export const AssetsItem = ({ coin }) => {
       onPress={() => console.log('FavoritesCard')}
       style={styles.container}>
       <View
-        style={{ ...styles.coinColor, backgroundColor: coin.fillColor }}></View>
+        style={{ ...styles.coinColor, backgroundColor: coin.fillColor }} />
       <View style={styles.coinInfo}>
-        <Image source={{ uri: coin?.image }} style={styles.coinImage} />
+        <Image source={{ uri: coin.image }} style={styles.coinImage} />
         <View>
           <Text style={styles.coinSymbol}>{coin?.symbol}</Text>
           <Text style={styles.coinName} numberOfLines={1} ellipsizeMode="tail">
@@ -38,14 +49,14 @@ export const AssetsItem = ({ coin }) => {
         <Text style={styles.coinQuantity}>{coin.quantity}</Text>
 
         <Text style={styles.coinSumPrice}>
-          ${(coin.current_price * coin.quantity).toFixed(2)}
+          ${(coin.current_price * (+coin.quantity)).toFixed(2)}
         </Text>
         <Text
           style={{
             color:
-              valuePercent > 0 ? COLORS.chartColorGreen : COLORS.chartColorRed,
+              +valuePercent > 0 ? COLORS.chartColorGreen : COLORS.chartColorRed,
           }}>
-          {valuePercent > 0 ? `+${valuePercent}%` : `${valuePercent}%`}
+          {+valuePercent > 0 ? `+${valuePercent}%` : `${valuePercent}%`}
         </Text>
       </View>
     </TouchableOpacity>

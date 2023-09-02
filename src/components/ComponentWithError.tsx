@@ -1,9 +1,9 @@
-import React from 'react';
+import React,{FunctionComponent} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-export const ComponentWithError = props => {
+export const ComponentWithError: FunctionComponent = props => {
   return (
     <View style={styles.container}>
       <Icon name={'flower-outline'} size={38} color={COLORS.orange} />

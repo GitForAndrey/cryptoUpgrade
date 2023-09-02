@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { FunctionComponent} from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { LoadingIndicator } from './LoadingIndicator';
 import { COLORS, FONTS, SIZES } from '../constants';
 
-export const FormButton = ({ title, handleSubmit, loadingStatus = false }) => {
+interface FormButtonProps {
+  title: string,
+  loadingStatus?:boolean,
+  handleSubmit: (()=> void)
+}
+
+export const FormButton:FunctionComponent<FormButtonProps> = ({ title, handleSubmit, loadingStatus = false }) => {
   return (
     <>
       <TouchableOpacity

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { LineChart } from 'react-native-svg-charts';
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../constants';
 
-export const Chart = ({ data, lineColor }) => {
+interface ChartProps {
+  data: [];
+  lineColor: boolean;
+}
+
+export const Chart: FunctionComponent<ChartProps> = ({ data, lineColor }) => {
   let strokeColor = lineColor ? COLORS.chartColorGreen : COLORS.chartColorRed;
 
   return (

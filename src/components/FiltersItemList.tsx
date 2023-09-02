@@ -1,8 +1,19 @@
-import React from 'react';
+import React,{FunctionComponent} from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { FiltersItem } from './FiltersItem';
 
-export const FiltersItemList = ({
+interface FiltersElement {
+  id:string,
+  title:string ,
+}
+
+interface FiltersItemListProps {
+  data:FiltersElement[],
+  activeFilter:string,
+  handleFilterOnPress: (() => void | undefined),
+}
+
+export const FiltersItemList: FunctionComponent<FiltersItemListProps> = ({
   data,
   activeFilter,
   handleFilterOnPress,
@@ -11,7 +22,7 @@ export const FiltersItemList = ({
     <View style={styles.filters_container}>
       <FlatList
         data={data}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         renderItem={({ item }) => {
           return (
             <FiltersItem
@@ -23,7 +34,6 @@ export const FiltersItemList = ({
         }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        AssetsCard
       />
     </View>
   );

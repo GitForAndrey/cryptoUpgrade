@@ -1,9 +1,14 @@
-import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import React, { FunctionComponent } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import { AssetsCardEmpty } from './AssetsCardEmpty';
 import { AssetsCard } from './AssetsCard';
+import { Coin } from '../types/coinTypes';
 
-export const AssetsCardList = ({ data }) => {
+interface AssetsCardListProps {
+  data:Coin[]
+}
+
+export const AssetsCardList: FunctionComponent<AssetsCardListProps> = ({ data }) => {
   return (
     <FlatList
       data={data}

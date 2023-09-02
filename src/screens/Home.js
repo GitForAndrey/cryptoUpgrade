@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     height: 165,
   },
   market_container: {
+    flex: 1,
     paddingBottom: 80,
     paddingHorizontal: 15,
   },

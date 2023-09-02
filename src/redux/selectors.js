@@ -26,10 +26,10 @@ export const isCoinWishlist = createSelector(
   },
 );
 
-export const isCoinInAssets = createSelector(
+export const valueInAssets = createSelector(
   [selectAssetsCoinsData, selectActiveCoin],
   (sliceData, selectedCoin) => {
     let isInAssets = sliceData?.find(item => item.id === selectedCoin?.id);
-    return isInAssets ? isInAssets.quantity : false;
+    return isInAssets ? isInAssets.quantity : 0;
   },
 );

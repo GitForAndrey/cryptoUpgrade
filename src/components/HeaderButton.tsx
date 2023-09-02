@@ -1,13 +1,19 @@
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import { TouchableOpacity, StyleSheet,StyleProp,ViewStyle } from 'react-native';
+import React, {FunctionComponent} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, SIZES } from '../constants';
 
-export const HeaderButton = ({ icon, style, handleOnPress }) => {
+interface HeaderButtonProps {
+  icon:string,
+  style:StyleProp<ViewStyle>,
+  handleOnPress: (() => void | undefined),
+}
+
+export const HeaderButton: FunctionComponent<HeaderButtonProps> = ({ icon, style, handleOnPress }) => {
   return (
     <TouchableOpacity
       onPress={() => handleOnPress()}
-      style={{ ...styles.container, ...style }}>
+      style={[styles.container, style ]}>
       <Ionicons name={icon} size={26} color={COLORS.white} />
     </TouchableOpacity>
   );

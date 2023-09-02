@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, FONTS, SIZES } from '../constants';
 import { useNavigation } from '@react-navigation/native';
 
-export const AssetsCardEmpty = () => {
+export const AssetsCardEmpty: FunctionComponent = () => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity

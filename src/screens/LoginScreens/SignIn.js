@@ -14,7 +14,7 @@ import { COLORS, FONTS, GLOB_STYLE } from '../../constants';
 import { FormButton } from '../../components/FormButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLoading, userSignIn } from '../../redux/features/authSlice';
-import { InputField } from '../../components/InputField';
+import { InputField } from '../../components/FormikInputField';
 
 const SignInSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),

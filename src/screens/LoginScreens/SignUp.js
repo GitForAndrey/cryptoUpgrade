@@ -9,7 +9,7 @@ import {
   userRegistration,
 } from '../../redux/features/authSlice';
 import { FormButton } from '../../components/FormButton';
-import { InputField } from '../../components/InputField';
+import { InputField } from '../../components/FormikInputField';
 
 const validationSchema = yup.object().shape({
   name: yup.string().min(4).required(),

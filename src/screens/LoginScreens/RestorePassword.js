@@ -3,7 +3,7 @@ import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { GLOB_STYLE } from '../../constants';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { InputField } from '../../components/InputField';
+import { InputField } from '../../components/FormikInputField';
 import { FormButton } from '../../components/FormButton';
 
 const RestoreSchema = yup.object().shape({

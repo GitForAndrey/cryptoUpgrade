@@ -1,8 +1,12 @@
-import React from 'react';
+import React,{ FunctionComponent} from 'react';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { COLORS } from '../constants';
 
-export const LoadingIndicator = ({ indicatorSize = 'small' }) => {
+interface LoadingIndicatorProps {
+  indicatorSize: 'large' | 'small',
+}
+
+export const LoadingIndicator:FunctionComponent<LoadingIndicatorProps> = ({ indicatorSize = 'small' }) => {
   return (
     <View style={styles.indicator_container}>
       <ActivityIndicator size={indicatorSize} color={COLORS.white} />

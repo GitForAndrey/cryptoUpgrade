@@ -1,10 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 import { Chart } from './Chart';
 import { COLORS, FONTS, SIZES } from '../constants';
+import { Coin } from '../types/coinTypes';
 
-export const ScrollListItem = React.memo(({ coin }) => {
+interface ScrollListItemProps {
+  coin: Coin,
+}
+
+export const ScrollListItem:FunctionComponent<ScrollListItemProps> = React.memo(({ coin }) => {
   const navigation = useNavigation();
 
   let percentage_24h = coin.price_change_percentage_24h

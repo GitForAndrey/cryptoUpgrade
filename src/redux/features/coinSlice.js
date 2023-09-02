@@ -32,7 +32,6 @@ export const getSearchCoin = createAsyncThunk(
   async (coinId, { rejectWithValue }) => {
     try {
       const response = await getDataRequest(searchCoinQuery(coinId));
-      console.log(response);
       return response[0];
     } catch (error) {
       console.log(error);

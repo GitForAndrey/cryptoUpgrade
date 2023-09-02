@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FunctionComponent} from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { FONTS } from '../constants';
 
-export const HeaderTextLeft = ({ userName }) => {
+interface HeaderTextLeftProps {
+  userName: string,
+}
+
+export const HeaderTextLeft:FunctionComponent<HeaderTextLeftProps> = ({ userName }) => {
   return (
     <View>
       <Text style={styles.textHome}>Hello, {userName}!</Text>

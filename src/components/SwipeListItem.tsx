@@ -1,11 +1,22 @@
-import React from 'react';
+import React,{FunctionComponent} from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch } from 'react-redux';
 import { COLORS, FONTS, SIZES } from '../constants';
+import { Coin } from '../types/coinTypes';
 
-export const SwipeListItem = ({
+interface SwipeListItemProps {
+  data: Coin,
+  renderItemComponent: FunctionComponent<any>,
+  onAddFunc:(() => void | undefined),
+  onDelFunc:(() => void | undefined),
+  isWishlistPage?:boolean,
+  isWalletPage?:boolean,
+  onLoadMore: () => Promise<void>,
+}
+
+export const SwipeListItem:FunctionComponent<SwipeListItemProps> = ({
   data,
   renderItemComponent,
   onAddFunc,

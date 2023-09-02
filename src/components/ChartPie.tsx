@@ -1,8 +1,17 @@
-import React from 'react';
+import React,{FunctionComponent} from 'react';
 import { PieChart } from 'react-native-svg-charts';
 import { StyleSheet } from 'react-native';
+import { Coin } from '../types/coinTypes';
 
-export const ChartPie = ({ assetsCoinData }) => {
+interface AssetsCoin extends Coin {
+  quantity:number,
+  fillColor:string,
+}
+interface ChartPieProps  {
+  assetsCoinData:AssetsCoin[],
+}
+
+export const ChartPie:FunctionComponent<ChartPieProps> = ({ assetsCoinData }) => {
   let chartData = assetsCoinData.map(item => {
     return {
       key: item.id,
