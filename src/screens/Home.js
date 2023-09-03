@@ -89,7 +89,7 @@ export const HomeScreen = ({ navigation }) => {
         {!marketCoinsLoadingInitial ? (
           <SwipeListItem
             data={marketCoinsData}
-            renderItemComponent={ScrollListItem}
+            RenderItemComponent={ScrollListItem}
             onAddFunc={saveWishlistCoinsFirebase}
             onDelFunc={delWishlistCoinsFirebase}
             onLoadMore={loadMoreData}

@@ -1,16 +1,33 @@
 // InputField.js
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import {
   View,
   TextInput,
   Text,
   TouchableOpacity,
   StyleSheet,
+  KeyboardTypeOptions,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, FONTS, SIZES } from '../constants';
 
-export const InputField = ({
+interface InputFieldProps {
+  iconName:string,
+  placeholder:string,
+  value:string,
+  onChangeText: (text: string) => void,
+  onBlur: () => void,
+  secureTextEntry:boolean,
+  showPassword:boolean,
+  toggleShowPassword: () => void,
+  errorText?: string | undefined,
+  keyboardType?: KeyboardTypeOptions | undefined,
+  autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined,
+  autoCorrect?:boolean,
+  secondIcon?:boolean,
+}
+
+export const InputField:FunctionComponent<InputFieldProps> = ({
   iconName,
   placeholder,
   value,

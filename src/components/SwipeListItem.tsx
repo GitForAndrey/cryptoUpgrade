@@ -1,14 +1,13 @@
 import React,{FunctionComponent} from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {StyleSheet } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useDispatch } from 'react-redux';
-import { COLORS, FONTS, SIZES } from '../constants';
-import { Coin } from '../types/coinTypes';
+import { COLORS } from '../constants';
+import { WithWishlistCoin } from '../types/coinTypes';
+import { SwipeHiddenItem } from './SwipeHiddenItem';
 
 interface SwipeListItemProps {
-  data: Coin,
-  renderItemComponent: FunctionComponent<any>,
+  data: WithWishlistCoin[],
+  RenderItemComponent: FunctionComponent<any>,
   onAddFunc:(() => void | undefined),
   onDelFunc:(() => void | undefined),
   isWishlistPage?:boolean,
@@ -18,29 +17,15 @@ interface SwipeListItemProps {
 
 export const SwipeListItem:FunctionComponent<SwipeListItemProps> = ({
   data,
-  renderItemComponent,
+  RenderItemComponent,
   onAddFunc,
   onDelFunc,
   isWishlistPage = false,
   isWalletPage = false,
   onLoadMore,
 }) => {
-  let dispatch = useDispatch();
-  const RenderItemComponent = renderItemComponent;
-  const renderItem = (item, func, color, iconName, text) => (
-    <TouchableOpacity
-      onPress={() => dispatch(func(item))}
-      style={{
-        ...styles.rightAction,
-        backgroundColor: color,
-        height: isWalletPage ? 75 : 55,
-      }}
-      activeOpacity={0.8}>
-      <Icon name={iconName} size={24} style={styles.icon} />
-      <Text style={styles.text}>{text}</Text>
-    </TouchableOpacity>
-  );
-
+const colorAdd = COLORS.itemColorAdd;
+const colorDel = COLORS.itemColorDel;
   return (
     <SwipeListView
       useFlatList={true}
@@ -50,15 +35,9 @@ export const SwipeListItem:FunctionComponent<SwipeListItemProps> = ({
       )}
       keyExtractor={item => item.id}
       renderHiddenItem={({ item }) =>
-        item.isWishlist || isWishlistPage || isWalletPage
-          ? renderItem(item, onDelFunc, COLORS.itemColorAdd, 'close', 'Del')
-          : renderItem(
-              item,
-              onAddFunc,
-              COLORS.itemColorDel,
-              'star-outline',
-              'Add',
-            )
+        (item.isWishlist || isWishlistPage || isWalletPage)
+          ? <SwipeHiddenItem item={item} handleOnPress={onDelFunc} color={colorAdd} iconName ={'close'}  title={'Del'} isWalletPage={isWalletPage} />
+          : <SwipeHiddenItem item={item} handleOnPress={onAddFunc} color={colorDel} iconName={'star-outline'} title={'Add'} isWalletPage={isWalletPage} />
       }
       rightOpenValue={-75}
       disableRightSwipe={true}
@@ -69,18 +48,5 @@ export const SwipeListItem:FunctionComponent<SwipeListItemProps> = ({
 };
 
 const styles = StyleSheet.create({
-  rightAction: {
-    position: 'absolute',
-    right: 0,
-    borderRadius: SIZES.radius + 1,
-    width: 75,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    color: COLORS.white,
-  },
-  text: {
-    ...FONTS.textRegular,
-  },
+  
 });

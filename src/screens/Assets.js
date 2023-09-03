@@ -50,7 +50,7 @@ export const AssetsScreen = () => {
         {assetsCoinData?.length ? (
           <SwipeListItem
             data={assetsCoinData}
-            renderItemComponent={AssetsItem}
+            RenderItemComponent={AssetsItem}
             onDelFunc={deleteAssetsFirebase}
             isWalletPage={true}
           />

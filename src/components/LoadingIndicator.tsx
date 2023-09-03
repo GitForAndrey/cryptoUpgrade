@@ -3,7 +3,7 @@ import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { COLORS } from '../constants';
 
 interface LoadingIndicatorProps {
-  indicatorSize: 'large' | 'small',
+  indicatorSize?: 'large' | 'small',
 }
 
 export const LoadingIndicator:FunctionComponent<LoadingIndicatorProps> = ({ indicatorSize = 'small' }) => {

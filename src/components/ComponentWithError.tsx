@@ -3,7 +3,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-export const ComponentWithError: FunctionComponent = props => {
+interface ComponentWithErrorProps {
+  resetError:(()=> void)
+}
+
+export const ComponentWithError: FunctionComponent<ComponentWithErrorProps> = ({resetError}) => {
   return (
     <View style={styles.container}>
       <Icon name={'flower-outline'} size={38} color={COLORS.orange} />
@@ -16,7 +20,7 @@ export const ComponentWithError: FunctionComponent = props => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => props.resetError()}>
+        onPress={() => resetError()}>
         <Text style={styles.buttonText}>OK</Text>
       </TouchableOpacity>
     </View>

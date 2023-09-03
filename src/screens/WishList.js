@@ -32,7 +32,7 @@ export const WishListScreen = () => {
         ) : wishlistData.length ? (
           <SwipeListItem
             data={wishlistData}
-            renderItemComponent={ScrollListItem}
+            RenderItemComponent={ScrollListItem}
             onAddFunc={saveWishlistCoinsFirebase}
             onDelFunc={delWishlistCoinsFirebase}
             isWishlistPage={true}

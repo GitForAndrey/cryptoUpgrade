@@ -12,3 +12,7 @@ export interface SearchCoin extends Coin {
     thumb:string,
     market_cap_rank:number | null,
 };
+
+export interface WithWishlistCoin extends Coin {
+  isWishlist: boolean,
+};

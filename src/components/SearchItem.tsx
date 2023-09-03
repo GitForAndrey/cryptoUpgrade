@@ -9,7 +9,7 @@ interface SearchItemProps {
   coin: SearchCoin,
 }
 
-export const SearchItem:FunctionComponent< SearchItemProps> = React.memo(({ coin }) => {
+export const SearchItem:FunctionComponent<SearchItemProps> = React.memo(({ coin }) => {
   const navigation = useNavigation();
   const onPressHandle = () => {
     navigation.navigate('Coin', {
