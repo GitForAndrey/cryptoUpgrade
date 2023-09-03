@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FunctionComponent } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -15,6 +15,8 @@ import { FormButton } from '../../components/FormButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLoading, userSignIn } from '../../redux/features/authSlice';
 import { InputField } from '../../components/FormikInputField';
+import { AuthStackParamList } from '../../navigation/authStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const SignInSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -24,7 +26,9 @@ const SignInSchema = yup.object().shape({
     .required('Password is required'),
 });
 
-export const SignInScreen = ({ navigation }) => {
+type Props = NativeStackScreenProps<AuthStackParamList, 'SignIn'>
+
+export const SignInScreen:FunctionComponent<Props> = ({ navigation }) => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(true);
   const loading = useSelector(selectLoading);

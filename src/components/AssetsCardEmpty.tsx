@@ -2,10 +2,11 @@ import React, { FunctionComponent } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, FONTS, SIZES } from '../constants';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { MainStackParamList } from '../navigation/mainStack';
 
 export const AssetsCardEmpty: FunctionComponent = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<MainStackParamList, 'Search'>>();
   return (
     <TouchableOpacity
       activeOpacity={0.6}

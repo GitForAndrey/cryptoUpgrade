@@ -2,13 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 import { Chart } from './Chart';
 import { COLORS, FONTS, SIZES } from '../constants';
-import { Coin } from '../types/coinTypes';
+import { AssetsCoin } from '../types/coinTypes';
 
-interface AssetsCoin extends Coin {
-  coinBuyPrice:number,
-  quantity:number,
-  fillColor:string,
-}
+
 interface AssetsItemProps  {
   coin:AssetsCoin,
 }

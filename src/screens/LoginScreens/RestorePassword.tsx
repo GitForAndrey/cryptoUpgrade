@@ -1,4 +1,4 @@
-import React from 'react';
+import Reactfrom 'react';
 import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { GLOB_STYLE } from '../../constants';
 import { Formik } from 'formik';
@@ -9,7 +9,8 @@ import { FormButton } from '../../components/FormButton';
 const RestoreSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
 });
-const handleOnSubmit = values => {
+const handleOnSubmit = (values: any) => {
+  console.log(values)
   //dispatch(userSignIn(values));
   //Keyboard.dismiss();
 };

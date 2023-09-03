@@ -11,10 +11,18 @@ import { COLORS, GLOB_STYLE } from '../constants';
 import { StyleSheet, View } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { HeaderButton } from '../components/HeaderButton';
+import { string } from 'yup';
 
-const Tabs = createBottomTabNavigator();
+export type BottomTabStackParamList = {
+  Home: undefined;
+  Assets:undefined;
+  Wishlist:undefined;
+  Settings:undefined;
+};
 
-function getTabIcon(routeName, focused) {
+const Tabs = createBottomTabNavigator<BottomTabStackParamList>();
+
+function getTabIcon(routeName:string, focused: boolean) {
   if (routeName === 'Home') {
     return focused ? 'home' : 'home-outline';
   } else if (routeName === 'Assets') {
@@ -39,7 +47,7 @@ const renderHeaderButtons = navigation => (
     />
   </View>
 );
-const renderTabBarIcon = (routeName, focused, color) => (
+const renderTabBarIcon = (routeName: string, focused:boolean, color:string) => (
   <Icon
     name={getTabIcon(routeName, focused)}
     size={24}
@@ -99,7 +107,7 @@ export const BottomTabs = () => {
       <Tabs.Screen
         name="Settings"
         component={SettingsScreen}
-        options={({ navigation, route }) => ({
+        options={({ route }) => ({
           tabBarIcon: ({ color, focused }) =>
             renderTabBarIcon(route.name, focused, color),
         })}

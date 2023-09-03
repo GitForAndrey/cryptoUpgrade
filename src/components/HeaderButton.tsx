@@ -5,7 +5,7 @@ import { COLORS, SIZES } from '../constants';
 
 interface HeaderButtonProps {
   icon:string,
-  style:StyleProp<ViewStyle>,
+  style?:StyleProp<ViewStyle>,
   handleOnPress: (() => void | undefined),
 }
 

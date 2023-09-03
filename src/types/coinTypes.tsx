@@ -6,13 +6,19 @@ export interface Coin {
     sparkline_in_7d:{price:[]} | null,
     price_change_percentage_24h:number | null,
     current_price:number,
-  };
+  }
 
 export interface SearchCoin extends Coin {
     thumb:string,
     market_cap_rank:number | null,
-};
+}
 
 export interface WithWishlistCoin extends Coin {
   isWishlist: boolean,
-};
+}
+
+export interface AssetsCoin extends Coin {
+  coinBuyPrice:number,
+  quantity:number,
+  fillColor:string,
+}

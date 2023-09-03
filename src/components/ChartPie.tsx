@@ -1,12 +1,9 @@
 import React,{FunctionComponent} from 'react';
 import { PieChart } from 'react-native-svg-charts';
 import { StyleSheet } from 'react-native';
-import { Coin } from '../types/coinTypes';
+import { AssetsCoin } from '../types/coinTypes';
 
-interface AssetsCoin extends Coin {
-  quantity:number,
-  fillColor:string,
-}
+
 interface ChartPieProps  {
   assetsCoinData:AssetsCoin[],
 }

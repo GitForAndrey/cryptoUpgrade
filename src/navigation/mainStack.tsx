@@ -1,10 +1,17 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { BottomTabs } from './bottomTabs';
+import { BottomTabStackParamList, BottomTabs } from './bottomTabs';
 import { CoinScreen, NotificationScreen, SearchScreen } from '../screens';
 import { GLOB_STYLE } from '../constants';
 import { HeaderButton } from '../components/HeaderButton';
+
+export type MainStackParamList = {
+  Main: BottomTabStackParamList;
+  Coin:{ coinId: string };
+  Search:undefined;
+  Notification:undefined;
+};
 
 const renderBackButton = navigation => (
   <HeaderButton
@@ -13,7 +20,7 @@ const renderBackButton = navigation => (
   />
 );
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<MainStackParamList>();
 
 export const MainStackNav = () => (
   <NavigationContainer>

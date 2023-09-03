@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,FunctionComponent } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ChartCoin } from '../components/ChartCoin';
@@ -23,8 +23,12 @@ import { AssetsCoinAdd } from '../components/AssetsCoinAdd';
 import { HeaderButton } from '../components/HeaderButton';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { FiltersItemList } from '../components/FiltersItemList';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { MainStackParamList } from '../navigation/mainStack';
 
-export const CoinScreen = ({ route }) => {
+type Props = NativeStackScreenProps<MainStackParamList, 'Coin'>
+
+export const CoinScreen:FunctionComponent<Props> = ({ route }) => {
   const { coinId } = route.params;
   const dispatch = useDispatch();
   const [activeFilter, setActiveFilter] = useState('7');

@@ -10,7 +10,7 @@ interface FiltersElement {
 interface FiltersItemListProps {
   data:FiltersElement[],
   activeFilter:string,
-  handleFilterOnPress: (() => void | undefined),
+  handleFilterOnPress: (value: string) => void,
 }
 
 export const FiltersItemList: FunctionComponent<FiltersItemListProps> = ({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FunctionComponent } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -28,8 +28,12 @@ import {
   saveWishlistCoinsFirebase,
 } from '../redux/features/wishlistSlice';
 import { getMarketsCoinWithWishlist } from '../redux/selectors';
+import { BottomTabStackParamList } from '../navigation/bottomTabs';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export const HomeScreen = ({ navigation }) => {
+type Props = NativeStackScreenProps<BottomTabStackParamList, 'Home'>
+
+export const HomeScreen:FunctionComponent<Props> = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [activeFilter, setActiveFilter] = useState(filtersMarketCoins[0].id);
@@ -63,7 +67,7 @@ export const HomeScreen = ({ navigation }) => {
     }
   };
 
-  const handleFilterOnPress = value => {
+  const handleFilterOnPress = (value:string) => {
     setActiveFilter(value);
     dispatch(getMarketCoins({ filter: value, page: 1 }));
   };

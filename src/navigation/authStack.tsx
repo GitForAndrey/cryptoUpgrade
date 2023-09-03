@@ -5,6 +5,13 @@ import { RestorePasswordScreen, SignInScreen, SignUpScreen } from '../screens';
 import { GLOB_STYLE } from '../constants';
 import { HeaderButton } from '../components/HeaderButton';
 
+export type AuthStackParamList = {
+  SignIn: undefined;
+  SignUp:undefined;
+  RestorePassword:undefined;
+};
+
+
 const renderBackButton = navigation => (
   <HeaderButton
     icon={'chevron-back-outline'}
@@ -12,7 +19,7 @@ const renderBackButton = navigation => (
   />
 );
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 export const AuthTabs = () => (
   <NavigationContainer>
