@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { COLORS, SIZES } from '../constants';
 import { saveAssetsFirebase } from '../redux/features/assetsSlice';
 import { FormButton } from './FormButton';
 import { Coin } from '../types/coinTypes';
 import { CoinInput } from './CoinInput';
+import { useAppDispatch } from '../redux/store';
 
 interface AssetsCoinAddProps {
   coin: Coin,
@@ -13,14 +13,18 @@ interface AssetsCoinAddProps {
 }
 
 export const AssetsCoinAdd:FunctionComponent<AssetsCoinAddProps> = ({ coin, inAssets }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isOpen, onSetIsOpen] = useState(false);
-  const [coinPriceInput, setCoinPriceInput] = useState(`${coin.current_price}`);
+  const [coinPriceInput, setCoinPriceInput] = useState(`${coin.current_price}` || '0');
   const [quantityInput, setQuantityInput] = useState('');
 
   const handleAddAsset = () => {
+
     if (coinPriceInput && quantityInput) {
-      dispatch(saveAssetsFirebase({ coinPriceInput, quantityInput, coin }));
+      const parsedCoinPrice = parseFloat(coinPriceInput);
+      const parsedQuantity = parseFloat(quantityInput);
+
+      dispatch(saveAssetsFirebase({ parsedCoinPrice, parsedQuantity, coin }));
     }
   };
 

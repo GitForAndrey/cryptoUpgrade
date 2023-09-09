@@ -5,7 +5,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ChartPie } from '../components/ChartPie';
 
 import { COLORS, FONTS, GLOB_STYLE } from '../constants';
-import { useSelector } from 'react-redux';
 import { SwipeListItem } from '../components/SwipeListItem';
 import {
   deleteAssetsFirebase,
@@ -14,11 +13,12 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { LogBox } from 'react-native';
 import { ContentTitle } from '../components/ContentTitle';
+import { useAppSelector } from '../redux/store';
 
 export const AssetsScreen = () => {
   LogBox.ignoreAllLogs();
   const navigation = useNavigation();
-  let assetsCoinData = useSelector(selectAssetsCoinsData);
+  let assetsCoinData = useAppSelector(selectAssetsCoinsData);
 
   const totalPrice = assetsCoinData
     ?.reduce((acc, item) => acc + item.current_price * item.quantity, 0)

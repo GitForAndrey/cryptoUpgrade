@@ -3,13 +3,13 @@ import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { GLOB_STYLE } from '../../constants';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   selectLoading,
   userRegistration,
 } from '../../redux/features/authSlice';
 import { FormButton } from '../../components/FormButton';
 import { InputField } from '../../components/FormikInputField';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 const validationSchema = yup.object().shape({
   name: yup.string().min(4).required(),
@@ -18,8 +18,8 @@ const validationSchema = yup.object().shape({
 });
 
 export const SignUpScreen = () => {
-  const dispatch = useDispatch();
-  const loading = useSelector(selectLoading);
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector(selectLoading);
   const [showPassword, setShowPassword] = useState(true);
   const toggleShowPassword = () => setShowPassword(!showPassword);
 

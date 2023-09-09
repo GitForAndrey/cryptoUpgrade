@@ -12,11 +12,11 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { COLORS, FONTS, GLOB_STYLE } from '../../constants';
 import { FormButton } from '../../components/FormButton';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectLoading, userSignIn } from '../../redux/features/authSlice';
 import { InputField } from '../../components/FormikInputField';
 import { AuthStackParamList } from '../../navigation/authStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 
 const SignInSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -29,9 +29,9 @@ const SignInSchema = yup.object().shape({
 type Props = NativeStackScreenProps<AuthStackParamList, 'SignIn'>
 
 export const SignInScreen:FunctionComponent<Props> = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showPassword, setShowPassword] = useState(true);
-  const loading = useSelector(selectLoading);
+  const loading = useAppSelector(selectLoading);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
   const handleOnSubmit = values => {

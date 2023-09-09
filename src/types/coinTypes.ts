@@ -3,7 +3,7 @@ export interface Coin {
     image: string,
     symbol: string,
     name:string,
-    sparkline_in_7d:{price:[]} | null,
+    sparkline_in_7d:{price:[]},
     price_change_percentage_24h:number | null,
     current_price:number,
   }
@@ -11,6 +11,8 @@ export interface Coin {
 export interface SearchCoin extends Coin {
     thumb:string,
     market_cap_rank:number | null,
+    api_symbol: string,
+    large: string,
 }
 
 export interface WithWishlistCoin extends Coin {

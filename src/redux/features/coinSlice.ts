@@ -1,45 +1,53 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getDataRequest } from '../../api/api';
 import { coinsChartQuery, searchCoinQuery } from '../../api/queries';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { Coin } from '../../types/coinTypes';
+import { RootState } from '../store';
 
-const initialState = {
+
+type CoinState = {
+  activeCoin: Coin | {},
+  activeCoinChart: number[] | [],
+  loading:boolean,
+}
+
+const initialState : CoinState = {
   activeCoin: {},
   activeCoinChart: [],
   loading: false,
 };
 
-export const getCoinsChart = createAsyncThunk(
+export const getCoinsChart = createAsyncThunk<number[],{filter:string,coin:string },{}>(
   'coin/getCoins',
-  async (data, { rejectWithValue }) => {
+  async ({filter, coin}) => {
     try {
       const response = await getDataRequest(
-        coinsChartQuery(data.coin, data.filter),
+        coinsChartQuery(coin, filter),
       );
-      return response.prices.map(i => i[1]);
-    } catch (error) {
+      return response.prices.map((i:[number, number] )=> i[1]);
+    } catch (error: any) {
       Toast.show({
         type: 'error',
         text2: 'getCoinsChart error: Request failed',
       });
-      return rejectWithValue();
+      throw error;
     }
   },
 );
 
-export const getSearchCoin = createAsyncThunk(
+export const getSearchCoin = createAsyncThunk<Coin,{coinId:string },{}>(
   'coin/getSearchCoin',
-  async (coinId, { rejectWithValue }) => {
+  async (coinId) => {
     try {
       const response = await getDataRequest(searchCoinQuery(coinId));
       return response[0];
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
       Toast.show({
         type: 'error',
         text2: 'getSearchCoin error: Request failed',
       });
-      return rejectWithValue();
+      throw error;
     }
   },
 );
@@ -56,19 +64,19 @@ const coinSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getCoinsChart.pending, state => {
-        // state.loading = 'loading';
+        state.loading = true;
       })
       .addCase(getCoinsChart.fulfilled, (state, action) => {
-        // state.loading = 'succeeded';
+        state.loading = false;
         state.activeCoinChart = action.payload;
       })
       .addCase(getCoinsChart.rejected, state => {
-        // state.loading = 'failed';
+        state.loading = false;
       })
       .addCase(getSearchCoin.pending, state => {
         state.loading = true;
       })
-      .addCase(getSearchCoin.fulfilled, (state, action) => {
+      .addCase(getSearchCoin.fulfilled, (state, action: PayloadAction<Coin>) => {
         state.activeCoin = action.payload;
         state.activeCoinChart = action.payload.sparkline_in_7d.price;
         state.loading = false;
@@ -79,9 +87,9 @@ const coinSlice = createSlice({
   },
 });
 
-export const selectCoinsChart = state => state.coin.activeCoinChart;
-export const selectActiveCoin = state => state.coin.activeCoin;
-export const selectCoinLoading = state => state.coin.loading;
+export const selectCoinsChart = (state:RootState) => state.coin.activeCoinChart;
+export const selectActiveCoin = (state:RootState) => state.coin.activeCoin;
+export const selectCoinLoading = (state:RootState) => state.coin.loading;
 
 export const { resetActiveCoin } = coinSlice.actions;
 

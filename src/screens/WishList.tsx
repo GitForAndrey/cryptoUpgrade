@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { COLORS, GLOB_STYLE } from '../constants';
 import { ScrollListItem } from '../components/ScrollListItem';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   delWishlistCoinsFirebase,
   getWishlistCoins,
@@ -12,11 +11,12 @@ import {
 } from '../redux/features/wishlistSlice';
 import { SwipeListItem } from '../components/SwipeListItem';
 import { LoadingIndicator } from '../components/LoadingIndicator';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 
 export const WishListScreen = () => {
-  const dispatch = useDispatch();
-  const wishlistLoading = useSelector(getWishlistLoading);
-  const wishlistData = useSelector(selectWishlistCoins);
+  const dispatch = useAppDispatch();
+  const wishlistLoading = useAppSelector(getWishlistLoading);
+  const wishlistData = useAppSelector(selectWishlistCoins);
 
   useEffect(() => {
     if (wishlistData.length) {

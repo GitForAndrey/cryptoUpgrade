@@ -10,7 +10,7 @@ export const HeaderTextLeft:FunctionComponent<HeaderTextLeftProps> = ({ userName
   return (
     <View>
       <Text style={styles.textHome}>Hello, {userName}!</Text>
-      <Text style={styles.textHome}>Wellcome to CryptoApp</Text>
+      <Text style={styles.textHome}>Welcome to CryptoApp</Text>
     </View>
   );
 };

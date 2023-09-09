@@ -7,6 +7,7 @@ import coinSlice from './features/coinSlice';
 
 import logger from 'redux-logger';
 import searchSlice from './features/searchSlice';
+import { useSelector,TypedUseSelectorHook, useDispatch } from 'react-redux';
 
 const rootReducer = {
   marketCoin: marketCoinReducer,
@@ -24,3 +25,9 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type RootDispatch = typeof store.dispatch;
+
+export const useAppSelector : TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch: () => RootDispatch = useDispatch;

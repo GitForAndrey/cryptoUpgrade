@@ -1,6 +1,5 @@
-import React, { useState, useEffect, FunctionComponent } from 'react';
+import React, { useState, useEffect,useMemo, FunctionComponent } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { HeaderTextLeft } from '../components/HeaderTextLeft';
@@ -19,6 +18,7 @@ import {
 import { selectUser } from '../redux/features/authSlice';
 import {
   fetchAssetsFromFirebase,
+  getAssetsCoins,
   getAssetsLoading,
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';
@@ -30,25 +30,30 @@ import {
 import { getMarketsCoinWithWishlist } from '../redux/selectors';
 import { BottomTabStackParamList } from '../navigation/bottomTabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 
 type Props = NativeStackScreenProps<BottomTabStackParamList, 'Home'>
 
 export const HomeScreen:FunctionComponent<Props> = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [activeFilter, setActiveFilter] = useState(filtersMarketCoins[0].id);
   const [page, setPage] = useState(1);
 
-  const marketCoinsData = useSelector(getMarketsCoinWithWishlist);
-  const marketCoinsLoadingInitial = useSelector(getMarketLoadingInitial);
-  const marketCoinsLoadingAdditional = useSelector(getMarketLoadingAdditional);
-  const activeUser = useSelector(selectUser);
-  const assetsCoinsData = useSelector(selectAssetsCoinsData);
-  const assetsCoinsLoading = useSelector(getAssetsLoading);
+  const marketCoinsData = useAppSelector(getMarketsCoinWithWishlist);
+  const marketCoinsLoadingInitial = useAppSelector(getMarketLoadingInitial);
+  const marketCoinsLoadingAdditional = useAppSelector(getMarketLoadingAdditional);
+  const activeUser = useAppSelector(selectUser);
+  const assetsCoinsData = useAppSelector(selectAssetsCoinsData);
+  const assetsCoinsLoading = useAppSelector(getAssetsLoading);
+
+  const HeaderTitle = useMemo(() => {
+    return <HeaderTextLeft userName={activeUser?.displayName || 'friend'} />;
+  }, [activeUser]);
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: () => <HeaderTextLeft userName={activeUser.displayName} />,
+      headerTitle: () =>  HeaderTitle,
     });
   }, []);
 
@@ -57,7 +62,7 @@ export const HomeScreen:FunctionComponent<Props> = ({ navigation }) => {
       dispatch(fetchAssetsFromFirebase());
       dispatch(fetchWishlistFromFirebase());
     });
-  }, []);
+  }, [dispatch]);
 
   const loadMoreData = async () => {
     const nextPage = page + 1;

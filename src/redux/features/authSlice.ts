@@ -1,18 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction,Dispatch } from '@reduxjs/toolkit';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-toast-message';
+import { RootState } from '../store';
 
-const initialState = {
-  user: {}, // null || {displayName:'Satoshi', email:'test@test.ua', uid:'sdf8dsf7sdf78' }
+export type User = {
+  displayName:string,
+  email:string,
+  uid:string,
+}
+export type UserState = {
+  user: User | null,
+  loading: boolean,
+}
+
+const initialState: UserState = {
+  user: null, // null | {displayName:'Satoshi', email:'test@test.ua', uid:'sdf8dsf7sdf78' }
   loading: false, // false/true
 };
 
-export const userRegistration = createAsyncThunk(
+export const userRegistration = createAsyncThunk<User,{name: string, email:string, password: string }, {}>(
   'auth/userRegistration',
-  async (payload, { rejectWithValue }) => {
-    const { name, email, password } = payload;
+  async ({ name, email, password }) => {
     try {
       const userCredential = await auth().createUserWithEmailAndPassword(
         email,
@@ -33,36 +43,34 @@ export const userRegistration = createAsyncThunk(
         text2: 'Successful new user registration!',
       });
 
-      return { uid: user.uid, email: user.email, displayName: name };
-    } catch (error) {
+      return { uid: user.uid, email: user.email || '', displayName: name };
+    } catch (error:any) {
       if (error.code === 'auth/email-already-in-use') {
         Toast.show({
           type: 'error',
           text2: 'This email address is already in use!',
         });
-        return rejectWithValue();
+        throw error;
       } else if (error.code === 'auth/invalid-email') {
         Toast.show({
           type: 'error',
           text2: 'Invalid email address, try another!',
         });
-        return rejectWithValue();
+        throw error;
       } else {
         console.error(error);
         Toast.show({
           type: 'error',
           text2: 'Registration error!',
         });
-        return rejectWithValue();
+        throw error;
       }
     }
   },
 );
-export const userSignIn = createAsyncThunk(
+export const userSignIn = createAsyncThunk<User,{email:string, password: string }, {dispatch:Dispatch}>(
   'auth/userSignIn',
-  async (payload, { rejectWithValue }) => {
-    const { email, password } = payload;
-
+  async ({ email, password }) => {
     try {
       const { user } = await auth().signInWithEmailAndPassword(email, password);
 
@@ -70,42 +78,41 @@ export const userSignIn = createAsyncThunk(
       await AsyncStorage.setItem(
         'user',
         JSON.stringify({
-          displayName: user.displayName,
-          email: user.email,
+          displayName: user.displayName || '',
+          email: user.email || '',
           uid: user.uid,
         }),
       );
       return {
         uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
+        email: user.email || '',
+        displayName: user.displayName || '',
       };
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'auth/wrong-password' || 'auth/user-not-found') {
         Toast.show({
           type: 'error',
           text2: 'Invalid password or email!',
         });
-        return rejectWithValue();
+        throw error;
       } else {
         Toast.show({
           type: 'error',
           text2: 'Login failed, try again later!',
         });
-        return rejectWithValue();
+        throw error;
       }
     }
   },
 );
-export const checkAuthUser = createAsyncThunk(
+export const checkAuthUser = createAsyncThunk<void,void, {dispatch:Dispatch}>(
   'auth/checkAuthUser',
   async (_, { dispatch }) => {
     try {
       const userJSON = await AsyncStorage.getItem('user');
-      const user = JSON.parse(userJSON);
-      console.log('setUserFromStorage', user);
-      if (user?.uid) {
-        dispatch(setUserFromStorage(user));
+      if (userJSON){
+        const user = JSON.parse(userJSON);
+        user?.uid ? dispatch(setUserFromStorage(user)) : null;
       }
     } catch (error) {
       console.error('Failed to check user:', error);
@@ -117,7 +124,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUserFromStorage(state, action) {
+    setUserFromStorage(state, action: PayloadAction<User>) {
       state.user = action.payload;
     },
     logoutUser(state) {
@@ -129,7 +136,7 @@ const authSlice = createSlice({
       .addCase(userRegistration.pending, state => {
         state.loading = true;
       })
-      .addCase(userRegistration.fulfilled, (state, action) => {
+      .addCase(userRegistration.fulfilled, (state, action: PayloadAction<User>) => {
         state.loading = false;
         state.user = action.payload;
       })
@@ -139,7 +146,7 @@ const authSlice = createSlice({
       .addCase(userSignIn.pending, state => {
         state.loading = true;
       })
-      .addCase(userSignIn.fulfilled, (state, action) => {
+      .addCase(userSignIn.fulfilled, (state, action: PayloadAction<User>) => {
         state.loading = false;
         state.user = action.payload;
       })
@@ -149,8 +156,8 @@ const authSlice = createSlice({
   },
 });
 
-export const selectLoading = state => state.auth.loading;
-export const selectUser = state => state.auth.user;
+export const selectLoading = (state:RootState) => state.auth.loading;
+export const selectUser = (state:RootState) => state.auth.user;
 
 export const { setUserFromStorage, logoutUser } = authSlice.actions;
 

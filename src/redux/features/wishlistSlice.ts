@@ -1,79 +1,85 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction, Dispatch } from '@reduxjs/toolkit';
 import { getDataRequest } from '../../api/api';
 import { wishlistCoinsQuery } from '../../api/queries';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { accessCollectionDb, fetchAccessCollection } from '../../api/firebase';
+import { Coin } from '../../types/coinTypes';
+import { RootState } from '../store';
 
-const initialState = {
+
+type WishlistState = {
+  wishlistCoinsData: {id:string}[] | Coin[],
+  loading: boolean,
+}
+
+const initialState : WishlistState = {
   wishlistCoinsData: [],
   loading: false,
 };
 
-export const getWishlistCoins = createAsyncThunk(
+export const getWishlistCoins = createAsyncThunk<Coin[],{id:string}[] | Coin[],{}>(
   'wishlist/getWishlist',
-  async (coins, { rejectWithValue }) => {
+  async (coins) => {
     let coinsNames = coins.map(item => item.id).join(',');
     try {
       const response = await getDataRequest(wishlistCoinsQuery(coinsNames));
       return response;
-    } catch (error) {
+    } catch (error: any) {
       Toast.show({
         type: 'error',
         text2: 'getWishlistCoins error: Request failed',
       });
-      return rejectWithValue();
+      throw error;
     }
   },
 );
-export const saveWishlistCoinsFirebase = createAsyncThunk(
+export const saveWishlistCoinsFirebase = createAsyncThunk<void,Coin,{state:RootState, dispatch:Dispatch }>(
   'wishlist/saveWishlistCoinsFirebase',
-  async (coin, { getState, rejectWithValue, dispatch }) => {
-    const user = getState().auth.user.uid;
+  async (coin, { getState, dispatch }) => {
+    const userUid = getState().auth.user?.uid;
     try {
-      accessCollectionDb(user, 'wishlist', coin.id, { id: coin.id });
+      accessCollectionDb(userUid, 'wishlist', coin.id, { id: coin.id });
       dispatch(addWishlistCoin(coin));
-    } catch (error) {
+    } catch (error:any) {
       Toast.show({
         type: 'error',
         text2: 'saveWishlistCoinsFirebase error: Request failed',
       });
-      return rejectWithValue();
+      throw error;
     }
   },
 );
-export const delWishlistCoinsFirebase = createAsyncThunk(
+export const delWishlistCoinsFirebase = createAsyncThunk<void,Coin,{state:RootState, dispatch:Dispatch }>(
   'wishlist/delWishlistCoinsFirebase',
-  async (coin, { getState, rejectWithValue, dispatch }) => {
-    const user = getState().auth.user.uid;
+  async (coin, { getState, dispatch }) => {
+    const userUid = getState().auth.user?.uid;
     try {
-      accessCollectionDb(user, 'wishlist', coin.id);
+      accessCollectionDb(userUid, 'wishlist', coin.id);
       dispatch(delWishlistCoin(coin));
-    } catch (error) {
+    } catch (error: any) {
       Toast.show({
         type: 'error',
         text2: 'delWishlistCoinsFirebase error: Request failed',
       });
-      return rejectWithValue();
+      throw error;
     }
   },
 );
-export const fetchWishlistFromFirebase = createAsyncThunk(
+export const fetchWishlistFromFirebase = createAsyncThunk<void,void,{state:RootState, dispatch:Dispatch<any> }>(
   'wishlist/fetchWishlistFromFirebase',
-  async (_, { getState, rejectWithValue, dispatch }) => {
-    const user = getState().auth.user.uid;
+  async (_, { getState, dispatch }) => {
+    const userUid = getState().auth.user?.uid;
     try {
-      let results = await fetchAccessCollection(user, 'wishlist');
+      let results  = await fetchAccessCollection(userUid, 'wishlist');
       if (results.length) {
-        await dispatch(getWishlistCoins(results));
-      } else {
-        return [];
+        dispatch(getWishlistCoins(results));
       }
-    } catch (error) {
+    } catch (error: any) {
       Toast.show({
         type: 'error',
         text2: 'fetchWishlistFromFirebase error: Request failed',
       });
-      return rejectWithValue();
+      throw error;
     }
   },
 );
@@ -82,13 +88,13 @@ const wishlistSlice = createSlice({
   name: 'wishlist',
   initialState,
   reducers: {
-    addWishlistCoin(state, action) {
-      state.wishlistCoinsData.push(action.payload);
-    },
-    delWishlistCoin(state, action) {
+    delWishlistCoin(state, action: PayloadAction<Coin>) {
       state.wishlistCoinsData = state.wishlistCoinsData.filter(
         item => item.id !== action.payload.id,
       );
+    },
+    addWishlistCoin(state, action: PayloadAction<Coin>) {
+      state.wishlistCoinsData.push(action.payload);
     },
   },
   extraReducers(builder) {
@@ -106,8 +112,8 @@ const wishlistSlice = createSlice({
   },
 });
 
-export const selectWishlistCoins = state => state.wishlist.wishlistCoinsData;
-export const getWishlistLoading = state => state.wishlist.loading;
+export const selectWishlistCoins = (state:RootState) => state.wishlist.wishlistCoinsData;
+export const getWishlistLoading = (state:RootState) => state.wishlist.loading;
 
 export const { addWishlistCoin, delWishlistCoin } = wishlistSlice.actions;
 

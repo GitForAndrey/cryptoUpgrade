@@ -1,20 +1,28 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getDataRequest } from '../../api/api';
 import { firstTestQuery, topQuery, secondTestQuery } from '../../api/queries';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { Coin } from '../../types/coinTypes';
+import { RootState } from '../store';
 
-const initialState = {
+type MarketCoinState = {
+  marketCoins: Coin[] | [],
+  loadingInitial: boolean,
+  loadingAdditional: boolean, //additional data
+  filter: string,
+}
+
+const initialState : MarketCoinState = {
   marketCoins: [],
   loadingInitial: false, //first page data loading
   loadingAdditional: false, //additional data
   filter: 'Top100',
 };
 
-export const getMarketCoins = createAsyncThunk(
+export const getMarketCoins = createAsyncThunk<{ data: Coin[], selectedFilter:string },{filter:string, page:number },{}>(
   'marketCoin/getMarketCoins',
-  async (data, { rejectWithValue }) => {
+  async ({ filter, page }) => {
     let url;
-    const { filter, page } = data;
     if (filter === 'Top100') {
       url = topQuery(page);
     } else if (filter === 'Test1') {
@@ -25,13 +33,12 @@ export const getMarketCoins = createAsyncThunk(
     try {
       const response = await getDataRequest(url);
       return { data: response, selectedFilter: filter };
-    } catch (error) {
-      console.log('getMarketCoins error', error);
+    } catch (error:any) {
       Toast.show({
         type: 'error',
         text2: 'getMarketCoins error: Request failed',
       });
-      return rejectWithValue();
+      throw error;
     }
   },
 );
@@ -49,7 +56,7 @@ const marketCoinSlice = createSlice({
           state.loadingAdditional = true;
         }
       })
-      .addCase(getMarketCoins.fulfilled, (state, action) => {
+      .addCase(getMarketCoins.fulfilled, (state, action: PayloadAction<{ data: Coin[], selectedFilter:string }>) => {
         state.loadingInitial = false;
         state.loadingAdditional = false;
         if (state.filter === action.payload.selectedFilter) {
@@ -66,9 +73,9 @@ const marketCoinSlice = createSlice({
   },
 });
 
-export const selectMarketCoins = state => state.marketCoin.marketCoins;
-export const getMarketLoadingInitial = state => state.marketCoin.loadingInitial;
-export const getMarketLoadingAdditional = state =>
+export const selectMarketCoins = (state:RootState) => state.marketCoin.marketCoins;
+export const getMarketLoadingInitial = (state:RootState) => state.marketCoin.loadingInitial;
+export const getMarketLoadingAdditional = (state:RootState) =>
   state.marketCoin.loadingAdditional;
 
 export const {} = marketCoinSlice.actions;

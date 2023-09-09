@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDispatch, useSelector } from 'react-redux';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { COLORS, GLOB_STYLE, SIZES } from '../constants';
 import {
@@ -11,17 +10,18 @@ import {
   selectSearchLoading,
 } from '../redux/features/searchSlice';
 import { SearchItemList } from '../components/SearchItemList';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 
 export const SearchScreen = () => {
-  const dispatch = useDispatch();
+  const dispatch =useAppDispatch();
   const [value, onChangeText] = useState('');
-  const coinData = useSelector(selectSearchData);
-  const searchLoading = useSelector(selectSearchLoading);
+  const coinData = useAppSelector(selectSearchData);
+  const searchLoading = useAppSelector(selectSearchLoading);
 
-  const handleSearch = text => {
-    onChangeText(text);
-    if (text.length >= 3) {
-      dispatch(getSearchData(text));
+  const handleSearch = (search:string) => {
+    onChangeText(search);
+    if (search.length >= 3) {
+      dispatch(getSearchData(search));
     } else {
       dispatch(resetSearchData());
     }

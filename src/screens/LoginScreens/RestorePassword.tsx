@@ -1,4 +1,4 @@
-import Reactfrom 'react';
+import React from 'react';
 import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { GLOB_STYLE } from '../../constants';
 import { Formik } from 'formik';

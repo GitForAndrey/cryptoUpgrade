@@ -3,7 +3,6 @@ import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ChartCoin } from '../components/ChartCoin';
 import { COLORS, FONTS, GLOB_STYLE } from '../constants';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { filtersCoinValue } from '../constants/data';
 import {
@@ -25,19 +24,20 @@ import { LoadingIndicator } from '../components/LoadingIndicator';
 import { FiltersItemList } from '../components/FiltersItemList';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MainStackParamList } from '../navigation/mainStack';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 
 type Props = NativeStackScreenProps<MainStackParamList, 'Coin'>
 
 export const CoinScreen:FunctionComponent<Props> = ({ route }) => {
   const { coinId } = route.params;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [activeFilter, setActiveFilter] = useState('7');
   const navigation = useNavigation();
-  const coinsChartData = useSelector(selectCoinsChart);
-  const isWishlist = useSelector(isCoinWishlist);
-  const valueInAsset = useSelector(valueInAssets);
-  const coin = useSelector(selectActiveCoin);
-  const loading = useSelector(selectCoinLoading);
+  const coinsChartData = useAppSelector(selectCoinsChart);
+  const isWishlist = useAppSelector(isCoinWishlist);
+  const valueInAsset = useAppSelector(valueInAssets);
+  const coin = useAppSelector(selectActiveCoin);
+  const loading = useAppSelector(selectCoinLoading);
 
   useEffect(() => {
     dispatch(getSearchCoin(coinId));

@@ -5,11 +5,11 @@ import { COLORS } from './src/constants';
 import { StatusBar } from 'react-native';
 import { AuthTabs } from './src/navigation/authStack';
 import { MainStackNav } from './src/navigation/mainStack';
-import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthUser, selectUser } from './src/redux/features/authSlice';
+import { useAppDispatch, useAppSelector } from './src/redux/store';
 
 const toastConfig = {
-  success: props => (
+  success: (props:any) => (
     <BaseToast
       {...props}
       style={{ borderLeftColor: COLORS.chartColorGreen }}
@@ -21,7 +21,7 @@ const toastConfig = {
       }}
     />
   ),
-  error: props => (
+  error:  (props:any) => (
     <ErrorToast
       {...props}
       style={{ borderLeftColor: COLORS.chartColorRed }}
@@ -36,8 +36,8 @@ const toastConfig = {
 };
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const isUser = useSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const isUser = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(checkAuthUser()).then(() => {
@@ -48,7 +48,7 @@ export const App = () => {
   return (
     <>
       <StatusBar backgroundColor={COLORS.mainBg} barStyle="light-content" />
-      {isUser?.uid ? <MainStackNav /> : <AuthTabs />}
+      {isUser ? <MainStackNav /> : <AuthTabs />}
       <Toast visibilityTime={3000} config={toastConfig} />
     </>
   );

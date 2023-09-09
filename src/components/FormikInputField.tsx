@@ -22,7 +22,7 @@ interface InputFieldProps {
   toggleShowPassword?: () => void,
   errorText?: string | undefined | false,
   keyboardType?: KeyboardTypeOptions | undefined,
-  autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined,
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | undefined,
   autoCorrect?:boolean,
   secondIcon?:boolean,
 }
