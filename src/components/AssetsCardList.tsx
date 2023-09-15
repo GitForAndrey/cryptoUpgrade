@@ -12,7 +12,7 @@ export const AssetsCardList: FunctionComponent<AssetsCardListProps> = ({ data })
   return (
     <FlatList
       data={data}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={item => item?.id.toString()}
       renderItem={({ item, index }) => {
         return <AssetsCard coin={item} firstStyle={index === 0} />;
       }}

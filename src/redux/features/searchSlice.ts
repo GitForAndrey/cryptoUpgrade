@@ -6,7 +6,7 @@ import { SearchCoin } from '../../types/coinTypes';
 import { RootState } from '../store';
 
 type SearchState = {
-  searchData: SearchCoin[] | [],
+  searchData: SearchCoin[],
   loading: boolean,
 }
 
@@ -15,9 +15,9 @@ const initialState : SearchState = {
   loading: false,
 };
 
-export const getSearchData = createAsyncThunk <SearchCoin[],{search:string },{}>(
+export const getSearchData = createAsyncThunk <SearchCoin[],string,{}>(
   'search/getSearchData',
-  async ({search}) => {
+  async (search) => {
     try {
       const response = await getDataRequest(searchDataQuery(search));
       return response.coins;

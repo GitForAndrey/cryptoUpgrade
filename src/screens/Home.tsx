@@ -18,7 +18,6 @@ import {
 import { selectUser } from '../redux/features/authSlice';
 import {
   fetchAssetsFromFirebase,
-  getAssetsCoins,
   getAssetsLoading,
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';

@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     maxWidth: '38%',
     flexShrink: 1,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   coinImage: {
     width: 30,

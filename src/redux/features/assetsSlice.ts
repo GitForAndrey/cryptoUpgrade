@@ -61,7 +61,6 @@ export const saveAssetsFirebase = createAsyncThunk< void,{ parsedCoinPrice: numb
     { parsedCoinPrice, parsedQuantity, coin },
     { getState, dispatch },
   ) => {
-    console.log(typeof parsedCoinPrice,typeof parsedQuantity,typeof coin);
     const userUid = getState().auth.user?.uid;
     let color = getRandomColor();
     let assetsCoin = {
@@ -106,7 +105,9 @@ export const fetchAssetsFromFirebase = createAsyncThunk<void, void, {state:RootS
     const userId =  getState().auth.user?.uid;
     try {
       let results:GetAssetsCoinsValue[] = await fetchAccessCollection(userId, 'assets');
-      dispatch(getAssetsCoins(results));
+      if (results.length) {
+       dispatch(getAssetsCoins(results));
+      }
     } catch (error:any) {
       Toast.show({
         type: 'error',
@@ -157,6 +158,7 @@ const assetsSlice = createSlice({
       })
       .addCase(fetchAssetsFromFirebase.fulfilled, (state) => {
         state.assetsCoinsData = [];
+        state.loading = false;
       });
   },
 });
