@@ -63,15 +63,8 @@ const coinSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getCoinsChart.pending, state => {
-        state.loading = true;
-      })
       .addCase(getCoinsChart.fulfilled, (state, action) => {
-        state.loading = false;
         state.activeCoinChart = action.payload;
-      })
-      .addCase(getCoinsChart.rejected, state => {
-        state.loading = false;
       })
       .addCase(getSearchCoin.pending, state => {
         state.loading = true;

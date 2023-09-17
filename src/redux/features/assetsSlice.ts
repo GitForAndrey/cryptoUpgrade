@@ -33,7 +33,8 @@ export const getAssetsCoins = createAsyncThunk<AssetsCoin[],GetAssetsCoinsValue[
   async (coins) => {
     let coinsNames = coins.map(i => i.id).join(',');
     try {
-      const response = await getDataRequest(assetsCoinsQuery(coinsNames));
+      if (coinsNames.length) {
+        const response = await getDataRequest(assetsCoinsQuery(coinsNames));
       const newAssets = response.map((coin:Coin) => {
         const newCoin = coins.find(asset => asset.id === coin.id);
         if (newCoin) {
@@ -46,6 +47,8 @@ export const getAssetsCoins = createAsyncThunk<AssetsCoin[],GetAssetsCoinsValue[
         }
       });
       return newAssets;
+      }
+      else {return [];}
     } catch (error:any) {
       Toast.show({
         type: 'error',
@@ -105,9 +108,10 @@ export const fetchAssetsFromFirebase = createAsyncThunk<void, void, {state:RootS
     const userId =  getState().auth.user?.uid;
     try {
       let results:GetAssetsCoinsValue[] = await fetchAccessCollection(userId, 'assets');
-      if (results.length) {
-       dispatch(getAssetsCoins(results));
-      }
+      dispatch(getAssetsCoins(results));
+      // if (results.length) {
+      //  dispatch(getAssetsCoins(results));
+      // }
     } catch (error:any) {
       Toast.show({
         type: 'error',
@@ -146,6 +150,9 @@ const assetsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getAssetsCoins.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(getAssetsCoins.fulfilled, (state, action: PayloadAction<AssetsCoin[]>) => {
         state.loading = false;
         state.assetsCoinsData = action.payload;
@@ -156,8 +163,7 @@ const assetsSlice = createSlice({
       .addCase(fetchAssetsFromFirebase.pending, state => {
         state.loading = true;
       })
-      .addCase(fetchAssetsFromFirebase.fulfilled, (state) => {
-        state.assetsCoinsData = [];
+      .addCase(fetchAssetsFromFirebase.rejected, (state) => {
         state.loading = false;
       });
   },
