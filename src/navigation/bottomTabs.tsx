@@ -11,7 +11,6 @@ import { COLORS, GLOB_STYLE } from '../constants';
 import { StyleSheet, View } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { HeaderButton } from '../components/HeaderButton';
-import { string } from 'yup';
 
 export type BottomTabStackParamList = {
   Home: undefined;
@@ -35,7 +34,7 @@ function getTabIcon(routeName:string, focused: boolean) {
     return null;
   }
 }
-const renderHeaderButtons = navigation => (
+const renderHeaderButtons = (navigation:any) => (
   <View style={styles.headerButtonsContainer}>
     <HeaderButton
       icon={'search-outline'}

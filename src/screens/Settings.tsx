@@ -8,6 +8,7 @@ import { useAppDispatch } from '../redux/store';
 export const SettingsScreen = () => {
   const dispatch = useAppDispatch();
 
+  //del user data from storage and state
   const logout = async () => {
     try {
       await AsyncStorage.removeItem('user');

@@ -25,6 +25,7 @@ import { FiltersItemList } from '../components/FiltersItemList';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MainStackParamList } from '../navigation/mainStack';
 import { useAppDispatch, useAppSelector } from '../redux/store';
+import { Coin } from '../types/coinTypes';
 
 type Props = NativeStackScreenProps<MainStackParamList, 'Coin'>
 
@@ -39,9 +40,33 @@ export const CoinScreen:FunctionComponent<Props> = ({ route }) => {
   const coin = useAppSelector(selectActiveCoin);
   const loading = useAppSelector(selectCoinLoading);
 
+
+  //get new coin chart data for different filter value and set active filter value
+  const handleFilterClick = (value: string) => {
+    let data = { filter: value, coin: coinId };
+    setActiveFilter(value);
+    dispatch(getCoinsChart(data));
+  };
+  //go back and clear coin state
+  const handleGoBack = () => {
+    navigation.goBack();
+    dispatch(resetActiveCoin());
+  };
+  //add/del coin from wishlist data
+  const addWishlist = (data : Coin)=> {
+    dispatch(saveWishlistCoinsFirebase(data));
+  };
+  const delWishlist = (data : Coin) => {
+    dispatch(delWishlistCoinsFirebase(data));
+  };
+  //format price value
+  const formatter = new Intl.NumberFormat('en-US');
+
+
   useEffect(() => {
     dispatch(getSearchCoin(coinId));
   }, [coinId]);
+  //create custom header with active add/del wishlist button
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -68,30 +93,13 @@ export const CoinScreen:FunctionComponent<Props> = ({ route }) => {
     });
   }, [isWishlist, coin]);
 
-  const handleFilterClick = value => {
-    let data = { filter: value, coin: coinId };
-    setActiveFilter(value);
-    dispatch(getCoinsChart(data));
-  };
-  const handleGoBack = () => {
-    navigation.goBack();
-    dispatch(resetActiveCoin());
-  };
-  const addWishlist = data => {
-    dispatch(saveWishlistCoinsFirebase(data));
-  };
-  const delWishlist = data => {
-    dispatch(delWishlistCoinsFirebase(data));
-  };
-  const formatter = new Intl.NumberFormat('en-US');
-
   return (
     <ScrollView style={styles.container}>
       {!loading ? (
         <>
           <View style={styles.coinInfoBlock}>
             <View style={styles.coinInfo}>
-              {coin.image && (
+              {coin?.image && (
                 <Image source={{ uri: coin.image }} style={styles.coinImage} />
               )}
               <View>

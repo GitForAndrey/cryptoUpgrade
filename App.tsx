@@ -39,6 +39,7 @@ export const App = () => {
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(selectUser);
 
+  //check is active user in storage and close splash screen
   useEffect(() => {
     dispatch(checkAuthUser()).then(() => {
       RNBootSplash.hide({ fade: true, duration: 500 });

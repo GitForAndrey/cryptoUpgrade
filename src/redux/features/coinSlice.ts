@@ -18,6 +18,7 @@ const initialState : CoinState = {
   loading: false,
 };
 
+//get new coin chart data with filters value
 export const getCoinsChart = createAsyncThunk<number[],{filter:string,coin:string },{}>(
   'coin/getCoins',
   async ({filter, coin}) => {
@@ -36,7 +37,8 @@ export const getCoinsChart = createAsyncThunk<number[],{filter:string,coin:strin
   },
 );
 
-export const getSearchCoin = createAsyncThunk<Coin,{coinId:string },{}>(
+//get current coin data from api
+export const getSearchCoin = createAsyncThunk<Coin,string,{}>(
   'coin/getSearchCoin',
   async (coinId) => {
     try {

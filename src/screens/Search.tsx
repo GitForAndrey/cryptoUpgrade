@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LoadingIndicator } from '../components/LoadingIndicator';
@@ -12,12 +12,13 @@ import {
 import { SearchItemList } from '../components/SearchItemList';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 
-export const SearchScreen = () => {
-  const dispatch =useAppDispatch();
+export const SearchScreen:FunctionComponent = () => {
+  const dispatch = useAppDispatch();
   const [value, onChangeText] = useState('');
   const coinData = useAppSelector(selectSearchData);
   const searchLoading = useAppSelector(selectSearchLoading);
 
+  //get data on search input
   const handleSearch = (search:string) => {
     onChangeText(search);
     if (search.length >= 3) {

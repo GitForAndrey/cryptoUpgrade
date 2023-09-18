@@ -31,7 +31,7 @@ export const AssetsCoinAdd:FunctionComponent<AssetsCoinAddProps> = ({ coin, inAs
   const openAssetBlock = () => {
     onSetIsOpen(!isOpen);
   };
- 
+
   return (
     <View>
       {inAssets ? (

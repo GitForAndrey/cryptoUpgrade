@@ -9,11 +9,11 @@ import { HeaderButton } from '../components/HeaderButton';
 export type MainStackParamList = {
   Main: BottomTabStackParamList;
   Coin:{ coinId: string };
-  Search:undefined;
-  Notification:undefined;
+  Search: undefined;
+  Notification: undefined;
 };
 
-const renderBackButton = navigation => (
+const renderBackButton = (navigation: any) => (
   <HeaderButton
     icon={'chevron-back-outline'}
     handleOnPress={() => navigation.goBack()}
@@ -42,7 +42,7 @@ export const MainStackNav = () => (
         })}
       />
       <Stack.Screen
-        name="Search"
+        name = "Search"
         component={SearchScreen}
         options={({ navigation }) => ({
           headerLeft: () => renderBackButton(navigation),

@@ -2,17 +2,17 @@ import React,{FunctionComponent} from 'react';
 import {StyleSheet } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { COLORS } from '../constants';
-import { WithWishlistCoin } from '../types/coinTypes';
+import { AssetsCoin, WithWishlistCoin } from '../types/coinTypes';
 import { SwipeHiddenItem } from './SwipeHiddenItem';
 
 interface SwipeListItemProps {
-  data: WithWishlistCoin[],
+  data: WithWishlistCoin[] | AssetsCoin[],
   RenderItemComponent: FunctionComponent<any>,
-  onAddFunc:(() => void | undefined),
-  onDelFunc:(() => void | undefined),
+  onAddFunc?:Function,
+  onDelFunc?:Function,
   isWishlistPage?:boolean,
   isWalletPage?:boolean,
-  onLoadMore: () => Promise<void>,
+  onLoadMore?: () => Promise<void>,
 }
 
 export const SwipeListItem:FunctionComponent<SwipeListItemProps> = ({
@@ -47,6 +47,5 @@ const colorDel = COLORS.itemColorDel;
   );
 };
 
-const styles = StyleSheet.create({
-  
-});
+// const styles = StyleSheet.create({
+// });

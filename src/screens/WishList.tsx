@@ -18,6 +18,7 @@ export const WishListScreen = () => {
   const wishlistLoading = useAppSelector(getWishlistLoading);
   const wishlistData = useAppSelector(selectWishlistCoins);
 
+//get current coins data
   useEffect(() => {
     if (wishlistData.length) {
       dispatch(getWishlistCoins(wishlistData));

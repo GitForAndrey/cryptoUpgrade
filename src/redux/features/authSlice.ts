@@ -20,7 +20,8 @@ const initialState: UserState = {
   loading: false, // false/true
 };
 
-export const userRegistration = createAsyncThunk<User,{name: string, email:string, password: string }, {}>(
+//new user registration to firestore and work with errors
+export const userRegistration = createAsyncThunk<void,{name: string, email:string, password: string }, {}>(
   'auth/userRegistration',
   async ({ name, email, password }) => {
     try {
@@ -43,7 +44,7 @@ export const userRegistration = createAsyncThunk<User,{name: string, email:strin
         text2: 'Successful new user registration!',
       });
 
-      return { uid: user.uid, email: user.email || '', displayName: name };
+      // return { uid: user.uid, email: user.email || '', displayName: name };
     } catch (error:any) {
       if (error.code === 'auth/email-already-in-use') {
         Toast.show({
@@ -68,6 +69,8 @@ export const userRegistration = createAsyncThunk<User,{name: string, email:strin
     }
   },
 );
+
+//user login with email and password, save user data to storage and state and work with error
 export const userSignIn = createAsyncThunk<User,{email:string, password: string }, {dispatch:Dispatch}>(
   'auth/userSignIn',
   async ({ email, password }) => {
@@ -105,6 +108,8 @@ export const userSignIn = createAsyncThunk<User,{email:string, password: string 
     }
   },
 );
+
+//check active user data in storage and set user to state
 export const checkAuthUser = createAsyncThunk<void,void, {dispatch:Dispatch}>(
   'auth/checkAuthUser',
   async (_, { dispatch }) => {
@@ -136,9 +141,8 @@ const authSlice = createSlice({
       .addCase(userRegistration.pending, state => {
         state.loading = true;
       })
-      .addCase(userRegistration.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(userRegistration.fulfilled, (state) => {
         state.loading = false;
-        state.user = action.payload;
       })
       .addCase(userRegistration.rejected, state => {
         state.loading = false;

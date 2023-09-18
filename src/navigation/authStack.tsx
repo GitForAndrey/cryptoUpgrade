@@ -12,7 +12,7 @@ export type AuthStackParamList = {
 };
 
 
-const renderBackButton = navigation => (
+const renderBackButton = (navigation:any) => (
   <HeaderButton
     icon={'chevron-back-outline'}
     handleOnPress={() => navigation.goBack()}

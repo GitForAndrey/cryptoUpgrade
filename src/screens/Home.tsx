@@ -46,6 +46,7 @@ export const HomeScreen:FunctionComponent<Props> = ({ navigation }) => {
   const assetsCoinsData = useAppSelector(selectAssetsCoinsData);
   const assetsCoinsLoading = useAppSelector(getAssetsLoading);
 
+  //set active user name to header welcome message
   const HeaderTitle = useMemo(() => {
     return <HeaderTextLeft userName={activeUser?.displayName || 'friend'} />;
   }, [activeUser]);
@@ -56,13 +57,14 @@ export const HomeScreen:FunctionComponent<Props> = ({ navigation }) => {
     });
   }, []);
 
+  //get data from api market coins and get user assets and wishlist from firebase storage
   useEffect(() => {
     dispatch(getMarketCoins({ filter: activeFilter, page: 1 })).then(() => {
       dispatch(fetchAssetsFromFirebase());
       dispatch(fetchWishlistFromFirebase());
     });
   }, [dispatch]);
-
+//get more data on scroll list
   const loadMoreData = async () => {
     const nextPage = page + 1;
     if (nextPage <= 3) {
@@ -70,7 +72,7 @@ export const HomeScreen:FunctionComponent<Props> = ({ navigation }) => {
       setPage(nextPage);
     }
   };
-
+//get data with market filters value
   const handleFilterOnPress = (value:string) => {
     setActiveFilter(value);
     dispatch(getMarketCoins({ filter: value, page: 1 }));

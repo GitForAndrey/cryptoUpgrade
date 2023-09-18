@@ -2,12 +2,12 @@ import React,{FunctionComponent} from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS, FONTS, SIZES } from '../constants';
-import { WithWishlistCoin } from '../types/coinTypes';
+import { AssetsCoin, WithWishlistCoin } from '../types/coinTypes';
 import { useAppDispatch } from '../redux/store';
 
 interface SwipeHiddenItemProps {
-  item:WithWishlistCoin,
-  handleOnPress:(() => void | undefined),
+  item:WithWishlistCoin | AssetsCoin,
+  handleOnPress:Function,
   color:string,
   iconName:string,
   title:string,
@@ -15,7 +15,7 @@ interface SwipeHiddenItemProps {
 }
 
 export const SwipeHiddenItem:FunctionComponent<SwipeHiddenItemProps> = ({
-  item, handleOnPress, color, iconName,  title  ,isWalletPage
+  item, handleOnPress, color, iconName,  title  ,isWalletPage,
 }) => {
   let dispatch = useAppDispatch();
   return (

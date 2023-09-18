@@ -4,6 +4,8 @@ import { selectMarketCoins } from './features/marketCoinSlice';
 import { selectWishlistCoins } from './features/wishlistSlice';
 import { selectActiveCoin } from './features/coinSlice';
 
+
+//compare first array with the second, find matching elements and add new field to data item with information isWishlist: true/false
 export const getMarketsCoinWithWishlist = createSelector(
   [selectMarketCoins, selectWishlistCoins],
   (sliceAData, sliceBData) => {
@@ -18,6 +20,7 @@ export const getMarketsCoinWithWishlist = createSelector(
   },
 );
 
+//check is active coin is a wishlisted or no
 export const isCoinWishlist = createSelector(
   [selectWishlistCoins, selectActiveCoin],
   (sliceData, selectedCoin) => {
@@ -26,6 +29,7 @@ export const isCoinWishlist = createSelector(
   },
 );
 
+//check is active coin is in assets and return how many coins in assets
 export const valueInAssets = createSelector(
   [selectAssetsCoinsData, selectActiveCoin],
   (sliceData, selectedCoin) => {

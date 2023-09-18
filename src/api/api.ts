@@ -6,7 +6,7 @@ const api = axios.create({
   timeout: 7000,
 });
 
-export const getDataRequest = async url => {
+export const getDataRequest = async (url:string) => {
   try {
     const response = await api.get(url);
     if (response.status === 200) {
@@ -14,15 +14,12 @@ export const getDataRequest = async url => {
     } else {
       throw new Error(`Request failed with status ${response.status}`);
     }
-  } catch (error) {
+  } catch (error:any) {
     if (error.response) {
-      // Ошибка с ответом от сервера (например, ошибка статуса)
       throw new Error(`Request error: ${error.message}`);
     } else if (error.request) {
-      // Ошибка без ответа от сервера (например, проблемы с сетью)
       throw new Error('Network error: Unable to connect to the server.');
     } else {
-      // Прочие ошибки
       throw new Error(error);
     }
   }

@@ -17,6 +17,7 @@ const initialState : WishlistState = {
   loading: false,
 };
 
+// get current Wishlist coins data from api and save to state
 export const getWishlistCoins = createAsyncThunk<Coin[],{id:string}[] | Coin[],{}>(
   'wishlist/getWishlist',
   async (coins) => {
@@ -33,6 +34,7 @@ export const getWishlistCoins = createAsyncThunk<Coin[],{id:string}[] | Coin[],{
     }
   },
 );
+//add Wishlist item, save item to firebase for active user and add to redux state
 export const saveWishlistCoinsFirebase = createAsyncThunk<void,Coin,{state:RootState, dispatch:Dispatch }>(
   'wishlist/saveWishlistCoinsFirebase',
   async (coin, { getState, dispatch }) => {
@@ -49,6 +51,7 @@ export const saveWishlistCoinsFirebase = createAsyncThunk<void,Coin,{state:RootS
     }
   },
 );
+//delete Wishlist item from firebase for active user and del from redux state
 export const delWishlistCoinsFirebase = createAsyncThunk<void,Coin,{state:RootState, dispatch:Dispatch }>(
   'wishlist/delWishlistCoinsFirebase',
   async (coin, { getState, dispatch }) => {
@@ -65,6 +68,7 @@ export const delWishlistCoinsFirebase = createAsyncThunk<void,Coin,{state:RootSt
     }
   },
 );
+//get Wishlist coins for active user from firebase, and send assets data to getWishlistCoins()
 export const fetchWishlistFromFirebase = createAsyncThunk<void,void,{state:RootState, dispatch:Dispatch<any> }>(
   'wishlist/fetchWishlistFromFirebase',
   async (_, { getState, dispatch }) => {

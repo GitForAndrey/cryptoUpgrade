@@ -19,19 +19,24 @@ const initialState : MarketCoinState = {
   filter: 'Top100',
 };
 
+//select query  to get data from api
+const getQueryWithFilters = (filter:string, page: number): string => {
+  if (filter === 'Top100') {
+    return topQuery(page);
+  } else if (filter === 'Test1') {
+    return firstTestQuery(page);
+  } else if (filter === 'Test2') {
+    return secondTestQuery(page);
+  }
+  return '';
+};
+
+//get main page market data from api
 export const getMarketCoins = createAsyncThunk<{ data: Coin[], selectedFilter:string },{filter:string, page:number },{}>(
   'marketCoin/getMarketCoins',
   async ({ filter, page }) => {
-    let url;
-    if (filter === 'Top100') {
-      url = topQuery(page);
-    } else if (filter === 'Test1') {
-      url = firstTestQuery(page);
-    } else if (filter === 'Test2') {
-      url = secondTestQuery(page);
-    }
     try {
-      const response = await getDataRequest(url);
+      const response = await getDataRequest(getQueryWithFilters(filter, page));
       return { data: response, selectedFilter: filter };
     } catch (error:any) {
       Toast.show({
@@ -56,6 +61,7 @@ const marketCoinSlice = createSlice({
           state.loadingAdditional = true;
         }
       })
+      //save data to the state if this is first load with different filters or additional data loading
       .addCase(getMarketCoins.fulfilled, (state, action: PayloadAction<{ data: Coin[], selectedFilter:string }>) => {
         state.loadingInitial = false;
         state.loadingAdditional = false;

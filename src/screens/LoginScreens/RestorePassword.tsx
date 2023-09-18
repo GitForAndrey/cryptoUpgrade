@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { GLOB_STYLE } from '../../constants';
 import { Formik } from 'formik';
@@ -10,12 +10,14 @@ const RestoreSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
 });
 const handleOnSubmit = (values: any) => {
-  console.log(values)
+  console.log(values);
   //dispatch(userSignIn(values));
   //Keyboard.dismiss();
 };
 
-export const RestorePasswordScreen = () => {
+
+//restore password is not working now
+export const RestorePasswordScreen:FunctionComponent = () => {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <Formik

@@ -34,7 +34,7 @@ export const SignInScreen:FunctionComponent<Props> = ({ navigation }) => {
   const loading = useAppSelector(selectLoading);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
-  const handleOnSubmit = values => {
+  const handleOnSubmit = (values: {email:string, password: string }) => {
     dispatch(userSignIn(values));
     Keyboard.dismiss();
   };

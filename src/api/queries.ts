@@ -1,13 +1,13 @@
 //queries constants
 
 ////////////getMarketCoins
-export const topQuery = (page:string) => {
+export const topQuery = (page:number) => {
   return `/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=33&page=${page}&sparkline=true&price_change_percentage=24&locale=en`;
 };
-export const firstTestQuery = (page:string) => {
+export const firstTestQuery = (page:number) => {
   return `/coins/markets?vs_currency=usd&order=volume_asc&per_page=33&page=${page}&sparkline=true&price_change_percentage=24&locale=en`;
 };
-export const secondTestQuery = (page:string) => {
+export const secondTestQuery = (page:number) => {
   return `/coins/markets?vs_currency=usd&order=volume_desc&per_page=33&page=${page}&sparkline=true&price_change_percentage=24&locale=en`;
 };
 

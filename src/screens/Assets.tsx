@@ -10,16 +10,19 @@ import {
   deleteAssetsFirebase,
   selectAssetsCoinsData,
 } from '../redux/features/assetsSlice';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import { LogBox } from 'react-native';
 import { ContentTitle } from '../components/ContentTitle';
 import { useAppSelector } from '../redux/store';
 
 export const AssetsScreen = () => {
+  // Ignore all logs for this screen, have some error with chart lib
   LogBox.ignoreAllLogs();
-  const navigation = useNavigation();
+
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   let assetsCoinData = useAppSelector(selectAssetsCoinsData);
 
+  // Calculate total asset balance
   const totalPrice = assetsCoinData
     ?.reduce((acc, item) => acc + item.current_price * item.quantity, 0)
     .toFixed(2);
@@ -36,7 +39,7 @@ export const AssetsScreen = () => {
       <View style={styles.assetBlock}>
         <ContentTitle
           title={'My assets'}
-          style={{ paddingLeft: 0, fontSize: 18 }}
+          style={styles.title_block}
         />
         <TouchableOpacity onPress={() => navigation.navigate('Search')}>
           <Ionicons
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
   },
-
+  title_block:{ paddingLeft: 0, fontSize: 18 },
   list_container: { flex: 1, paddingBottom: 80 },
   list_empty: { color: COLORS.white, textAlign: 'center' },
 });

@@ -20,7 +20,7 @@ type AssetsState = {
   assetsCoinsData: AssetsCoin[];
   loading: boolean;
 }
-type GetAssetsCoinsValue= Pick<AssetsCoin, 'coinBuyPrice' | 'fillColor' | 'id' | 'quantity'>;
+type GetAssetsCoinsValue = Pick<AssetsCoin, 'coinBuyPrice' | 'fillColor' | 'id' | 'quantity'>;
 
 
 const initialState: AssetsState = {
@@ -28,6 +28,7 @@ const initialState: AssetsState = {
   loading: false,
 };
 
+// get current assets coins data from api and create array with additional data, for save to state
 export const getAssetsCoins = createAsyncThunk<AssetsCoin[],GetAssetsCoinsValue[],{}>(
   'assets/getAssetsCoin',
   async (coins) => {
@@ -58,6 +59,8 @@ export const getAssetsCoins = createAsyncThunk<AssetsCoin[],GetAssetsCoinsValue[
     }
   },
 );
+
+//create new assets item, save assets item to firebase for active user and add to redux state
 export const saveAssetsFirebase = createAsyncThunk< void,{ parsedCoinPrice: number, parsedQuantity:number, coin: Coin }, {state:RootState, dispatch:Dispatch }>(
   'assets/saveAssetsFirebase',
   async (
@@ -85,6 +88,7 @@ export const saveAssetsFirebase = createAsyncThunk< void,{ parsedCoinPrice: numb
     return undefined;
   },
 );
+//delete assets item from firebase for active user and del from redux state
 export const deleteAssetsFirebase = createAsyncThunk< void, WithWishlistCoin, {state:{auth:{user:User}}, dispatch:Dispatch }>(
   'assets/deleteAssetsFirebase',
   async (coin, { getState, dispatch }) => {
@@ -102,6 +106,8 @@ export const deleteAssetsFirebase = createAsyncThunk< void, WithWishlistCoin, {s
     return undefined;
   },
 );
+
+//get assets coins for active user from firebase, and send assets data to getAssetsCoins()
 export const fetchAssetsFromFirebase = createAsyncThunk<void, void, {state:RootState, dispatch:Dispatch<any> }>(
   'assets/fetchAssetsFromFirebase',
   async (_, {getState, dispatch}) => {
@@ -109,9 +115,6 @@ export const fetchAssetsFromFirebase = createAsyncThunk<void, void, {state:RootS
     try {
       let results:GetAssetsCoinsValue[] = await fetchAccessCollection(userId, 'assets');
       dispatch(getAssetsCoins(results));
-      // if (results.length) {
-      //  dispatch(getAssetsCoins(results));
-      // }
     } catch (error:any) {
       Toast.show({
         type: 'error',

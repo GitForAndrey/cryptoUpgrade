@@ -15,6 +15,7 @@ const initialState : SearchState = {
   loading: false,
 };
 
+//get search coins data from api
 export const getSearchData = createAsyncThunk <SearchCoin[],string,{}>(
   'search/getSearchData',
   async (search) => {

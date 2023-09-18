@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { GLOB_STYLE } from '../../constants';
 import { Formik } from 'formik';
@@ -10,6 +10,7 @@ import {
 import { FormButton } from '../../components/FormButton';
 import { InputField } from '../../components/FormikInputField';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 
 const validationSchema = yup.object().shape({
   name: yup.string().min(4).required(),
@@ -17,7 +18,8 @@ const validationSchema = yup.object().shape({
   password: yup.string().min(6).required(),
 });
 
-export const SignUpScreen = () => {
+export const SignUpScreen:FunctionComponent = () => {
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoading);
   const [showPassword, setShowPassword] = useState(true);
@@ -32,7 +34,7 @@ export const SignUpScreen = () => {
           password: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={values => dispatch(userRegistration(values))}>
+        onSubmit={values => dispatch(userRegistration(values)).then(()=>navigation.navigate('SignIn'))}>
         {({
           handleChange,
           handleBlur,
