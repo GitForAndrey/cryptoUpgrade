@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import RNBootSplash from 'react-native-bootsplash';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 import { COLORS } from './src/constants';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { AuthTabs } from './src/navigation/authStack';
 import { MainStackNav } from './src/navigation/mainStack';
 import { checkAuthUser, selectUser } from './src/redux/features/authSlice';
@@ -47,10 +47,17 @@ export const App = () => {
   }, []);
 
   return (
-    <>
+    <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.mainBg} barStyle="light-content" />
       {isUser ? <MainStackNav /> : <AuthTabs />}
       <Toast visibilityTime={3000} config={toastConfig} />
-    </>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    backgroundColor: COLORS.mainBg,
+  },
+});

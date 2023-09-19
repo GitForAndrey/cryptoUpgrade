@@ -21,7 +21,7 @@ export type BottomTabStackParamList = {
 
 const Tabs = createBottomTabNavigator<BottomTabStackParamList>();
 
-function getTabIcon(routeName:string, focused: boolean) {
+function getTabIcon(routeName:string, focused: boolean): string {
   if (routeName === 'Home') {
     return focused ? 'home' : 'home-outline';
   } else if (routeName === 'Assets') {
@@ -31,7 +31,7 @@ function getTabIcon(routeName:string, focused: boolean) {
   } else if (routeName === 'Settings') {
     return focused ? 'settings' : 'settings-outline';
   } else {
-    return null;
+    return '';
   }
 }
 const renderHeaderButtons = (navigation:any) => (
