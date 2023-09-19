@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   indicator_container: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 5,
     //marginVertical: 10,
   },
 });
